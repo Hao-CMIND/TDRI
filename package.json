@@ -1,0 +1,136 @@
+{
+  "name": "webpack",
+  "version": "1.0.0",
+  "description": "webpack app",
+  "repository": {
+    "url": "",
+    "type": "git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development EXTENSION=.html webpack serve --config webpack.dev.mjs",
+    "build:demo": "cross-env NODE_ENV=production EXTENSION=.html OPTIMIZE=0 webpack --config webpack.prod.mjs",
+    "build:html": "cross-env NODE_ENV=production EXTENSION=.html OPTIMIZE=1 webpack --config webpack.prod.mjs",
+    "build:cshtml": "cross-env NODE_ENV=production EXTENSION=.cshtml OPTIMIZE=1 webpack --config webpack.prod.mjs",
+    "build:html:imgOptimize": "cross-env NODE_ENV=production EXTENSION=.html OPTIMIZE=1 IMG=1 webpack --config webpack.prod.mjs",
+    "build:cshtml:imgOptimize": "cross-env NODE_ENV=production EXTENSION=.cshtml OPTIMIZE=1 IMG=1 webpack --config webpack.prod.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/plugin-transform-runtime": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.8.1",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "eslint": "^8.43.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-webpack-plugin": "^4.0.1",
+    "group-css-media-queries-loader": "^4.3.0",
+    "html-loader": "^4.2.0",
+    "html-minimizer-webpack-plugin": "^4.4.0",
+    "html-webpack-plugin": "^5.5.2",
+    "image-minimizer-webpack-plugin": "^3.8.3",
+    "imagemin": "^8.0.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-svgo": "^10.0.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "postcss-loader": "^7.3.2",
+    "pug": "^3.0.2",
+    "pug-loader": "^2.4.0",
+    "puglint-webpack-plugin": "^1.0.3",
+    "purgecss-webpack-plugin": "^5.0.0",
+    "sass": "^1.63.3",
+    "sass-lint": "^1.13.1",
+    "sass-lint-webpack": "^1.0.4",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "svg-sprite-loader": "^6.0.11",
+    "svg-url-loader": "^8.0.0",
+    "webpack": "^5.86.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0"
+  },
+  "browserslist": [
+    ">= 1%",
+    "not dead",
+    "Chrome >= 88",
+    "Firefox >= 78",
+    "Firefox ESR",
+    "iOS >= 12",
+    "Safari >= 12",
+    "not Explorer <= 11"
+  ],
+  "dependencies": {
+    "@popperjs/core": "^2.10.2",
+    "axios": "^1.4.0",
+    "bs4": "npm:bootstrap@^4.6.2",
+    "bs5": "npm:bootstrap@^5.3.3",
+    "d3-array": "^3.2.4",
+    "d3-axis": "^3.0.0",
+    "d3-dispatch": "^3.0.1",
+    "d3-ease": "^3.0.1",
+    "d3-fetch": "^3.0.1",
+    "d3-format": "^3.1.0",
+    "d3-interpolate": "^3.0.1",
+    "d3-path": "^3.1.0",
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0",
+    "d3-selection-multi": "^1.0.1",
+    "d3-shape": "^3.2.0",
+    "d3-time": "^3.1.0",
+    "d3-time-format": "^4.1.0",
+    "d3-transition": "^3.0.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "lodash-es": "^4.17.21",
+    "nodemailer": "^6.9.7",
+    "shepherd.js": "^11.2.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true
+    },
+    "extends": [
+      "standard"
+    ],
+    "rules": {
+      "no-undef": 0,
+      "no-unused-vars": 0,
+      "no-new": 0
+    },
+    "globals": {
+      "$": "readonly",
+      "ENV": "readonly"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-transform-runtime",
+        {
+          "helpers": true,
+          "corejs": false,
+          "regenerator": true,
+          "useESModules": false,
+          "absoluteRuntime": false
+        }
+      ]
+    ]
+  }
+}
