@@ -1,0 +1,814 @@
+extends ./template/layout.pug
+block local
+  // bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+
+mixin chartAreaVue({ id })
+  nav.step-3.nav.sticky-spy.pde-spy.gap-l-3.list-number(id='scroll-spy-'+id)
+    template(v-for=`chart, i of tabCategory.${id}.context`)
+      a.nav-link.spy-anchor(:class='{ active: !i }' :href!=`'#chart-area-${id}-' + chart.id`)
+        span.nav-text {{chart.title}}
+  .container.tab-charts-container.gap-4(data-bs-spy='scroll' data-bs-target='#scroll-spy-'+id data-bs-offset='0' tabindex='0')
+    p.t-33(v-if=`filterDesc('${id}')`) {{filterDesc('#{id}')}}
+    if id==='all'
+      button.btn.btn-outline-white(type='button' @click='downloadAll' :disabled=isDownloading) 全部下載
+    template(v-for=`chart, i in tabCategory.${id}.context`)
+      .card.chart-area(:id!=`'chart-area-${id}-'+chart.id`)
+        .card-body
+          .flexbox.gy-3.gx-0.gx-m-3(v-if!='chart.type===\'url\'')
+            template(v-if!='chart.json?.dataset.length')
+              .sp-12
+                h3.chart-title {{chart.title}}
+              .sp-l-3
+                select.custom-select.bg-none.pill.b-333
+                  option(value='' selected disabled) 選擇資料類型
+                  option(value='0') 政府
+                  option(value='1') 新聞
+              .sp-12
+                p 原始留言、圖片、文章等連結可能因第三方網站內容異動，導致連結失效或網頁內容與本網站所提供之資料不同。
+              .sp-11
+                ul.list-unstyled.gy-3(v-if='chart?.json')
+                  template(v-for='dataset, i of chart.json.dataset')
+                    li
+                      a(:href='dataset[1]')
+                        span.badge.badge-blue-lg.mr-3 {{chart.json.legendsEnum[dataset[0]]}}
+                        |{{dataset[2]}}
+              .sp-1
+                .flexbox.col.a-end.gx-0.gy-3
+                  .sp-auto
+                    button.btn.icon-btn-blue-gray.p-0(type='button')
+                      span.fi-vis-chart
+                  .sp-auto
+                    button.btn.icon-btn-blue-gray.p-0(type='button')
+                      span.fi-marked
+                  .sp-auto
+                    button.btn.icon-btn-blue-gray.p-0.js-popovers-option(type='button' data-bs-placement='left' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.download)
+                      span.fi-download
+              .sp-12
+                span.badge.badge-outline(v-for='categoryIndex, i of chart.category' :key!='\'category\'+i') \#{{structure.category[categoryIndex][0]}}
+                span.badge.badge-purple(v-for='tagIndex, i of chart.tag' :key!='\'tag\'+i') \#{{structure.tags[tagIndex]}}
+              .sp-12
+                +pagination({ pages: 5, icon, current: 5, cls: 'J-ctr bt-1' })
+          .flexbox.sps-5.gy-3.gx-0.gx-m-3(v-else-if!='chart.type===\'image\'')
+            .sp-12
+              h3.chart-title {{chart.title}}
+            .sp-9.spr-3
+              p.chart-desc 圖表簡述：
+                br
+                |{{chart.descr}}
+                br
+                |{{chart.exp}}
+
+            .sp-l-3.spr-9(v-if='chart?.json')
+              select.custom-select.bg-none.pill.b-333(@change='imageTypeChange')
+                option(value='' selected disabled) 請選擇風格
+                template(v-for='legend, i of chart.json.legendsEnum')
+                  option(:value='i') {{ legend }}
+            .sp-12
+              p 原始留言、圖片、文章等連結可能因第三方網站內容異動，導致連結失效或網頁內容與本網站所提供之資料不同。
+            template(v-if='chart?.json')
+              template(v-for='dataset, i of chart.json.dataset')
+                template(v-for='set of dataset')
+                  .sp
+                    .product-style
+                      img.product-img(:src='set[5][0]' width='100%' height='auto' :alt='set[1]' :title='set[1]' loading='lazy')
+                      h4.img-clamp-2 {{set[1]}}
+                      p
+                        a.stretched-link.img-clamp-2(:href='set[0]' target='_blank') {{set[2]}}
+                        |原價
+                        del ${{set[3]}}
+                        br
+                        |特價
+                        ins.product-discount(:cite='set[0]') ${{set[4]}}
+
+          .flexbox.js-pdf.gy-3.gx-0(v-else)
+            .sp-12
+              h3.chart-title {{chart.title}}
+            .sp-9.spr-3
+              //- input.checkbox-collapse(type='checkbox' :id!=`\'css-desc-${id}-\'+chart.id`)
+              p.chart-desc 圖表簡述：
+                br
+                |{{chart.descr}}
+                br
+                |{{chart.exp}}
+
+            //- .sp-12(data-html2canvas-ignore)
+              label.t-blue.t-left(:for=`\'css-desc-${id}-\'+chart.id`) 詳細說明
+            .sp-l-3(v-if!='chart.type.match(/spider|stacked/)')
+              select.custom-select.bg-none.pill.b-333(v-if='chart?.json' :id=`\'chart-select-${id}-\'+chart.id` @change!=`dataSelect($event, '${id}', chart.id)`)
+                option(v-if!='chart.type === \'stacked\'' value='' selected) 全部
+                option(v-else-if!='chart.type === \'spider\'' value='' disabled selected) 請選擇品牌
+                template(v-for='legend, i of chart.json.legendsEnum')
+                  option(:value!='i') {{legend}}
+
+            .sp-11
+              .table-rwd-xl(:id!=`'chart-svg-${id}-'+chart.id` ref='svg')
+            .sp-1(data-html2canvas-ignore)
+              .flexbox.col.a-xxl-ctr.gx-0.gy-3
+                //- .sp-auto
+                //-   button.btn.icon-btn-blue-gray.p-0(type='button')
+                //-     span.fi-vis-chart
+                .sp-auto
+                  button.btn.icon-btn-blue-gray.p-0(type='button')
+                    span.fi-marked
+                .sp-auto(:class!='{ \'step-4\': i === 0 }')
+                  button.btn.icon-btn-blue-gray.p-0(ref='download' type='button' data-bs-placement='left' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.download)
+                    span.fi-download
+            .sp-12
+              template(v-for='categoryIndex, i of chart.category')
+                span.badge.badge-outline(v-if='structure.category[categoryIndex][0]') \#{{structure.category[categoryIndex][0]}}
+              span.badge.badge-purple(v-for='tagIndex, i of chart.tag' :key!='\'tag\'+i') \#{{structure.tags[tagIndex]}}
+            .sp-12
+              .table-rwd-xxl.t-nowrap(:id!=`\'chart-table-${id}-\'+chart.id` ref='table')
+                input.checkbox-collapse(type='checkbox' :id!=`\'css-table-${id}-\'+chart.id` checked)
+            .sp-12(data-html2canvas-ignore)
+              //- template(v-if!='chart.title.match(/使用者不?喜歡的原因/)')
+              //-   h4.txt-blue=`{{chart?.instaceCharts.${id}?.table.hoverTitle}}`
+              //-   template(v-for=`data, i of chart?.instaceCharts.${id}?.table.hoverData`)
+              //-     a.badge.badge-outline(:href='data.url' target='_blank') {{data.comments}}
+              label.btn.btn-block.t-ctr.t-blue(:for!=`\'css-table-${id}-\'+chart.id`) 收起表格
+block body
+  .container
+    .flexbox.sps-1.gy-3.mb-3
+      .sp
+        a.t-333(href='#')
+          svg.img-fluid(fill='currentColor' width='19' height='19')
+            use(xlink:href='./img/sprite.svg#arrow-left')
+          span.v-middle 產品類別選擇
+
+  section#app.pb-5
+    .container.slide-down-invisible
+      h2.fz-24 子類別分析資料
+      .flexbox.J-end.a-ctr.sps-1.gx-2
+        .sp-m-auto
+          h2.fz-32 {{ productId }}
+        .sp-m-auto.mr-auto
+          +breadcrumb({ cls: 'mb-0', prev: [
+              { href: '\'./productSelect.html\'+productAnchor', page: '{{majorId}}' },
+              { href: '\'./productSelect.html\'+productAnchor', page: '{{minorId}}' }
+            ]})
+        .sp-7.sp-m-3.sp-l-2.input-col
+          +inputGroup({type: 'search', id: 'search', name: 'search', label: '搜尋', placeholder: '請搜尋關鍵字...', cls: 'bg-none', groupCls: 'bg-white pill' })
+            +prepend
+              label.mb-0.pt-1.pl-2(for='search')
+                svg(fill='currentColor' stroke='#828282' width='20' height='20')
+                  use(xlink:href='./img/sprite.svg#magnifer')
+
+        .sp-5.sp-m-3.sp-l-auto
+          button.btn.btn-blue.btn-block(ref='popover' type='button' data-bs-html='true' data-bs-toggle='popover' data-bs-custom-class='popover-wider' data-bs-content='<p>近5年來，洗衣機和烘乾機的設計趨勢發生了顯著變化，主要包括以下五個面向：<ol class=\'pl-3\'><li>現代感和緊湊設計：現代洗滌一體機和獨立洗衣機的設計趨勢傾向於簡潔、緊湊的外觀，減少了冗餘的裝飾和複雜的外觀。 這種設計使得這些設備更容易融入現代廚房和洗衣房的佈局。</li><li>中性和深色調：外觀顏色方面，中性色調如白色、灰色、黑色仍然非常受歡迎，提供了簡潔、高檔的外觀。 一些製造商也提供了深色調，如深藍或深灰，以滿足消費者對多樣化顏色的需求。</li><li>智慧技術的整合：智慧功能已廣泛應用，包括Wi-Fi連接、智慧程式、遠端監控和診斷。 用戶可以透過智慧型手機應用程式來控制機器，查看剩餘時間，接收通知，提高了便利性。</li><li>節水和節能：設計趨勢強調節水和節能，透過改善內部水流系統、增加高效能能源選擇和智慧程序，以減少能源和水資源的浪費。</li><li>高級洗滌和乾燥技術：洗衣機和烘乾機設計不僅關注清潔，還注重衣物的照顧。 高級技術，如蒸汽功能、特殊洗滌程序和烘乾程序，有助於衣物更好地保持品質。</li></ol></br>總之，近5年來，洗衣機和烘乾機的設計趨勢強調了現代感、中性和深色調、智慧技術、節水和節能以及高級洗滌和乾燥技術。 這些趨勢使得這些家電更符合當代消費者對功能性、美觀性和環保性的需求。</p>')
+            span.fi-star-fill
+            |AI趨勢分析
+        .sp-5.sp-l-auto.step-2
+          +radioToggle('blue', null, {labeltag: 'span',labeltextCls: 'slide-down-hide'})
+
+      p 這裡的數據可以幫助您評估市場狀況，了解競品的市場策略、使用者偏好和熱度。統計 直立式、滾筒式、TWINWash、蒸氣洗衣機、烘衣機、攜帶式 等共6個品類資料 (包含XXXX筆因素及XXXX筆留言摘要)。
+    .step-1
+      // nav(class="{ 'scroll-container': 螢幕寬度 < 頁簽寬度 }")
+      // document.getElementById('nav-tab') .clientWidth < [...document.getElementById('nav-tab').children].reduce((accu, curr) => accu + curr.offsetWidth, 0)
+      +tabs({selfContainer, id: 'tab', v5, cls: ['tab-charts'], contentCls: 'tab-charts-content', controller })
+        +inContainer
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'all', title: '<span class=\'fi-plain\'></span>全部', active })
+            +chartAreaVue({ id: 'all' })
+
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'marketing', title: '<span class=\'fi-chart\'></span>市場分析' })
+            +chartAreaVue({ id: 'marketing' })
+
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'positioning', title: '<span class=\'fi-locate\'></span>產品定位' })
+            +chartAreaVue({ id: 'positioning' })
+
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'spec', title: '<span class=\'fi-doc\'></span>功能規格' })
+            +chartAreaVue({ id: 'spec' })
+
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'design', title: '<span class=\'fi-lightbulb\'></span>設計外觀' })
+            +chartAreaVue({ id: 'design' })
+
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'criteria', title: '<span class=\'fi-bookmark-rect\'></span>規範標準' })
+            +chartAreaVue({ id: 'criteria' })
+
+          +item({wrapText, wrapTextAttr: { class: 'tab-text' }, id: 'trend', title: '<span class=\'fi-star\'></span>趨勢探索' })
+            +chartAreaVue({ id: 'trend' })
+
+        +outContainer
+          .flex.gx-1.slide-down-visible
+            .sp-auto
+              .input-group.nav-input-group.bg-white.pill.slide
+                .input-group-prepend
+                  label.mb-0.pt-1.pl-2(for='search-fixed')
+                    svg(fill='currentColor' stroke='#828282' width='20' height='20')
+                      use(href='./img/sprite.svg#magnifer')
+                input#search-fixed.form-control.bg-none(type='search' name='search' placeholder='請搜尋關鍵字...' aria-label='搜尋')
+            .sp-auto
+              .radio-toggle.radio-blue.mb-2
+                input#local-fixed(type='radio' name='locale-fixed' value='local' checked)
+                label(for='local-fixed')
+                  span.fi-taiwan
+                input#global-fixed(type='radio' name='locale-fixed' value='global')
+                label(for='global-fixed')
+                  span.fi-earth
+    .toast-msg(aria-live='polite' aria-atomic='true')
+      .toast(data-bs-autohide='false')
+        .toast-body
+          span.fi-download
+          |{{toastMsg}}
+          button.close(type='button' data-bs-dismiss='toast' aria-label='Close')
+            span(aria-hidden='true') ×
+  //- - const tempId = '{{index}}'
+block script
+  script(src='https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/shepherd.js/7.1.2/js/shepherd.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+  script (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    .
+      // dataAnalysis.js
+      window.vm = new Vue({
+        el: '#app',
+        data: {
+          productAnchor: '#product-0',
+          isDownloading: false, // 決定是否  disabled 彈出下載鈕的popover
+          majorId: '',
+          minorId: '',
+          productId: '',
+          activateTab: 'all',
+          tabEnum: ['all', 'marketing', 'positioning', 'spec', 'design', 'criteria', 'trend'],
+          structure: {},
+
+          loadingCharts: 5,
+          isLoading: false,
+          tabChartsId: {},
+          tabCategory: {},
+          popovers: null,
+          downloadPopovers: [],
+          chartAreaId: null,
+          toastMsg: '正在下載中...'
+        },
+        async beforeMount () {
+          const vm = this
+
+          for (const [key, val] of Object.entries(Object.fromEntries(new URLSearchParams(location.search).entries()))) {
+            vm[key] = val
+          }
+
+          this.tabCategory = this.genTabCategory()
+        },
+        async mounted () {
+          const vm = this
+          const structure = this.hasTutorial ? this.fakeStructure : await (await fetch('https://tdri.cmind.com.tw/api/PDE/Structure')).json()
+          // console.log(structure)
+          structure.chart.forEach(c => {
+            // console.log(c.type)
+            // if (c.type.match(/url/)) return
+            c.category.unshift(0)
+            const chartList = c.category.map((tabIndex) => [this.tabEnum[tabIndex], null])
+            c.instaceCharts = Object.fromEntries(chartList)
+          })
+          this.tabEnum.forEach((tab, i) => {
+            this.$set(this.tabCategory[tab], 'context', structure.chart.filter(c => c.category.includes(i)))
+            this.$set(this.tabChartsId, tab, structure.chart.filter(c => c.category.includes(i)).map(({ id }) => id))
+          })
+          this.structure = structure
+
+          await this.getChartData()
+          this.launchChart()
+          this.tutor()
+          $('#nav-tab').on('shown.bs.tab', this.tabShownHandler)
+          $('.tab-charts-container').on('activate.bs.scrollspy', this.srollspyActivateHandler)
+          this.popovers = new $.bootstrap.Popover(this.$refs.popover)
+
+          this.downloadPopovers = $(this.$refs.download)
+            .on('inserted.bs.popover', vm.dlPopverInsertHandler)
+            .on('hidden.bs.popover', vm.dlPopoverHiddenHandler)
+            .map(download => new $.bootstrap.Popover(download))
+
+          $(window).on('click scroll', vm.hidePopover)
+
+          // console.log(this)
+        },
+        computed: {
+          productIndex () {
+            // fetch('https://tdri.cmind.com.tw/api/PDE/').then(res => {
+            //   console.log(68, res)
+            // }).catch(err => {
+            //   console.log(err)
+            // })
+            const products = [{ ID: 8, Name: '電腦', Sub: [{ ID: 49, Name: '筆記型電腦', Sub: [{ ID: 181, Name: '一般筆電', ibuzz: '筆記電腦' }, { ID: 180, Name: '電競筆電', ibuzz: '筆記電腦' }] }, { ID: 47, Name: '電腦配件', Sub: [{ ID: 176, Name: '繪圖板', ibuzz: null }, { ID: 174, Name: 'SSD/記憶體', ibuzz: null }, { ID: 173, Name: '滑鼠/鍵盤', ibuzz: null }, { ID: 172, Name: '顯示卡', ibuzz: null }, { ID: 171, Name: '內接碟/NAS', ibuzz: null }, { ID: 170, Name: '電腦螢幕', ibuzz: null }] }, { ID: 45, Name: '印表機', Sub: [{ ID: 167, Name: '噴墨印表機', ibuzz: null }, { ID: 166, Name: '相片印表機', ibuzz: null }, { ID: 165, Name: '雷射印表機', ibuzz: null }] }] }, { ID: 7, Name: '通訊', Sub: [{ ID: 43, Name: '手機', Sub: [{ ID: 161, Name: '智慧型手機', ibuzz: '手機' }, { ID: 160, Name: '一般手機', ibuzz: '手機' }] }] }, { ID: 5, Name: '相機/攝影', Sub: [{ ID: 39, Name: '相機', Sub: [{ ID: 147, Name: '兒童相機', ibuzz: '相機' }] }, { ID: 38, Name: '攝影機', Sub: [{ ID: 146, Name: '數位攝影機', ibuzz: '攝影機' }, { ID: 145, Name: '空拍機', ibuzz: '攝影機' }, { ID: 144, Name: '全景攝影機', ibuzz: '攝影機' }, { ID: 143, Name: '運動攝影機', ibuzz: '攝影機' }] }] }, { ID: 4, Name: '數位配件', Sub: [{ ID: 37, Name: '穿戴裝置', Sub: [{ ID: 141, Name: '智慧手錶', ibuzz: '穿戴裝置' }, { ID: 140, Name: '智慧手環', ibuzz: '穿戴裝置' }] }, { ID: 36, Name: '藍芽耳機', Sub: [{ ID: 139, Name: '骨傳導/開放式', ibuzz: '耳機/藍芽' }] }, { ID: 34, Name: '錄音設備', Sub: [{ ID: 133, Name: '錄音筆', ibuzz: null }] }] }, { ID: 3, Name: '廚房小家電', Sub: [{ ID: 32, Name: '烘焙家電', Sub: [{ ID: 128, Name: '攪拌機', ibuzz: '烘焙家電' }, { ID: 127, Name: '烤箱', ibuzz: '烘焙家電' }, { ID: 126, Name: '鬆餅/點心機', ibuzz: '烘焙家電' }, { ID: 125, Name: '麵包機', ibuzz: '烘焙家電' }] }, { ID: 31, Name: '微波爐', Sub: [{ ID: 124, Name: '水波爐/蒸烤爐/蒸爐', ibuzz: '微波爐' }] }, { ID: 30, Name: '飲水設備', Sub: [{ ID: 120, Name: '氣泡水機', ibuzz: '冷熱飲水' }] }, { ID: 29, Name: '榨汁機', Sub: [{ ID: 116, Name: '果汁機', ibuzz: '冷熱果汁調理機' }, { ID: 115, Name: '豆漿機', ibuzz: '冷熱果汁調理機' }, { ID: 114, Name: '調理機', ibuzz: '冷熱果汁調理機' }] }, { ID: 28, Name: '料理電器', Sub: [{ ID: 113, Name: '真空保鮮機', ibuzz: null }, { ID: 112, Name: '舒肥棒/機', ibuzz: null }, { ID: 111, Name: '廚餘機', ibuzz: null }, { ID: 110, Name: '食物處理機', ibuzz: null }] }, { ID: 27, Name: '料理鍋', Sub: [{ ID: 108, Name: '電子鍋', ibuzz: '電鍋/電子鍋' }, { ID: 107, Name: '電鍋', ibuzz: '電鍋/電子鍋' }, { ID: 106, Name: '電火鍋', ibuzz: '電鍋/電子鍋' }, { ID: 105, Name: '氣炸鍋', ibuzz: '電鍋/電子鍋' }] }, { ID: 26, Name: '電磁/烤爐', Sub: [{ ID: 104, Name: '電烤盤', ibuzz: null }, { ID: 103, Name: '電陶爐', ibuzz: null }, { ID: 102, Name: '電磁爐', ibuzz: null }] }, { ID: 25, Name: '咖啡機', Sub: [{ ID: 101, Name: '膠囊機', ibuzz: '咖啡機' }, { ID: 100, Name: '美式咖啡機', ibuzz: '咖啡機' }, { ID: 99, Name: '烘豆機/磨豆機', ibuzz: '咖啡機' }, { ID: 98, Name: '義式咖啡機', ibuzz: '咖啡機' }] }] }, { ID: 2, Name: '小型家電', Sub: [{ ID: 24, Name: '口腔電器', Sub: [{ ID: 97, Name: '沖牙機', ibuzz: '美容家電' }, { ID: 96, Name: '電動牙刷', ibuzz: '美容家電' }] }, { ID: 23, Name: '捕蚊電器', Sub: [{ ID: 95, Name: '捕蚊拍', ibuzz: '捕蚊家電' }, { ID: 94, Name: '捕蚊燈', ibuzz: '捕蚊家電' }] }, { ID: 22, Name: '檯燈', Sub: [{ ID: 93, Name: '座/夾式檯燈', ibuzz: '檯燈' }, { ID: 92, Name: 'USB/充電式檯燈', ibuzz: '檯燈' }, { ID: 91, Name: '螢幕掛燈', ibuzz: '檯燈' }, { ID: 89, Name: 'LED檯燈', ibuzz: '檯燈' }] }, { ID: 21, Name: '掃地機', Sub: [{ ID: 88, Name: '拖地機', ibuzz: '掃地機/吸塵器' }, { ID: 87, Name: '掃地機', ibuzz: '掃地機/吸塵器' }] }, { ID: 20, Name: '整燙縫紉', Sub: [{ ID: 86, Name: '掛燙機', ibuzz: null }, { ID: 85, Name: '熨斗', ibuzz: null }] }, { ID: 19, Name: '吸塵器', Sub: [{ ID: 83, Name: '筒式吸塵器', ibuzz: '掃地機/吸塵器' }, { ID: 82, Name: '有線吸塵器', ibuzz: '掃地機/吸塵器' }, { ID: 81, Name: '除蹣機', ibuzz: '掃地機/吸塵器' }, { ID: 80, Name: '無線吸塵器', ibuzz: '掃地機/吸塵器' }] }, { ID: 18, Name: '清淨機/除濕機', Sub: [{ ID: 79, Name: '除濕機', ibuzz: '清淨除濕' }, { ID: 78, Name: '隨身/車用清淨機', ibuzz: '清淨除濕' }, { ID: 77, Name: '清淨機', ibuzz: '清淨除濕' }] }, { ID: 17, Name: '美容電器', Sub: [{ ID: 76, Name: '美容/美體/美足機', ibuzz: '美容家電' }, { ID: 75, Name: '洗臉/粉刺機', ibuzz: '美容家電' }, { ID: 74, Name: '熱敷儀/眼罩', ibuzz: '美容家電' }, { ID: 73, Name: '刮鬍刀', ibuzz: '美容家電' }, { ID: 72, Name: '保養按摩機', ibuzz: '美容家電' }] }, { ID: 16, Name: '美髮電器', Sub: [{ ID: 71, Name: '吹風機', ibuzz: '美髮家電' }, { ID: 70, Name: '造型器', ibuzz: '美髮家電' }] }, { ID: 15, Name: '電暖器', Sub: [{ ID: 69, Name: '電暖器', ibuzz: '電暖器' }, { ID: 68, Name: '烘被/烘鞋機', ibuzz: '電暖器' }] }] }, { ID: 1, Name: '大型家電', Sub: [{ ID: 14, Name: '冷/暖空調', Sub: [{ ID: 66, Name: '移動式', ibuzz: '冷暖空調' }, { ID: 64, Name: '風扇', ibuzz: '冷暖空調' }] }, { ID: 10, Name: '洗/烘衣機', Sub: [{ ID: 57, Name: '蒸氣洗衣機', ibuzz: '洗衣機' }, { ID: 56, Name: '脫水機', ibuzz: '洗衣機' }, { ID: 55, Name: '滾筒式', ibuzz: '洗衣機' }, { ID: 54, Name: '烘衣機', ibuzz: '洗衣機' }, { ID: 53, Name: '直立式', ibuzz: '洗衣機' }] }, { ID: 9, Name: '冰箱/冰櫃', Sub: [{ ID: 51, Name: '冰箱', ibuzz: '冰箱' }] }] }, { ID: 6, Name: '視聽家電', Sub: [] }]
+            const majorProduct = products.find(majorId => majorId.Name === this.majorId)
+            const minorProduct = majorProduct.Sub.find(minorId => minorId.Name === this.minorId)
+
+            if (this.productId === this.minorId) {
+              return minorProduct.ID
+            }
+            return minorProduct.Sub.find(product => product.Name === this.productId).ID
+          },
+          hasTutorial () { return new URLSearchParams(location.search).get('tutorial') === 'true' },
+          fakeStructure () {
+            return {
+              category: [['全部'], ['市場分析', '這裡的數據可以幫助您評估市場狀況，了解競品的市場策略、使用者偏好和熱度'], ['產品定位', '透過使用情境、風格變化、品牌定位等數據資料，可以協助您制定有效的產品定位策略'], ['功能規格', '這裡所提供的資料將幫助您定義產品應該擁有的功能、性能以及需要遵循的標準'], ['外觀設計', '這些資料將協助您進行產品外觀設計，探索產品可能的風格、色彩、造型、材質，和表面處理的限制'], ['規範標準', '這裡的資料可以協助您了解可能涉及的法規標準、評估量產可行性'], ['趨勢探索', '這裡所提供的資料可以協助您探索這類產品市場和技術趨勢，了解設計上可能的機會和挑戰']
+              ],
+              tags: ['市場售價', '售價分析'],
+              chart: [{
+                id: 8,
+                type: 'candle',
+                title: '產品售價分析',
+                xAxis: '10大品牌',
+                yAxis: '售價',
+                table: '品牌名稱',
+                descr: '呈現 [子類/品類名稱] 下各品牌的價格區間，以近10年上市的產品進行分析。',
+                exp: '最低售價、平均折扣後的價格、平均定價、最高售價等資料，皆取自於電商平台的產品說明，再統計為 [子類/品類名稱] 中各個品牌的售價區間。您可以從這個圖表了解不同品牌的定價策略、市場定位，並推估產品的製造與設計成本。',
+                category: [0, 1, 2, 3],
+                tag: []
+              }
+              ]
+            }
+          },
+          fakeData () {
+            const dataset = Array.from({ length: 10 }, (d, j) => {
+              return Array.from({ length: 4 }, (v, i) => {
+                const max = 12 ** 3
+                const min = (10 - i) ** 3
+                return Math.floor(Math.random() * (max - min + 1)) + min
+              }).sort((a, b) => b - a)
+            })
+            return [
+              {
+                labelsEnum: ['Fairphone', 'Apple', 'HTC 宏達電', 'Google', 'SAMSUNG 三星', 'vivo', 'SONY 索尼', 'ASUS 華碩', 'OPPO', 'NOKIA'],
+                legendsEnum: ['最高售價', '平均定價', '最低售價', '平均折扣後價格'
+                ],
+                dataset
+              }
+            ]
+          }
+        },
+        methods: {
+          scrollTab (tab, dir) {
+            const target = $(tab)[0]
+            const current = target.scrollLeft
+            target.scrollLeft = current + (((target.clientWidth / 2) | 0) * dir)
+          },
+          hidePopover () {
+            $(this.$refs.download).popover('hide')
+            // this.chartArea = null
+          },
+          downloadLink (filename, href) {
+            const downloadBtn = document.createElement('a')
+            downloadBtn.download = filename
+            downloadBtn.href = href
+            downloadBtn.click()
+          },
+          svgToBlob (node, cb) {
+            const svgContent = new XMLSerializer().serializeToString(node)
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' })
+            cb(blob)
+            URL.revokeObjectURL(blob)
+          },
+          async downloadAll () {
+            $('.toast').toast('show')
+            const vm = this
+            vm.toastMsg = '資料加載中...'
+            vm.isDownloading = true
+            vm.loadingCharts = 100
+            await vm.getChartData()
+            vm.launchChart()
+            vm.tabCategory.all.instaceCharts.forEach(chart => {
+              if (chart.launcher instanceof Container && chart.launcher?.updateVis) {
+                chart.launcher.updateVis(0)
+              }
+            })
+
+            const pdfs = $('#scroll-spy-all').next().find('.js-pdf')
+            pdfs.find('.checkbox-collapse').forEach(checkbox => {
+              $(checkbox).prop('checked', true).attr('id')
+            })
+
+            const width = 1384// el.width()
+
+            const PDF_HEIGHT = width * 1.414
+            // 靜態站判定使用(不須修改)
+            if (typeof PDF === 'undefined') {
+              const PDF = jspdf.jsPDF
+              doc = new PDF('p', 'px', [width, PDF_HEIGHT])
+            } else {
+              doc = new PDF('p', 'px', [width, PDF_HEIGHT])
+            }
+
+            for (let i = 0; i < pdfs.length; i++) {
+              const el = $(pdfs[i]).parent()
+
+              const canvas = await html2canvas(el[0], { windowWidth: 1920 })
+              if (i > 0) {
+                doc.addPage()
+              }
+              doc.addImage(canvas, 'JPEG', 0, 0, width, canvas.height)
+              vm.toastMsg = `PDF轉換完成進度${(i / pdfs.length * 100).toFixed(0)}%`
+            }
+            doc.save(vm.majorId + '-' + vm.minorId + '-' + vm.productId + '.pdf')
+            $('.toast').toast('hide')
+            vm.isDownloading = false
+            vm.toastMsg = 'PDF轉換完成進度100%'
+          },
+
+          async downloadImageHandler (e) {
+            $('.toast').toast('show')
+
+            const vm = this
+
+            vm.toastMsg = '正在下載中...'
+            vm.isDownloading = true
+            $(this.$refs.download).popover('hide')
+            const { action } = e.target.closest('button').dataset
+            const node = d3.select(vm.chartAreaId).select('svg').attrs({
+              version: 1.1,
+              xmlns: 'http://www.w3.org/2000/svg'
+            }).node()
+            console.log(node)
+            /*
+            const { width, height } = node.getBBox()
+            node = node */.cloneNode(true)
+            // const title = node.querySelector('.svg-chart-title')
+            // const chart = $(vm.chartAreaId)
+            // const filename = vm.majorId + '-' + vm.minorId + '-' + vm.productId + '-' + chart.find('.chart-title').txt() + new Date().toLocaleString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\/|:|\s/g, '')
+            // title.textContent = chart.find('.chart-title').txt()
+            // const img = {
+            //   async pdf () {
+            //     chart.find('.checkbox-collapse').forEach(checkbox => {
+            //       $(checkbox).prop('checked', true)
+            //     })
+            //     const el = chart.find('.js-pdf').parent()
+            //     const width = 1424// el.width()
+            //     const canvas = await html2canvas(el[0], { windowWidth: 1920 })
+            //     const PDF_HEIGHT = width * 1.414
+            //     let doc
+
+            //     // 靜態站判定使用(不須修改)
+            //     if (typeof PDF === 'undefined') {
+            //       const PDF = jspdf.jsPDF
+            //       doc = new PDF('p', 'px', [width, PDF_HEIGHT])
+            //     } else {
+            //       doc = new PDF('p', 'px', [width, PDF_HEIGHT])
+            //     }
+            //     doc.addImage(canvas, 'JPEG', 0, 0, width, canvas.height)
+            //     doc.save(filename + '.pdf')
+            //   },
+            //   svg () {
+            //     title.removeAttribute('class')
+            //     const div = document.createElement('div')
+            //     div.innerHTML = node.outerHTML
+            //       .replace(/[0-9]+\.[0-9]{2,}/gm, p1 => Math.round(p1 * 10) / 10 + '')
+            //       .replace(/fill="currentColor"/gm, 'fill="#000"')
+
+            //     div.querySelectorAll('line').forEach(line => {
+            //       const attrs = ['y2']
+            //       line.classList.remove('domain')
+            //       if (line.classList.length === 0) { attrs.push('class') }
+            //       attrs.forEach(attr => {
+            //         if (attr === 'y2' && +line.getAttribute(attr) !== 0) { return }
+            //         line.removeAttribute(attr)
+            //       })
+            //       if (line.attributes.length === 1) { line.remove() }
+            //     })
+            //     div.querySelectorAll('path').forEach(path => {
+            //       const attrs = ['stroke-dasharray', 'stroke-dashoffset', 'stroke']
+            //       path.classList.remove('domain')
+            //       if (path.classList.length === 0) { attrs.push('class') }
+            //       attrs.forEach(attr => {
+            //         if (attr === 'stroke-dasharray' && +path.getAttribute(attr) === 5) { return }
+            //         if (attr === 'stroke' && path.getAttribute(attr) !== 'none') { return }
+            //         path.removeAttribute(attr)
+            //         if (path.attributes.length === 1) { path.remove() }
+            //       })
+            //     })
+            //     div.querySelectorAll('g').forEach(g => {
+            //       const attrs = ['data-legend', 'transform', 'opacity']
+            //       g.classList.remove('graphic', 'chart', 'tick', 'legend', 'line', 'dashed-line')
+            //       if (g.classList.length === 0) { attrs.push('class') }
+            //       attrs.forEach(attr => {
+            //         if (attr === 'transform' && g.getAttribute(attr) !== 'translate(0,0)') { return }
+            //         g.removeAttribute(attr)
+            //       })
+            //       if (g.attributes.length === 0) {
+            //         g.replaceWith(...g.childNodes)
+            //       }
+            //     })
+            //     div.querySelectorAll('.bs-tip').forEach(tip => {
+            //       const attrs = ['data-bs-toggle', 'data-bs-html', 'data-bs-content', 'data-bs-trigger', 'data-legend']
+            //       tip.classList.remove('bs-tip')
+            //       if (tip.classList.length === 0) { attrs.push('class') }
+            //       attrs.forEach(attr => { tip.removeAttribute(attr) })
+            //     })
+
+            //     vm.svgToBlob(div.firstElementChild, (blob) => {
+            //       vm.downloadLink(filename + '.svg', URL.createObjectURL(blob))
+            //     })
+            //   },
+            //   async png () {
+            //     const canvas = await html2canvas($(vm.chartAreaId).find('svg').parent()[0], { windowWidth: 1920, backgroundColor: null })
+            //     vm.downloadLink(filename + '.png', canvas.toDataURL('image/png'))
+            //   }
+            // }
+            // await img[action]()
+            // vm.isDownloading = false
+            // $('.toast').toast('hide')
+          },
+          dlPopverInsertHandler (e) {
+            const btn = $(e.target)
+            this.chartAreaId = '#' + btn.parents('.chart-area').attr('id')
+            $('.popover').on('click', this.downloadImageHandler)
+          },
+          dlPopoverHiddenHandler () {
+            $('.popover').off('click', this.downloadImageHandler)
+          },
+          imageTypeChange () {
+
+          },
+          tutor () {
+            if (this.hasTutorial) {
+              const tour = new Shepherd.Tour({
+                useModalOverlay: true,
+                defaultStepOptions: {
+                  scrollTo: true
+                }
+              })
+              function buttons (step) {
+                return [{ text: '下一步', action: tour.next, classes: 'btn btn-blue' },
+                  { text: '略過 (' + step + '/4)', action: tour.cancel, classes: 'btn btn-outline-white' }]
+              }
+              tour.addSteps([{
+                title: '1.選擇分析資料類別',
+                text: '<p><br /></p>',
+                scrollTo: false,
+                // modalOverlayOpeningPadding: 32,
+                attachTo: {
+                  element: '.step-1',
+                  on: 'top'
+                },
+                buttons: buttons(1)
+              }, {
+                title: '2.選擇分析資料市場',
+                text: '<p><br /></p>',
+                attachTo: {
+                  element: '.step-2',
+                  on: 'top'
+                },
+                buttons: buttons(2)
+              }, {
+                title: '3.快速查詢圖表',
+                text: '<p>選擇圖表名稱。</p>',
+                attachTo: {
+                  element: '.step-3',
+                  on: 'top'
+                },
+                buttons: buttons(3)
+              }, {
+                title: '4.收藏至專案資料夾',
+                text: '<p>選擇收藏icon，將圖表儲至專案資料夾。</p>',
+                attachTo: {
+                  element: '.step-4',
+                  on: 'top'
+                },
+                buttons: buttons(4)
+              }
+              ])
+
+              tour.start()
+              this.tabCategory.all.instaceCharts[0].launcher.updateVis()
+            }
+          },
+          dataSelect (e, tab, chartId) {
+            const [{ json, instaceCharts }] = this.structure.chart.filter(({ id }) => id === chartId)
+            const chart = instaceCharts[tab]
+            const productIndex = e.target.value
+            const data = productIndex === '' ? json : this.filterData(json, +productIndex)
+            chart.wangleData(data).updateVis()
+          },
+          filterData ({ dataset, labelsEnum, legendsEnum, rawData }, dataIndex) {
+            const result = {
+              dataset: dataset.map((set, i) => [set[dataIndex]]).filter(v => v[0]),
+              labelsEnum: dataset.map((set, i) => labelsEnum[i]).filter((set, i) => dataset[i][dataIndex]),
+              legendsEnum: legendsEnum.filter((d, i) => i === dataIndex)
+            }
+            if (rawData?.length) {
+              result.rawData = rawData.map((d, i) =>
+                d.map((data, j) => data.slice(0, dataset[i][j]))
+                  .filter((v, j) => (j === dataIndex && dataset[i][j] > 0)
+                  )).filter(d => d[0])
+            }
+            return result
+          },
+          genTabCategory () {
+            const tabContent = this.tabEnum.map((tab, i) => [tab, {
+              context: [],
+              instaceCharts: []
+            }])
+            return Object.fromEntries(tabContent)
+          },
+          async srollspyActivateHandler (e) {
+            const activateArea = $(e.relatedTarget)
+            const chartArea = activateArea.attr('href')
+
+            // 確認 區域有無 svg 及 資料
+
+            const [,, tab, currentId] = chartArea.split('-')
+            const { json } = this.tabCategory[tab].context.find(({ id, json }) => {
+              return id === +currentId
+            })
+            // 區域沒資料
+            if (!json) {
+              await this.getChartData()
+              this.launchChart()
+              return
+            }
+            this.triggerChartAnimate(chartArea)
+
+          // 子元素 數量 大於 loading量
+          // 子元素 數量 大於 loading量
+          //   if ($(e.target).children().length > this.loadingCharts) {
+          //     await this.infinityLoading(activateArea)
+          //   }
+          },
+          triggerChartAnimate (href) {
+            this.structure.chart.forEach(({ id: activateId, type }) => {
+            // 滾動導航取出非 type === url的 href 中 id
+              if (activateId !== +href?.split('-')[3] || ['url', 'spider', 'image'].includes(type)) { return }
+              // 比對頁簽符合 id 觸發圖表動畫
+              this.tabCategory[this.activateTab].instaceCharts
+                .forEach(({ launcher, id }) => {
+                  if (id !== +activateId) { return }
+                  launcher.updateVis()
+                })
+            }
+            )
+          },
+          tabShownHandler (e) {
+            // console.log($(e.target))
+            $(e.target).parent().addClass('active').siblings().removeClass('active')
+            $('.tab-charts-container').scrollspy('refresh')
+            const [, tab] = e.target.id.split('-')
+            this.activateTab = tab
+            this.launchChart()
+          },
+
+          async getChartData () {
+            if (this.isLoading || this.tabChartsId[this.activateTab].length === 0) return
+            this.isLoading = true // 讀取中
+            const Chart = this.tabChartsId[this.activateTab].splice(0, this.loadingCharts)
+            this.cleanInstaceChartsId(Chart)
+            const ID = this.productIndex
+            // console.log(ID)
+            try {
+              const res = this.deepFreeze(this.hasTutorial
+                ? this.fakeData
+                : (await (await fetch('https://tdri.cmind.com.tw/api/PDE/Data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ID, Chart, source: 0 })
+                  })).json()))
+              res.forEach((json, i) => this.saveToStructure(Chart[i], json))
+              const loadedCharts = this.loadCharts(Chart, res)
+              // console.log(loadedCharts)
+              loadedCharts.forEach(({ tab, chart, chartId }) => {
+                const { instaceCharts } = this.tabCategory[tab]
+                instaceCharts.push({ id: chartId, launcher: chart })
+              })
+              $('.tab-charts-container').scrollspy('refresh')
+              this.isLoading = false // 讀取中
+            } catch (error) {
+              throw new Error(error)
+            }
+          },
+          launchChart () {
+            this.tabCategory[this.activateTab].instaceCharts.forEach(({ id, launcher }, i, a) => {
+              if (launcher instanceof Container || typeof launcher !== 'function') { return }
+              let instanceChart
+              try {
+                instanceChart = launcher()
+              } catch (e) {
+                throw new Error(e)
+              }
+              a[i].launcher = instanceChart
+
+              // 實體陣列儲存 指向 structure 陣列
+              this.structure.chart.forEach(({ id: chartId, instaceCharts }) => {
+                if (chartId !== id) { return }
+                instaceCharts[this.activateTab] = instanceChart
+              })
+            })
+          },
+          cleanInstaceChartsId (spliceIds) {
+            this.tabEnum.forEach(tab => {
+              if (this.activateTab === tab) { return }
+              this.tabChartsId[tab] = this.tabChartsId[tab].filter(id => !spliceIds.includes(id))
+            })
+          },
+
+          loadCharts (chartsId) {
+            return Object.entries(this.tabCategory).flatMap(([tab, { context }]) =>
+              context.map((content) => {
+                if (!content.json || !chartsId.includes(content.id)) {
+                  return undefined
+                }
+                // console.log('content=>>', content)
+                const chart = this.instanceCharts(tab, content.id, content)
+                return chart && { chart, tab, chartId: content.id }
+              })
+            ).filter(d => d)
+          },
+
+          instanceCharts (tab, id, { type, yAxis, xAxis, table, json, transpose }) {
+            const vm = this
+            // if (!['spider', 'candle', 'url', 'pie', 'line', 'grouped', 'hgrouped','stacked', 'image'].includes(type)) { return undefined }
+            const tabId = tab + '-' + id
+            const title = new Title('')
+            const translateX = type === 'spider' ? 450 : 0
+            const yMajorLabel = new AxisTitle(yAxis).left({ translateX })
+            const legend = new Legend({ offset: 20 })
+            const xLabel = this.deepPrevExt(new AxisTitle(xAxis).bottom())
+            const init = this.deepPrevExt({ title, yMajorLabel, xLabel, legend })
+            const config = {
+              el: '#chart-svg-' + tabId,
+              table: new DataTable({ el: '#chart-table-' + tabId, colTitle: table, hover: type === 'spider' }),
+              transpose
+            }
+
+            if (!type.match(/url/) && json.dataset.length === 0) {
+              $(config.el).parents('.js-pdf').removeClass('js-pdf')
+              return // () => new ComingSoon(config).initVis().wangleData()
+            }
+
+            const launcher = {
+              hgrouped () { return new HGroupedChart({ ...config, marginLeft: 0 }).initVis({ title, xLabel, legend }).wangleData(json) },
+              grouped () { return new GroupedChart(config).initVis(init).wangleData(json) },
+              stacked () { return new StackedChart(config).initVis(init).wangleData(json) },
+              candle () { return new GroupedChart(config).initVis(init).wangleData(json) },
+              line () { return new LineChart(config).initVis(init).wangleData(json) },
+              pie () { return new PieChart({ ...config, innerRadius: 180 }).initVis(vm.deepPrevExt({ title, legend })).wangleData(json) },
+              spider () { return new HGroupedChart({ ...config, original: 'spider' }).initVis(init).wangleData(vm.filterData(json, 0)) },
+              url: json,
+              image: json
+            }
+            return launcher[type]
+          },
+          saveToStructure (chartId, json) {
+            // if (json.type === 'url') {
+            //   console.log(json)
+            // }
+            const filtered = this.structure.chart.find(({ id }) => id === chartId)
+            this.$set(filtered, 'json', json)
+          },
+          filterDesc (id) {
+            return this.structure.category?.[this.tabEnum.indexOf(id)][1]
+          },
+          deepFreeze (json) {
+            const vm = this
+            const propName = Object.getOwnPropertyNames(json)
+            propName.forEach((name) => {
+              const prop = json[name]
+              if (typeof prop === 'object' && prop !== null) {
+                vm.deepFreeze(prop)
+              }
+            })
+            return Object.freeze(json)
+          },
+          deepPrevExt (json) {
+            const vm = this
+            const propName = Object.getOwnPropertyNames(json)
+            propName.forEach((name) => {
+              const prop = json[name]
+              if (typeof prop === 'object' && prop !== null) {
+                vm.deepPrevExt(prop)
+              }
+            })
+            return Object.preventExtensions(json)
+          }
+        },
+        beforeDestroy () {
+          $(window).off('click', vm.hidePopover)
+            .off('scroll', vm.hidePopover)
+          $(this.$refs.popover).popover('dispose')
+          $(this.$refs.download).popover('dispose')
+          $('#nav-tab').tab('dispose').off('shown.bs.tab', this.tabShownHandler)
+          $('.tab-charts-container').off('activate.bs.scrollspy', this.srollspyActivateHandler)
+
+          // 移除 popover
+          Object.values(this.tabCategory).forEach(({ instaceCharts }) => {
+            // console.log(instaceCharts)
+            instaceCharts.forEach(({ launcher }) => {
+              if (launcher instanceof Container || typeof launcher !== 'function') {
+                launcher.popovers.forEach(popover => {
+                  if (launcher.enterHandler) {
+                    $(popover._element).off('mouseenter', launcher.enterHandler.shift())
+                  }
+                  popover.dispose()
+                })
+                launcher.table?.popovers.forEach(popover => {
+                  $(popover._element).parent().off('mouseenter', launcher.table.enterHandler.shift())
+                  popover.dispose()
+                })
+              }
+            })
+          })
+        }
+      })
+
+    | })}((window)))

@@ -1,0 +1,110 @@
+extends ./template/layout.pug
+block local
+  - pageType = 'pde'
+
+block body
+  section.min-vh-full.py-5
+    .container
+      .flexbox.sps-1.gx-2.gy-3.mb-3
+        .sp-12
+          h1.fz-32 專案列表
+        .sp-auto.mr-auto
+          button.btn.btn-blue(type='button')
+            span.fi-plus
+            |建立專案
+        .sp-2
+          select.custom-select.bg-none.b-1(name='sort')
+            option(value='0' selected) 依產品名稱排序
+            option(value='1') 依加入時間排序(新到舊)
+            option(value='2') 依加入時間排序(舊到新)
+        .sp-auto
+          button.btn.btn-layout-toggle.active(type='button' data-layout='list')
+            span.fi-list
+        .sp-auto
+          button.btn.btn-layout-toggle(type='button' data-layout='grid')
+            span.fi-grid
+      .flexbox.card-list
+        - for(let i = 0; i < 6; i++)
+          .sp
+            .card.card-blue
+              .card-header
+                button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'edit\'><span class=\'fi-pen\'></span>編輯檔案</button></li><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li><li><button class=\'btn\' type=\'button\' data-action=\'share\'><span class=\'fi-link\'></span>分享</button></li><li><button class=\'btn\' type=\'button\' data-action=\'saveAs\'><span class=\'fi-target\'></span>另存關係人</button></li></menu>')
+                  span.fi-option-h
+                h4.fz-16.card-title ABC洗衣機
+              .card-body
+                .card-list-title ABC洗衣機
+                .avatar
+                  img.img-fluid.hidden.inline-m(src=require('./img/user-blue.jpg') width='96' height='96' alt='ABC洗衣機' title='ABC洗衣機' loading='lazy')
+                    //- button.btn.btn-blue.avatar-btn(type='button' data-bs-toggle='modal' data-bs-target='#change-avatar')
+                      span.fi-cam
+                .card-desc
+                  ul.list-charts.t-left
+                    li
+                      span.t-82.pr-1
+                        span.fi-linechart
+                        |已加入圖表
+                        strong.t-black.fl-right 3張
+                    li
+                      span.t-82.pr-1
+                        span.fi-piechart
+                        |交叉分析
+                        strong.t-black.fl-right 1分
+
+                a.stretched-link(href='./pdeManagement2.html' title='ABC洗衣機')
+
+  +modal({ id: 'addproject-modal', label: 'modal-title', static, size: 'xl', centered, v5, nobtn})
+    +body({cls: ['p-4']})
+      .flexbox.J-around
+        .sp-6
+          .bg-white.rad-xl.vh-50.of-y-auto.p-2
+            h2.bb-82.fz-24.t-black 電競筆電設計趨勢(1)
+            section#sec-1.py-3
+              h2.fz-18.mb-3 總體社會經濟趨勢
+              dl.order-dl
+                dt 政治（Political）
+                dd 產品採用多樣化顏色、食品級安全材料、易清潔表面處理，並具備高效能功能，以符合政府規範並滿足市場多元需求。
+                dt 經濟（Economic）
+                dd 膠囊機以基本白色系降低生產成本，選用耐用且經濟的材質和表面處理，並整合節能技術以減少運作成本。
+                dt 社會（Social）
+                dd 提供多種顏色選擇、抗污材質和實用美觀的表面處理，結合一鍵食譜和智能辨識功能，以提升產品與現代生活品質的契合度。
+                dt 技術（Technological）
+                dd 膠囊機透過現代顏色設計、堅固材質和帶紋理表面處理展現高科技感，並融入最新咖啡萃取技術和智慧操作介面。
+                dt 環境（Environmental）
+                dd 採用自然色彩、可回收或生物分解材料和易於回收的表面處理，並具備節水節能功能，以凸顯膠囊機的環保設計。
+                dt 法律（Legal）
+                dd 膠囊機使用不易褪色且符合健康安全標準的材料，表面處理無害且不刺激，並通過安全認證以保障消費者使用安全。
+        .sp-6
+          .mb-3
+            p 選擇類別
+            .dropdown.customize-dropdown.black-dropdown
+              button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                span.placeholder 圖表
+                span.fi-arr-down
+              .dropdown-menu(data-popper-placement='bottom-start')
+                each type, i in ['圖表', 'AI報告', '交叉分析']
+                  a.dropdown-item(href='javascript:void') #{type}
+
+          .mb-3
+            p 選擇AI報告(可多選)
+            .dropdown.customize-dropdown.black-dropdown
+              button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                span.placeholder 手機
+                  time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+                span.fi-arr-down
+              .dropdown-menu(data-popper-placement='bottom-start')
+                - for(let i = 0; i < 3; i++)
+                  a.dropdown-item(href='javascript:void') 手機
+                    time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+          p 選擇格式
+          .dropdown.customize-dropdown.black-dropdown
+            button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+              span.placeholder SVG
+              span.fi-arr-down
+            .dropdown-menu(data-popper-placement='bottom-start')
+              each type, i in ['SVG', 'PNG', 'PDF']
+                a.dropdown-item(href='javascript:void') #{type}
+    +footer({cls: ['p-4']})
+      .grow-1
+        button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+      .grow-1
+        a.btn.btn-blue.btn-block(href='#' download='report.pdf' data-bs-dismiss='modal') 下載

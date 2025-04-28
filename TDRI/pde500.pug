@@ -1,0 +1,15 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+  // bodyAttr = {style: 'background:linear-gradient(90deg, #a2c6e7, #d1e3f3);' }
+  - bodyAttr = {style: 'background:linear-gradient(90deg, #a2c6e7, #d1e3f3);' }
+block body
+  .container.py-5.min-vh-full.bg-contain.bg-right(style!=`background-image:url(${require('./img/pde-500.png')})`)
+    h1.display-1.mb-5(style='border:none;text-align:left') Internal
+      br
+      |Sever Error
+    p.mb-3 系統維修，請回到首頁。
+    .flexbox
+      .sp-l-3
+        a.btn.btn-blue.btn-block(href='./pdeIndex.html') 回首頁

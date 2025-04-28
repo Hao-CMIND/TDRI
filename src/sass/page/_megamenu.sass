@@ -1,0 +1,124 @@
+.nav-megamenu .nav-link,
+.nav-megamenu-content .nav-link
+  width: 100%
+
+  border: none
+  background: none
+
+.nav-megamenu
+  .nav-item
+    padding: 0
+  .nav-link
+    padding: .5rem
+    border-left: none
+    &.active
+      border-color: transparent
+      background-color: transparent
+      background-image: var(--tab-bg)
+      background-repeat: no-repeat
+      background-position: center
+      background-size: calc(100% - 2rem) 100%
+      font-weight: $font-weight-bold
+    // &:first-child
+    //   &.active
+    //     background-position-x:  -1rem
+    //     background-size: calc(100% + 1rem) 100%
+.megamenu-categroy
+  align-content: center
+  min-height: 3.25rem
+  padding-right: 1rem
+  padding-left: 1rem
+  border-top: 1px solid #e0e0e0
+  border-bottom: 1px solid #e0e0e0
+  background-color: #fafafa
+.nav-megamenu-content
+  padding: 2rem
+  border-radius: 1.5rem
+  background-color: $white
+  .tab-list-1
+    .nav-link.active
+      background-color: $black
+      color: $white
+  .nav-link
+    min-height: 3rem
+    padding: .5rem 0
+    border-radius: .5rem
+
+    line-height: 1.2
+    text-align: left
+    padding-block: 0
+    &:before
+      content: ''
+      padding-left: .5rem
+      border-left: .25rem solid transparent
+    &.active
+      background-color: #f2f2f2
+      &:before
+        border-left-color: $black
+      // &.disabled
+      //   opacity: 0.65
+      //   cursor: default
+      //   pointer-events: none
+    + .custom-checkbox-right .custom-control-label
+      padding-top: 0
+      padding-bottom: 0
+      font-size: 0
+      &:before,
+      &:after
+        top: .5rem
+  .nav-scroll
+    height: 20rem
+    overflow: auto
+    margin-block: 1rem
+  .nav
+    padding-inline: 1rem
+  .nav-item
+    padding: 0
+
+
+
+
+// .megamenu-nav-tabs
+//   border-bottom: none
+//   .nav-link
+//     margin-bottom: 0
+//     padding-top: 1rem
+//     padding-bottom: 1rem
+//     border: none
+//     &:hover
+//       border-color: transparent
+//     &.active
+//       border-color: transparent
+//       background-color: transparent
+//       background-image: var(--tab-bg)
+//       background-repeat: no-repeat
+//       background-position: center
+//       background-size: calc(100% - 2rem) 100%
+//       font-weight: $font-weight-bold
+//     // &:first-child
+//     //   &.active
+//     //     background-position-x:  -1rem
+//     //     background-size: calc(100% + 1rem) 100%
+
+// .megamenu-content
+//   padding: 2rem
+//   border-radius: 1.5rem
+//   background-color: $white
+// .megamenu-sub-category
+//   // padding-top: .5rem
+//   // padding-bottom: .5rem
+//   border-radius: .5rem
+//   .btn
+//     padding-top: 0
+//     padding-bottom: 0
+//     border-left: 4px solid transparent
+//     border-top-width: 0
+//     border-right-width: 0
+//     border-bottom-width: 0
+//     border-radius: 0
+//     line-height: 1.2
+//     text-align: left
+//   &.active
+//     background-color: #f2f2f2
+//     .btn
+//       border-left-color: #000

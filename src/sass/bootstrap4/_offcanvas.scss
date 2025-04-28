@@ -1,0 +1,109 @@
+$zindex-offcanvas-backdrop:         1040 !default;
+$zindex-offcanvas:                  1045 !default;
+$offcanvas-padding-y:               $modal-inner-padding * 2 !default;
+$offcanvas-padding-x:               $modal-inner-padding * 2 !default;
+$offcanvas-horizontal-width:        800px !default;
+$offcanvas-vertical-height:         30vh !default;
+$offcanvas-transition-duration:     .3s !default;
+$offcanvas-border-color:            $modal-content-border-color !default;
+$offcanvas-border-width:            $modal-content-border-width !default;
+$offcanvas-title-line-height:       $modal-title-line-height !default;
+$offcanvas-bg-color:                $modal-content-bg !default;
+$offcanvas-color:                   $modal-content-color !default;
+$offcanvas-box-shadow:              $modal-content-box-shadow-xs !default;
+$offcanvas-backdrop-bg:             $modal-backdrop-bg !default;
+$offcanvas-backdrop-opacity:        $modal-backdrop-opacity !default;
+.offcanvas {
+  position: fixed;
+  bottom: 0;
+  z-index: $zindex-offcanvas;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  color: $offcanvas-color;
+  visibility: hidden;
+  background-color: $offcanvas-bg-color;
+  background-clip: padding-box;
+  outline: 0;
+  @include box-shadow($offcanvas-box-shadow);
+  @include transition(transform $offcanvas-transition-duration ease-in-out);
+}
+
+.offcanvas-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $zindex-offcanvas-backdrop;
+  width: 100vw;
+  height: 100vh;
+  background-color: $offcanvas-backdrop-bg;
+
+  // Fade for backdrop
+  &.fade { opacity: 0; }
+  &.show { opacity: $offcanvas-backdrop-opacity; }
+}
+
+.offcanvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $offcanvas-padding-y $offcanvas-padding-x 0;
+
+  .btn-close {
+    padding: ($offcanvas-padding-y * .5) ($offcanvas-padding-x * .5);
+    margin-top: $offcanvas-padding-y * -.5;
+    margin-right: $offcanvas-padding-x * -.5;
+    margin-bottom: $offcanvas-padding-y * -.5;
+  }
+}
+
+.offcanvas-title {
+  margin-bottom: 0;
+  line-height: $offcanvas-title-line-height;
+}
+
+.offcanvas-body {
+  flex-grow: 1;
+  padding: $offcanvas-padding-y $offcanvas-padding-x;
+  overflow-y: auto;
+}
+
+.offcanvas-start {
+  top: 0;
+  left: 0;
+  width: $offcanvas-horizontal-width;
+  border-right: $offcanvas-border-width solid $offcanvas-border-color;
+  transform: translateX(-100%);
+}
+
+.offcanvas-end {
+  top: 0;
+  right: 0;
+  min-width: $offcanvas-horizontal-width;
+  border-left: $offcanvas-border-width solid $offcanvas-border-color;
+  transform: translateX(100%);
+}
+
+.offcanvas-top {
+  top: 0;
+  right: 0;
+  left: 0;
+  height: $offcanvas-vertical-height;
+  max-height: 100%;
+  border-bottom: $offcanvas-border-width solid $offcanvas-border-color;
+  transform: translateY(-100%);
+}
+
+.offcanvas-bottom {
+  right: 0;
+  left: 0;
+  height: $offcanvas-vertical-height;
+  max-height: 100%;
+  border-top: $offcanvas-border-width solid $offcanvas-border-color;
+  transform: translateY(100%);
+}
+
+.offcanvas.show {
+  visibility: visible;
+  transform: none;
+}

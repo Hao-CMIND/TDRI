@@ -1,0 +1,350 @@
+.decor
+  position: relative
+  &:before,
+  &:after
+    content: ''
+    position: absolute
+    top: 50%
+    width: 25%
+    height: 1px
+    background-color: #e6e6e6
+  &:before
+    left: 8%
+  &:after
+    right: 8%
+.tool
+  &-title
+    display: inline-block
+    margin-left: .5rem
+    line-height: 1.125
+    vertical-align: middle
+  &-desc
+    display: -webkit-box
+    height: 2 * 2 * 1rem
+    // margin: 0
+    overflow: hidden
+    -webkit-box-orient: vertical
+    -webkit-line-clamp: 2
+
+  &-badge-group
+    margin-bottom: 1rem
+    .badge
+      padding: 6px 8px
+      border: 1px solid #e0e0e0
+      border-radius: 0.5rem
+      font-size: 0.875rem
+      &:not(:first-child)
+        margin-left: 0.5rem
+.input-ic
+  padding-left: 2.5em
+  background-position: 0.5em
+  background-size: 1.5em
+.prepend-icon,
+.append-icon
+  align-items: center
+  padding: 0 0.5rem
+  border-top: 1px solid transparent
+  border-bottom: 1px solid transparent
+  background-color: $input-bg
+  background-clip: padding-box
+  color: #828282
+.append-icon
+  .btn
+    padding: 0
+    color: inherit
+
+.check-control
+  padding-left: calc(2em + 0.75rem)
+  .custom-control-label
+    padding-left: 0.75rem
+    &:before,
+    &::after
+      top: calc(50% - 0.6em)
+      left: calc(-1.6em - 0.375rem)
+      width: 1.2em
+      height: 1.2em
+
+// .btn-append-icon
+//   padding: 0 calc(2em + 0.75rem) 0 0
+//   border-left-width: 0
+//   +border-right-radius($input-border-radius-sm)
+//   background-position: calc(0.5em + 0.1875rem) center
+
+.bg-frosted
+  padding: 1rem
+  border-radius: $border-radius
+  box-shadow: inset 0 0 30px -5px $white
+  transform-origin: bottom center
+  backdrop-filter: blur(5px)brightness(1.1)
+  &.maximize
+    animation: maximize .3s
+  &.minimize
+    animation: minimize .3s forwards
+.step-list
+  display: flex
+  justify-content: space-between
+  padding: 0
+  list-style: none
+  text-align: center
+.step-progress
+  stroke: #333
+.step-text
+  color: #333
+.step-check
+  display: none
+.step-line
+  position: relative
+  flex-grow: 1
+  &:before
+    content: ''
+    position: absolute
+    top: 50%
+    left: 0
+    width: 100%
+    height: 1px
+    background-color: #828282
+.step-item
+  position: relative
+  flex-grow: 1
+  color: #f2f2f2
+  .step-text
+    color: #828282
+  &:not(:first-child):before
+    content: ''
+    position: absolute
+
+  &.active
+    color: $black
+    .step-progress
+      stroke: #f2f2f2
+    .step-text
+      color: #333
+  &.done
+    .step-check
+      display: inline
+    + .step-line:before
+      height: 2px
+      background-color: $black
+.step-purple
+  .step-item
+    color: #e6deff
+    &:hover
+      color: darken(#e6deff, 5%)
+    &.active
+      color: #603ae7
+.step-green
+  .step-item
+    &.active
+      color: #b2fb2f
+      .step-progress
+        stroke: $black
+    &.done
+      color: $black
+.check-item-content
+  @extend .bg-contain
+  padding-top: 1rem
+  padding-left: 1rem
+  border-radius: $border-radius-sm
+  background-color: #f2f2f2
+  aspect-ratio: 1
+
+.btn-collapse-checkbox-list
+  border-bottom: 2px solid #2f80ed
+  +border-top-radius($border-radius-sm)
+  +border-bottom-radius(0)
+  background-color: #f2f2f2
+  text-align: left
+  &.purple
+    border-bottom-color: #7856ff
+  &.black
+    border-bottom-color: $black
+  &.collapsed
+    +border-bottom-radius($border-radius-sm)
+    border-color: transparent
+
+
+.collapse-checkbox-list
+  padding: 1rem 0
+  +border-bottom-radius($border-radius-sm)
+  background-color: #f2f2f2
+
+.purple
+  .custom-control-input:checked ~ .custom-control-label::before
+    border-color: #7856ff
+    background-color: #7856ff
+
+.collapse-checkbox,
+.custom-checkbox-right
+  padding-left: 0
+  .custom-control-label
+    width: 100%
+    padding: .5rem 1.5rem .5rem .5rem
+    &:before,
+    &:after
+      top: 1.125rem
+      right: .5rem
+      left: auto
+.collapse-input-checkbox
+  padding-left: 1rem
+  .form-control
+    padding-left: 0
+    border-radius: 0
+    background-color: transparent
+    &:focus
+      background-color: inherit
+  // .input-group-text
+.avatar-member
+  background-color: $white
+  background-repeat: no-repeat
+  background-position: center
+  background-size: 1.5rem
+  &.normalcn
+    background-image: map-get($ico-url, 'normalcn')
+  &.coppercn
+    background-image: map-get($ico-url, 'coppercn')
+  &.silvercn
+    background-image: map-get($ico-url, 'silvercn')
+  &.goldcn
+    background-image: map-get($ico-url, 'goldcn')
+.img-crown
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  padding: .5rem
+  border: $border-width solid $border-color
+  line-height: 1
+  aspect-ratio: 1
+  &.sm
+    width: 25px
+    padding: 0
+    border-width: 0
+    line-height: 1
+  &.normalcn
+    background-color:  #fff
+  &.coppercn
+    background-color:  #fdf7e4
+  &.silvercn
+    background-color:  #fdf0e4
+  &.goldcn
+    background-color: #ffedec
+.progress-black,
+.progress-blue,
+.progress-purple
+
+  // width: 100%
+  // height: 4px
+  border: none
+  border-radius: 2px
+  background: $white
+  vertical-align: middle
+  inline-size: 100%
+  block-size: 4px
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+.progress-black
+  &::-webkit-progress-bar
+    background: $white
+  &::-webkit-progress-value
+    background: $black
+  &::-moz-progress-bar
+    background: $black
+.progress-blue
+  &::-webkit-progress-bar
+    background: #f2f2f2
+  &::-webkit-progress-value
+    background: $blue
+  &::-moz-progress-bar
+    background: $blue
+.progress-purple
+  &::-webkit-progress-bar
+    background: #f2f2f2
+  &::-webkit-progress-value
+    background: $purple
+  &::-moz-progress-bar
+    background: $purple
+.progress-full
+  &::-webkit-progress-value
+    background: $red
+  &::-moz-progress-bar
+    background: $red
+.card-header-stick
+  padding-top: 0.5rem
+  padding-bottom: 0.5rem
+  &.active
+    background-color: $white
+    box-shadow: 0 0 1rem #828282
+.minor-ico
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  padding: 0.25rem
+  border: $border-width solid $border-color
+  border-radius: $border-radius-sm
+  background-color: #dbebfd
+  line-height: 1
+  &-lg
+    border-radius: $border-radius
+.css-has-collapse:has(+.sp-auto>:not(.collapsed))
+  opacity: 0
+  transition: .3s
+.before-white-text
+  &:before
+    content: attr(data-label)
+    position: absolute
+    top: 50%
+    left: 0
+    width: 100%
+    color: $white
+    font-size: 2rem
+    font-weight: $font-weight-bold
+    text-align: center
+    transform: translateY(-50%)
+@keyframes minimize
+  0%
+    transform: skewY(0deg)scaleX(1)scaleY(1)
+    animation-timing-function: ease-in
+  60%
+    transform: skewY(60deg)scaleX(0.3)scaleY(0.4)
+    animation-timing-function: ease-out
+  100%
+    transform: skewY(80deg)scaleX(0)scaleY(0)
+@keyframes maximize
+  0%
+    transform: skewY(80deg)scaleX(0)scaleY(0)
+    animation-timing-function: ease-in
+  40%
+    transform: skewY(60deg)scaleX(0.3)scaleY(0.4)
+    animation-timing-function: ease-out
+  100%
+    transform: skewY(0deg)scaleX(1)scaleY(1)
++media-breakpoint-up(m)
+  .bg-frosted
+    // background-color: transparent
+    box-shadow: none
+    transform-origin: center
+    backdrop-filter: none
+  @keyframes minimize
+    0%
+      opacity: 1
+      transform: scale(1)translateX(0)
+      animation-timing-function: ease-in
+    60%
+      opacity: .6
+      transform: scale(.75)translateX(0)
+      animation-timing-function: ease-out
+    100%
+      opacity: 0
+      transform: scale(.75)translateX(-100%)
+
+  @keyframes maximize
+    0%
+      opacity: 0
+      transform: scale(.75)translateX(100%)
+    40%
+      opacity: .6
+      transform: scale(.75)translateX(0)
+      animation-timing-function: ease-out
+    100%
+      opacity: 1
+      transform: scale(1)translateX(0)

@@ -1,0 +1,283 @@
+extends ./template/layout.pug
+block local
+  - pageType = 'pde'
+  - headerH1 = false
+block style
+  style @media print{@page{size:a4 portrait;}.sp-12-print{flex:0 0 100%;max-width:100%;}.color-block{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}}
+block body
+  main
+    .container-fluid.print-none
+      .flexbox
+        .sp-2.py-5.bg-f2
+        .sp.py-5
+          a.t-333(href='./projectList.html')
+            svg.img-fluid(fill='currentColor' width='19' height='19')
+              use(href='./img/sprite.svg#arrow-left')
+            span.v-middle 返回專案A
+        .sp-auto.py-5
+          a.btn.btn-gray(href='#' download='AI報告列表.pdf' title='下載報告')
+            span.fi-download
+            |下載報告
+    .container-fluid
+      .flexbox
+        .sp-2.bg-f2.print-none
+          .sticky-top
+            h2.fz-16.t-333 目錄
+            nav#scroll-spy-nav.nav.nav-spy-gray.list-number.col.nx-3
+              a.nav-link(href='#sec-1' title='總體設計趨勢') 總體設計趨勢
+              a.nav-link(href='#sec-2' title='色彩趨勢') 色彩趨勢
+              a.nav-link(href='#sec-3' title='材質趨勢') 材質趨勢
+              a.nav-link(href='#sec-4' title='表面處理趨勢') 表面處理趨勢
+              a.nav-link(href='#sec-5' title='功能趨勢') 功能趨勢
+              a.nav-link(href='#sec-6' title='色彩+材質搭配趨勢') 色彩+材質搭配趨勢
+              a.nav-link(href='#sec-7' title='功能相關產品趨勢') 相關產品
+
+        .sp-8.sp-12-print
+          .container
+            p.t-82
+              time(datetime='2024-02-28T15:34') 2024/08/23 15:34
+            h1.fz-32.t-ctr(contenteditable='plaintext-only') 自行車子類設計趨勢(1)
+              time(datetime='2024-02-28T15:34') 2024/08/23 15:34
+            +alertDanger('AI生成的內容可能包含錯誤或誤導資訊，請驗證內容的準確性。',false)
+            section.py-3.nest-counter.report-section(data-bs-spy='scroll' data-bs-target='#scroll-spy-nav' data-bs-offset='0' tabindex='0')
+              h2#sec-1.title-count 總體設計趨勢
+              .nest-counter
+                h3.title-count 多樣化需求
+                p 從碳纖維、鋁合金到碳鋼，這些材質的選擇顯示消費者對自行車性能、耐用性和舒適度有多樣化的需求。例如，碳纖維適合尋求輕量化和減震效果的騎行者，而鋁合金則適合注重耐腐蝕和輕巧操控的使用者。色彩選擇如黑色、藍色和紅色也顯示了消費者對時尚感、全性和個性化的需求。這些特徵滿足了不同使用族群的期望，幫助設計師更好地理解消費者的實際需求及使用情境。
+                h3.title-count 技術創新
+                p 自動車在材質和功能上的技術創新顯而易見。使用碳纖維材質不僅提升了車輛的輕量化和減震效果，還提高了耐用性，這些都顯著提升了產品性能和使用體驗。此外，快速折疊和避震減震功能等技術應用，讓自行車在攜帶和適應多種路況的能力上都有了很大提升。  這些創新技術滿足了現代消費者對便捷性和舒適性的高要求，幫助設計師了解新技術應用的趨勢。
+                h3.title-count 環境永續
+                p 行車產品的材質選擇和表面處理反映了對環境永續的關注。例如，鋁合金和碳鋼具有較高的耐用性和耐腐蝕性，延長了產品的使用 壽命，減少了資源的浪費。哑光和磨砂表面處理不僅提升了產品的耐用性，還減少了對清潔劑的需求，有助於降低環境污染。這些特徵顯示了設計師在產品設計中如何考慮環境永續的需求，並提供符合可持續發展的解決方案。
+              h2#sec-2.title-count 色彩趨勢
+              .nest-counter
+                h3.title-count 黑色
+                dl.order-dl
+                  dt 耐髒污
+                  dd 黑色的車身設計讓騎士不必過分擔心髒污問題，特別是在城市騎行時，能有效隱藏路邊的灰塵和泥濘，維持車輛外 觀的清潔。
+                  dt 時尚感
+                  dd 黑色本身具有高度的時尚感，無論搭配任何服裝都能顯得很有型，讓騎士在朋友間更受讚賞，增添自信。
+                  dt 安全性
+                  dd 黑色車輛在某些情況下能提升騎士的可見度，特別是在城市的夜晚。搭配一些反光配件，能夠進一步增加騎行安全。
+                h3.title-count 藍色
+                dl.order-dl
+                  dt 視覺舒適
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#000;')
+                        strong 經典黑
+                        br
+                        |Pantone Black C
+                    |藍色給予人冷靜和放鬆的感覺，能在騎乘時讓使用者心情愉快，特別是在炎熱的夏天，這種色調讓人感到清爽。
+                  dt 安全性提升
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#110045;')
+                        strong 時尚黑
+                        br
+                        |Pantone Black C
+                    |藍色車身在路上非常顯眼，特別是在夜間騎行時，其他駕駛容易注意到，這能大幅提高使用者的安全性。
+                  dt 時尚感
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#001B42;')
+                        strong 夜幕黑
+                        br
+                        |Pantone Black C
+                    |藍色是一種流行且時尚的顏色，使得自行車看起來更具個性，無論是日常通勤或休閒騎行，都能讓使用者倍感自信，吸引眾多目光。
+                h3.title-count 紅色
+                dl.order-dl
+                  dt 醒目的視覺效果
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#2F80ED;')
+                        strong 悠閒藍
+                        br
+                        |Pantone 292 C
+                    |紅色自行車在道路上非常顯眼，能夠提升騎車人的安全性，因為它更容易被其他駕駛者注意到。
+                  dt 活力與動感
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#56CCF2;')
+                        strong 亮光藍
+                        br
+                        |Pantone 2132 C
+                    |紅色象徵著活力和激情，這讓騎行者在運動過程中感到更加有動力，增添了健身的樂趣。
+                  dt 個性化的風格
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#001B42;')
+                        strong 潮流藍
+                        br
+                        |Pantone 7462 C
+                    |紅色設計讓自行車在眾多單車中脫穎而出，展現了騎行者的個性與品味，增強了自信心，並成為朋友間的話題。
+                  dt 個性化的風格
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:transparent;outline:2px dashed #000;color:#000')
+                        strong 潮流藍
+                        br
+                        |Pantone 7462 C
+                      br
+                      small.t-red.fz-12 (請自行查詢顏色)
+                    |紅色設計讓自行車在眾多單車中脫穎而出，展現了騎行者的個性與品味，增強了自信心，並成為朋友間的話題。
+                h3.title-count 紅色
+                dl.order-dl
+                  dt 醒目的視覺效果
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#DC3545;')
+                        strong 亮紅色
+                        br
+                        |Pantone 485 C
+                    |紅色自行車在道路上非常顯眼，能夠提升騎車人的安全性，因為它更容易被其他駕駛者注意到。
+                  dt 活力與動感
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#D63384;')
+                        strong 動感紅
+                        br
+                        |Pantone 1797 C
+                    |紅色象徵著活力和激情，這讓騎行者在運動過程中感到更加有動力，增添了健身的樂趣。
+                  dt 個性化的風格
+                  dd
+                    span.fl-left
+                      span.color-block(style='background-color:#7B2949;')
+                        strong 個性紅
+                        br
+                        |Pantone 186 C
+                    |紅色設計讓自行車在眾多單車中脫穎而出，展現了騎行者的個性與品味，增強了自信心，並成為朋友間的話題。
+              h2#sec-3.title-count 材質趨勢
+              .nest-counter
+                h3.title-count 碳纖維
+                dl.order-dl
+                  dt 輕量化
+                  dd 碳纖維材質使得整台自行車變得非常輕巧，讓使用者在爬坡和加速時更加輕鬆，騎行距離也能顯著增加，減少了負擔。
+                  dt 減震效果
+                  dd 碳纖維能有效吸收路面的震動，騎行過程中即使遇到不平路面，身體也不會受到過多的衝擊，提升舒適度，長時間騎行也不易感到疲勞。
+                  dt 耐用性強
+                  dd 碳纖維擁有極高的強度和耐用性，可以抵抗各種外力衝擊，減少因碰撞或跌倒造成的損壞，提升使用者的安心感與產品的性價比。
+                h3.title-count 鋁合金
+                dl.order-dl
+                  dt 輕巧易操控
+                  dd 鋁合金材質讓這款自行車相對較輕，騎乘時特別輕鬆，尤其在城市中穿梭時不會感到沉重，非常便捷。
+                  dt 耐腐蝕性強
+                  dd 鋁合金具有優異的耐腐蝕性能，即使在潮濕環境或雨天騎乘，也不必擔心生鏽問題，維護相對容易，讓使用者可以長期安心使用。
+                  dt 良好的減震效果
+                  dd 鋁合金材質能有效吸收路面震動，提供相對平穩的騎乘體驗，特別適合長途騎行，增加了使用者的舒適度，減少騎乘疲勞。
+                h3.title-count 碳鋼
+                dl.order-dl
+                  dt 耐用性高
+                  dd 碳鋼材質的強度和韌性優異，確保車架在騎行過程中不易損壞，尤其在崎嶇路面上依然穩定，提升騎士信心。
+                  dt 重量適中
+                  dd 雖然碳鋼比鋁合金稍重，但其重量仍在可接受範圍內，不會影響騎行操控性，適合長途騎行或日常通勤。
+                  dt 抗震效果好
+                  dd 碳鋼材質具良好彈性，能有效吸收路面震動，提供舒適的騎乘體驗，尤其適合長時間騎行，減少疲憊感。
+              h2#sec-4.title-count 表面處理趨勢
+              .nest-counter
+                h3.title-count 啞光表面
+                dl.order-dl
+                  dt 抗刮耐磨
+                  dd 哑光表面能有效減少刮痕的出現，提升車身耐用性，讓使用者在日常騎乘中不必過度擔心外觀損壞。
+                  dt 減少反光
+                  dd 使用哑光表面處理能大幅減少陽光下的反光現象，提供更清晰的視線，同時也提高其他行人和車輛的注意力，增強騎行安全性。
+                  dt 時尚外觀
+                  dd 啞光質感賦予自行車獨特且現代的外觀，不論在城市或是山區騎行，都能吸引眾多目光，增強使用者的自信，騎乘時更具風格。
+                h3.title-count 磨砂或半光澤澤塗裝
+                dl.order-dl
+                  dt 抗刮耐磨
+                  dd 磨砂表面相較於光滑表面更能抵抗刮痕，這讓自行車在日常使用中不易留下明顯的磨損痕跡，保持外觀整潔如新，使用者不必經常擔心刮傷問題。
+                  dt 增強握感
+                  dd 磨砂的表面處理提供了更好的握持感，特別是在騎行過程中，即使手汗較多也不容易滑手。這讓使用者在騎行時感到更加安全，操控更穩定。
+                  dt 優雅的外觀
+                  dd 半光澤的涂裝效果在視覺上給人一種高雅的感覺，無論是城市騎行還是戶外探險，都能吸引不少目光。這樣的設計不僅實用，也讓自行車更具個性，令人愛不釋手。
+                h3.title-count 光滑涂裝
+                dl.order-dl
+                  dt 清潔便利
+                  dd 光滑的表面設計讓清潔變得相當簡單。不論是灰塵還是泥土，只需輕輕一擦便能恢復如新，省去大量清理時間與精力。
+                  dt 防刮耐用
+                  dd 不僅外觀光滑美觀，還具備優秀的耐磨性。即便在崎嶇路面上騎乘，也不易留下刮痕，確保自行車始終保持良好狀態，延長使用壽命。
+                  dt 提升騎乘體驗
+                  dd 提升騎乘體驗
+              h2#sec-5.title-count 功能趨勢
+              .nest-counter
+                h3.title-count 快速折疊
+                dl.order-dl
+                  dt 便於攜帶
+                  dd 由於快速折疊功能，使用者可以輕鬆地將自行車放進車廂或搭乘公共交通工具，避免攜帶大型自行車的麻煩。無論是上班還是周末出遊，都能隨時隨地騎行，非常便利。
+                  dt 節省空間
+                  dd 折疊後的自行車在家裡或辦公室佔用的空間非常小，方便存放且不會造成交通或安全上的不便，這對於住在小空間的人尤其有幫助。
+                  dt 快速組裝
+                  dd 每次使用前只需幾秒鐘即可將自行車展開，能在忙碌的日常生活中迅速準備好出門騎行，避免浪費時間在繁瑣的組裝過程。
+                h3.title-count 避震減震
+                dl.order-dl
+                  dt 長時間騎乘不疲累
+                  dd 這款自行車的座墊和手把設計皆遵循人體工學原理，無論騎乘多久，使用者都不會感到坐骨痛或手麻，從而能輕鬆享受騎行的樂趣。
+                  dt 穩定性佳，適合各種路況
+                  dd 無論是在平坦的鋪面上，或是崎嶇的山路上，這款自行車的懸吊系統能有效吸收路面衝擊，提供極佳的平穩性，確保在各種路況下都能保持舒適。
+                  dt 提升騎行的信心
+                  dd 由於舒適的騎乘體驗，騎乘過程中使用者能更加專注於周圍環境，減少身體不適的干擾，從而在城市騎行時增強安全感和信心。
+              h2#sec-6.title-count 色彩+材質搭配趨勢
+              .nest-counter
+                h3.title-count 永續材質(Sustainable Materials)
+                dl.order-dl
+                  dt 組合
+                  dd 黑色+碳纖維、灰色+碳纖維、銀色+碳纖維、紅色+碳纖維、藍色+碳纖維
+                  dt 市場需求
+                  dd 隨著環保意識的提升，市場對於採用永續材質的自行車需求日益增加。碳纖維材質不僅輕盈且堅固，還能減少碳排放，符合環保趨勢。色彩搭配上則提供了多樣選擇，滿足消費者對於外觀的多樣化需求。
+                  dt 使用經驗
+                  dd 碳纖維自行車具有輕量化的特點，適合長途騎行和競賽使用，能減少騎乘者的疲勞感。像是長途自行車賽選手和熱愛環保的騎行者，碳纖維材質可以提供他們更佳的騎行體驗和性能。
+                h3.title-count 個性化外觀(Personalized Aesthetics)
+                dl.order-dl
+                  dt 組合
+                  dd 藍色+鋁合金、紅色+鋁合金、粉色+鋁合金、紫色+鋁合金、綠色+鋁合金
+                  dt 市場需求
+                  dd 經典色彩搭配現代鋁合金材質，在市場中結合了傳統與現代的設計元素。這類設計既能符合經典審美，又擁有現代科技的優勢，特別適合中高齡消費者和追求低調優雅風格的騎行者。
+                  dt 使用經驗
+                  dd 鋁合金材質的自行車結構堅固且重量適中，適合日常通勤或休閒騎行。對於追求簡約和經典設計的騎行者，如上班族和中高齡騎行者，這類自行車能夠提供穩定、安全且舒適的騎行體驗。
+              h2#sec-7.title-count 相關產品
+              .nest-counter
+                h3.title-count FUSIN 20吋21速小徑摺疊車(新騎生活F101)
+                p 這款產品展示了多樣化需求的趨勢。透過使用碳鋼和鋁合金材料，不僅提高了自行車的耐用性和輕量化，也滿足了消費者對不同使用情境的需求。此外，摺疊收納和休閒騎乘的特性對現代都市生活非常實用。
+                img.img-fluid(src='https://fakeimg.pl/80x80/888888/' width='auto' height='auto' alt='FUSIN 20吋21速小徑摺疊車' title='FUSIN 20吋21速小徑摺疊車' loading='lazy')
+                h3.title-count WANMA 城市悠遊 W801 20吋21速小徑折疊車(DIY組裝 - 多配色可選)
+                p 這款產品反映了技術創新趨勢。使用高階變速系統和快速折疊功能，使得自行車在多種路況下的適應性提高。此外，限量版配色和輕巧便攜的設計滿足了消費者對個性化和時尚的需求。
+                img.img-fluid(src='https://fakeimg.pl/80x80/888888/' width='auto' height='auto' alt='FUSIN 20吋21速小徑摺疊車' title='FUSIN 20吋21速小徑摺疊車' loading='lazy')
+                h3.title-count Wanma 20吋24速城市穿梭折疊車-W104(6色可選 DIY 組裝)
+                p 這款產品展示了環境永續的趨勢。使用鋁合金和高碳鋼材料，不僅延長了產品壽命，還減少了資源浪費。快速折疊和變速騎行的特性滿足了城市通勤的需求，並且適合多種環境。
+                img.img-fluid(src='https://fakeimg.pl/80x80/888888/' width='auto' height='auto' alt='FUSIN 20吋21速小徑摺疊車' title='FUSIN 20吋21速小徑摺疊車' loading='lazy')
+                h3.title-count WANMA 城市悠遊 W801 20吋21速小徑折疊車(DIY組裝 - 多配色可選)
+                p 這款自行車展示了多樣化需求和技術創新的融合。使用碳鋼和鋁合金材質提高了耐用性，快速折疊和運動追蹤功能滿足了不同騎行場合的需求，適合現代消費者的多樣化需求。
+                img.img-fluid(src='https://fakeimg.pl/80x80/888888/' width='auto' height='auto' alt='FUSIN 20吋21速小徑摺疊車' title='FUSIN 20吋21速小徑摺疊車' loading='lazy')
+                h3.title-count ChingChing 親親 16吋日系文青風兒童腳踏車(SX16-07WH)
+                p 這款兒童腳踏車展示了對環境永續和安全的關注。使用PP和鐵材料，不僅提高了產品的耐用性，也減少了對環境的影響。簡易組裝和安全防護功能滿足了家長和兒童對安全和便捷的需求。
+                img.img-fluid(src='https://fakeimg.pl/80x80/888888/' width='auto' height='auto' alt='FUSIN 20吋21速小徑摺疊車' title='FUSIN 20吋21速小徑摺疊車' loading='lazy')
+
+        .sp-2.print-none
+          .flexbox.col.gx-0.gy-3.a-end.sticky-top
+            .sp-auto
+              button.btn.icon-btn-blue-gray.p-0(type='button' data-bs-toggle='modal' data-bs-target='#add-proj-modal')
+                span.fi-marked
+            .sp-auto
+              button.btn.icon-btn-blue-gray.p-0(type='button')
+                span.fi-download
+  +modal({ id: 'add-proj-modal', label: 'add-proj-modal-title', v5, nobtn })
+    +header 收藏至專案
+    +body
+      .dropdown.customize-dropdown.pde-dropdown
+        button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false' ref='dropdownBrands')
+          span.placeholder 專案名稱
+          span.fi-arr-down
+        .dropdown-menu
+          .dropdown-item(@click.stop)
+            .custom-control.custom-checkbox.custom-checkbox-right
+              input#proj-1.custom-control-input.check-blue(type='checkbox')
+              label.custom-control-label(for='proj-1') 專案A
+          .dropdown-item
+            button.btn.px-0.t-blue(type='button')
+              span.fi-plus
+              |新增專案
+    +footer
+      .sp-6
+        button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+      .sp-6
+        button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 確定

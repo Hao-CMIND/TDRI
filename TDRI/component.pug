@@ -1,0 +1,295 @@
+extends ./template/layout.pug
+block body
+  img(src=require('./img/nobase64/noResult.png') width='170' height='200' alt='無搜尋結果' title='無搜尋結果' loading='lazy')
+  template#breadcrumb
+    +breadcrumb({ prev: [
+      { href: '{{href}}', page: '{{Pagename}}' },
+      { href: '{{href}}', page: '{{Pagename}}' },
+    ]})
+  template#sortSelect
+    +sortSelect()
+  template#PDEcreateBtn
+    +PDEcreateBtn({id: '{{id}}', btnContent: '{{btnContent}}'})
+  template#UDEcreateBtn
+    +UDEcreateBtn({id: '{{id}}', btnContent: '{{btnContent}}'})
+  template#PDEcard
+    +PDEcard()
+  template#UDEcard
+    +UDEcard({ index: '{{index}}', icon: '{{icon}}', level: '{{level}}', cardTitle: '{{cardTitle}}' })
+  template#advMemberModal
+    +adModal()
+  template#createInterestedParty
+    +createInterestedParty({ id: '{{id}}' })
+  template#radioToggle
+    +radioToggle({ color: '{{color}}' })
+  template#badgeGroup
+    +badgeGroup('{{legnend}}', '{{id}}', '{{labels}}' ,{showTitle: true, labelIcon: true, legendIcon: true})
+  template#readonlyGroup
+    +readonlyGroup('{{legend}}', '{{id}}')
+  template#dropdownProducts
+    +dropdownProducts('{{title}}')
+  +alertDanger('test',false)
+  .dropdown.customize-dropdown.pde-dropdown
+    button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+      span.placeholder 手機
+        time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+      span.fi-arr-down
+    .dropdown-menu(data-popper-placement='bottom-start')
+      - for(let i = 0; i < 3; i++)
+        a.dropdown-item(href='javascript:void') 手機
+          time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+  button.btn(type='button')&attributes({ 'data-bs-content': '請選擇一產品', 'data-bs-placement': 'top', 'data-bs-toggle': 'popover', 'data-bs-custom-class':'popover-danger' }) popover-danger
+  button.btn(type='button')&attributes({ 'data-bs-content': '請選擇一產品', 'data-bs-placement': 'top', 'data-bs-toggle': 'popover', 'data-bs-custom-class':'popover-info' }) popover-info
+  button.btn(type='button')&attributes({ 'data-bs-content': '請選擇一產品', 'data-bs-placement': 'top', 'data-bs-toggle': 'popover', 'data-bs-custom-class':'popover-black' }) popover-info
+  +modal({ id: 'adv-modal', label: 'modal-title', static, centered, v5, btnText: '試用進階工具' })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-goldcn.ic-2x
+      br
+      |試用進階工具
+      br
+      |Coming Soon
+
+    +body
+      p Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio illum recusandae, autem modi voluptas eaque vel enim tempore ipsam, laborum qui aliquid, quam reiciendis dolorum voluptatem distinctio dolore sed error sit? Quae, aliquid. Eveniet adipisci sit, praesentium corrupti quae delectus error magni accusantium rem tempora obcaecati! Eveniet placeat architecto magni.
+
+    +footer()
+      button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 好的
+
+  +modal({ id: 'info-modal', label: 'modal-title', static, centered, v5, btnText: '提示標題' })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-info.ic-2x
+      br
+      |提示標題
+
+    +body
+      p Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio illum recusandae, autem modi voluptas eaque vel enim tempore ipsam, laborum qui aliquid, quam reiciendis dolorum voluptatem distinctio dolore sed error sit? Quae, aliquid. Eveniet adipisci sit, praesentium corrupti quae delectus error magni accusantium rem tempora obcaecati! Eveniet placeat architecto magni.
+
+    +footer()
+      button.btn.btn-blue.btn-block(type='button') 好的
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+
+  +modal({ id: 'alert-modal', label: 'modal-title', static, centered, v5, btnText: '警告標題' })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-alert.ic-2x
+      br
+      |警告標題
+
+    +body
+      p Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio illum recusandae, autem modi voluptas eaque vel enim tempore ipsam, laborum qui aliquid, quam reiciendis dolorum voluptatem distinctio dolore sed error sit? Quae, aliquid. Eveniet adipisci sit, praesentium corrupti quae delectus error magni accusantium rem tempora obcaecati! Eveniet placeat architecto magni.
+
+    +footer()
+      button.btn.btn-red.btn-block(type='button') 刪除
+
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+
+  +modal({ id: 'error-modal', label: 'modal-title', static, centered, v5, btnText: '維修標題' })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-error.ic-2x
+      br
+      |維修標題
+
+    +body
+      p Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio illum recusandae, autem modi voluptas eaque vel enim tempore ipsam, laborum qui aliquid, quam reiciendis dolorum voluptatem distinctio dolore sed error sit? Quae, aliquid. Eveniet adipisci sit, praesentium corrupti quae delectus error magni accusantium rem tempora obcaecati! Eveniet placeat architecto magni.
+
+    +footer()
+      button.btn.btn-blue.btn-block(type='button') 按鈕
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+
+  +modal({ id: 'error-modal', label: 'modal-title', static, centered, v5, btnText: '錯誤標題' })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-error.ic-2x
+      br
+      |錯誤標題
+
+    +body
+      p Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio illum recusandae, autem modi voluptas eaque vel enim tempore ipsam, laborum qui aliquid, quam reiciendis dolorum voluptatem distinctio dolore sed error sit? Quae, aliquid. Eveniet adipisci sit, praesentium corrupti quae delectus error magni accusantium rem tempora obcaecati! Eveniet placeat architecto magni.
+
+    +footer()
+      button.btn.btn-blue.btn-block(type='button') 按鈕
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+  .container
+    .flexbox.sps-4.gx-0
+      .sp
+        span.ic-bf.ib-normalcn
+      .sp
+        span.ic-bf.ib-coppercn
+      .sp
+        span.ic-bf.ib-silvercn
+      .sp
+        span.ic-bf.ib-goldcn
+      .sp
+        strong.minor-ico.mr-1 子
+      .sp
+        strong.minor-ico.bg-f2.mr-1 品
+    .flexbox.sps-6.gx-0
+      each ico in ['fi-achieve','fi-ai-file','fi-ap1','fi-ap2','fi-ap3','fi-cam','fi-ap4','fi-ap5','fi-ap6','fi-ap7','fi-ap8','fi-ap9','fi-ap10','fi-ap11','fi-ap12','fi-ap13','fi-ap14','fi-ap15','fi-ap16','fi-ap17','fi-ap18','fi-ap19','fi-ap20','fi-ap21','fi-ap22','fi-ap23','fi-ap24','fi-arr-down','fi-arr-right','fi-baby','fi-bachelor','fi-barchart','fi-book','fi-bookmark-rect','fi-calendar','fi-candlechart','fi-care','fi-cart','fi-chart','fi-check','fi-check-cir','fi-check-cir-fill','fi-check-rect','fi-check-rect-fill','fi-clock','fi-close','fi-close-cir','fi-copy','fi-database-down','fi-delete','fi-doc','fi-download','fi-earth','fi-earth-fill','fi-edit','fi-field','fi-file-star','fi-file-star-copy','fi-folder','fi-folder-normal','fi-folder-question','fi-grid','fi-id-card','fi-id-connect','fi-info','fi-invis','fi-job','fi-job-time','fi-letter','fi-lightbulb','fi-like','fi-linechart','fi-link','fi-list','fi-locate','fi-lock','fi-logout','fi-marked','fi-mobile','fi-money','fi-move','fi-next','fi-next-end','fi-option-h','fi-option-v','fi-pen','fi-pictures','fi-piechart','fi-plain','fi-planet','fi-plus','fi-prev','fi-prev-end','fi-question','fi-question-solid','fi-redo','fi-reset','fi-save','fi-search','fi-select','fi-shape','fi-share','fi-signpost','fi-spiderchart','fi-stackedchart','fi-star','fi-star-fill','fi-taiwan','fi-taiwan-fill','fi-target','fi-text','fi-top-end','fi-tpl-0','fi-tpl-1','fi-tpl-2','fi-tpl-3','fi-tpl-4','fi-undo','fi-unmarked','fi-unvis-chart','fi-upload','fi-user','fi-user-circle','fi-user-plus','fi-user-search','fi-vis','fi-vis-chart','fi-star-5']
+        .sp
+          span(class=ico)
+          |.#{ico}
+
+    .flexbox.gy-3.gx-2
+      .sp-auto
+        |.btn-red
+        button.btn-block.btn.btn-red(type='button') $bg: #eb5757
+      .sp-auto
+        |.btn-blue
+        button.btn-block.btn.btn-blue(type='button') $bg: #323dff
+      .sp-auto
+        |.btn-purple
+        button.btn-block.btn.btn-purple(type='button') $bg: #7856ff
+      .sp-auto
+        |.btn-white
+        button.btn-block.btn.btn-white(type='button') $bg: #fff
+      .sp-auto
+        |.btn-gray
+        button.btn-block.btn.btn-gray(type='button') $bg: #f2f2f2
+      .sp-auto
+        |.btn-deep-gray
+        button.btn-block.btn.btn-deep-gray(type='button') $bg: #e7e7e7
+      .sp-auto
+        |.btn-black
+        button.btn-block.btn.btn-black(type='button') $bg: #141316
+      .sp-auto
+        |.btn-green
+        button.btn-block.btn.btn-green(type='button') $bg: #141316
+      .sp-auto
+        |.btn-light-blue
+        button.btn-block.btn.btn-light-blue(type='button') $bg: #141316
+      .sp-6
+        |.btn-outline-white
+        button.btn-block.btn.btn-outline-white(type='button') $bg: $white, $color: #333, $border: #dee2e6
+      .sp-12
+      - for(let i = 1; i < 21; i++)
+        .sp-3
+          img.img-fluid(src=require('./img/nobase64/chart-'+i+'.png') width='100%' height='auto' alt='' title='' loading='lazy')
+          |chart-#{i}.png
+  //- .bg-contain.hgroupedgraph(style='height:600px')
+  //- img(src='https://picsum.photos/id/217/200/300' width='auto' height='auto' alt='' title='' loading='lazy')
+  //- img(src='https://picsum.photos/id/217/200/300' width='100' height='100' alt='' title='' loading='lazy' style='object-fit:cover;border-radius:50%')
+  // PDE Header
+  //- header.fxd-strch.top-0
+    nav.navbar.navbar-expand-l.navbar-light
+      .container.J-between
+        h1.navbar-brand
+          svg.img-fluid(fill='#000' width='58' height='32')
+            use(href='./img/sprite.svg#logo')
+          a(href='./pdeIndex.html' title='歷史紀錄')
+        button.navbar-toggler.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#mobile-menu' aria-controls='mobile-menu' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #mobile-menu.navbar-collapse.collapse
+          ul.navbar-nav
+            li.nav-item
+              span.pipe-line
+            li.nav-item
+              a.nav-link.nav-first-link(href='./pdeIndex.html')
+                img.mr-2(src=require('./img/nobase64/pde.png') width='36' height='36' alt='產品數據分析工具' title='產品數據分析工具' loading='lazy')
+                span.v-middle 產品數據分析工具
+            li.nav-item
+              // active page
+              a.nav-link.active(href='./history.html' title='瀏覽紀錄') 瀏覽紀錄
+            li.nav-item.mr-auto
+              a.nav-link(href='./productSelect.html' title='篩選項目') 篩選項目
+            li.nav-item
+              .dropdown
+                a.nav-link(href='./udeIndex.html')
+                  img.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE' title='UDE' loading='eager')
+                a#ude-dropdown.dropdown-toggle.dropdown-toggle-split(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  span.fi-arr-down
+                .dropdown-menu(aria-labelledby='ude-dropdown')
+                  a.dropdown-item(href='interestedPartyList.html' title='利益關係人清單') 利益關係人清單
+                  a.dropdown-item(href='characterList.html' title='人物誌清單') 人物誌清單
+            li.nav-item.dropdown
+              //   class=||'dropdown-toggle'
+              a#member-dropdown.nav-link.nav-icon-link(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                img.circle(src='data:image/svg+xml,%3c!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3e %3csvg version=\'1.1\' id=\'圖層_1\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\' x=\'0px\' y=\'0px\' viewBox=\'0 0 96 96\' enable-background=\'new 0 0 96 96\' xml:space=\'preserve\'%3e %3ccircle fill=\'%23E6F0FF\' stroke=\'%23040000\' stroke-miterlimit=\'10\' cx=\'48\' cy=\'48\' r=\'48\'/%3e %3cpath fill=\'%23CCE0FF\' d=\'M24.9,81.4c6.8,4.7,14.8,7.2,23.1,7.1c8.2,0,16.3-2.5,23.1-7.1c2.9-2,4.1-5.8,2.4-8.9 C70,66.1,62.8,62.1,48,62.1s-22,4-25.5,10.4C20.8,75.6,22,79.4,24.9,81.4z M48,47.7c-3.8,0-7.5-1.5-10.2-4.2s-4.2-6.4-4.2-10.2 s1.5-7.5,4.2-10.2s6.4-4.2,10.2-4.2s7.5,1.5,10.2,4.2s4.2,6.4,4.2,10.2s-1.5,7.5-4.2,10.2S51.8,47.7,48,47.7z\'/%3e %3c/svg%3e' width='32' height='32' alt='會員' title='會員' loading='eager')
+              .dropdown-menu(aria-labelledby='member-dropdown')
+                a.dropdown-item(href='projectList.html' title='專案列表') 專案列表
+                a.dropdown-item(href='infoManagement.html' title='個人資料管理') 個人資料管理
+                a.dropdown-item(href='advMember.html' title='進階會員') 進階會員
+                a.dropdown-item(href='index.html' title='登出  ') 登出
+  // UDE Header
+  header.fxd-strch.top-0
+    nav.navbar.navbar-expand-l.navbar-light
+      .container.J-between
+        h1.navbar-brand
+          svg.img-fluid(fill='#000' width='58' height='32')
+            use(href='./img/sprite.svg#logo')
+          a(href='./udeIndex.html' title='利益關係人清單')
+        button.navbar-toggler.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#mobile-menu' aria-controls='mobile-menu' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #mobile-menu.navbar-collapse.collapse
+          ul.navbar-nav
+            li.nav-item
+              span.pipe-line
+            li.nav-item
+              a.nav-link.nav-first-link(href='./udeIndex.html')
+                img.mr-2(src=require('./img/nobase64/ude.png') width='36' height='36' alt='使用者研究數位工具' title='使用者研究數位工具' loading='lazy')
+                span.v-middle 使用者研究數位工具
+            li.nav-item
+              // active page
+              a.nav-link.active(href='./history.html' title='瀏覽紀錄') 利益關係人清單
+            li.nav-item.mr-auto
+              a.nav-link(href='./productSelect.html' title='篩選項目') 人物誌清單
+            li.nav-item
+              .dropdown
+                a.nav-link(href='./pdeIndex.html')
+                  img.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE' title='PDE' loading='eager')
+                a#ude-dropdown.dropdown-toggle.dropdown-toggle-split(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  span.fi-arr-down
+                .dropdown-menu(aria-labelledby='ude-dropdown')
+                  a.dropdown-item(href='history.html' title='瀏覽紀錄') 瀏覽紀錄
+                  a.dropdown-item(href='productSelect.html' title='篩選項目') 篩選項目
+            li.nav-item.dropdown
+              //   class=||'dropdown-toggle'
+              a#member-dropdown.nav-link.nav-icon-link(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                img.circle(src='data:image/svg+xml,%3c!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3e %3csvg version=\'1.1\' id=\'圖層_1\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\' x=\'0px\' y=\'0px\' viewBox=\'0 0 96 96\' enable-background=\'new 0 0 96 96\' xml:space=\'preserve\'%3e %3ccircle fill=\'%23E6F0FF\' stroke=\'%23040000\' stroke-miterlimit=\'10\' cx=\'48\' cy=\'48\' r=\'48\'/%3e %3cpath fill=\'%23CCE0FF\' d=\'M24.9,81.4c6.8,4.7,14.8,7.2,23.1,7.1c8.2,0,16.3-2.5,23.1-7.1c2.9-2,4.1-5.8,2.4-8.9 C70,66.1,62.8,62.1,48,62.1s-22,4-25.5,10.4C20.8,75.6,22,79.4,24.9,81.4z M48,47.7c-3.8,0-7.5-1.5-10.2-4.2s-4.2-6.4-4.2-10.2 s1.5-7.5,4.2-10.2s6.4-4.2,10.2-4.2s7.5,1.5,10.2,4.2s4.2,6.4,4.2,10.2s-1.5,7.5-4.2,10.2S51.8,47.7,48,47.7z\'/%3e %3c/svg%3e' width='32' height='32' alt='會員' title='會員' loading='eager')
+              .dropdown-menu(aria-labelledby='member-dropdown')
+                a.dropdown-item(href='projectList.html' title='專案列表') 專案列表
+                a.dropdown-item(href='infoManagement.html' title='個人資料管理') 個人資料管理
+                a.dropdown-item(href='advMember.html' title='進階會員') 進階會員
+                a.dropdown-item(href='index.html' title='登出  ') 登出
+  // member Header
+  //- header.fxd-strch.top-0
+    nav.navbar.navbar-expand-l.navbar-light
+      .container.J-between
+        // <h1 class='navbar-brand'>
+        svg.img-fluid(fill='#000' width='58' height='32')
+          use(href='./img/sprite.svg#logo')
+        a.navbar-brand.t-hide(href='./udeIndex.html' title='專案列表')
+          span.v-middle 專案列表
+        // </h1>
+        button.navbar-toggler.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#mobile-menu' aria-controls='mobile-menu' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #mobile-menu.navbar-collapse.collapse
+          ul.navbar-nav.J-l-end
+            li.nav-item
+              .dropdown
+                a.nav-link(href='./pdeIndex.html')
+                  img.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE' title='PDE' loading='eager')
+                a#ude-dropdown.dropdown-toggle.dropdown-toggle-split(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  span.fi-arr-down
+                .dropdown-menu(aria-labelledby='ude-dropdown')
+                  a.dropdown-item(href='history.html' title='瀏覽紀錄') 瀏覽紀錄
+                  a.dropdown-item(href='productSelect.html' title='篩選項目') 篩選項目
+            li.nav-item
+              .dropdown
+                a.nav-link(href='./udeIndex.html')
+                  img.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE' title='UDE' loading='eager')
+                a#ude-dropdown.dropdown-toggle.dropdown-toggle-split(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  span.fi-arr-down
+                .dropdown-menu(aria-labelledby='ude-dropdown')
+                  a.dropdown-item(href='interestedPartyList.html' title='利益關係人清單') 利益關係人清單
+                  a.dropdown-item(href='characterList.html' title='人物誌清單') 人物誌清單
+            li.nav-item.dropdown
+              a#member-dropdown.nav-link.nav-icon-link(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                img.circle(src='data:image/svg+xml,%3c!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3e %3csvg version=\'1.1\' id=\'圖層_1\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\' x=\'0px\' y=\'0px\' viewBox=\'0 0 96 96\' enable-background=\'new 0 0 96 96\' xml:space=\'preserve\'%3e %3ccircle fill=\'%23E6F0FF\' stroke=\'%23040000\' stroke-miterlimit=\'10\' cx=\'48\' cy=\'48\' r=\'48\'/%3e %3cpath fill=\'%23CCE0FF\' d=\'M24.9,81.4c6.8,4.7,14.8,7.2,23.1,7.1c8.2,0,16.3-2.5,23.1-7.1c2.9-2,4.1-5.8,2.4-8.9 C70,66.1,62.8,62.1,48,62.1s-22,4-25.5,10.4C20.8,75.6,22,79.4,24.9,81.4z M48,47.7c-3.8,0-7.5-1.5-10.2-4.2s-4.2-6.4-4.2-10.2 s1.5-7.5,4.2-10.2s6.4-4.2,10.2-4.2s7.5,1.5,10.2,4.2s4.2,6.4,4.2,10.2s-1.5,7.5-4.2,10.2S51.8,47.7,48,47.7z\'/%3e %3c/svg%3e' width='32' height='32' alt='會員' title='會員' loading='eager')
+              .dropdown-menu(aria-labelledby='member-dropdown')
+                a.dropdown-item(href='projectList.html' title='專案列表') 專案列表
+                a.dropdown-item(href='infoManagement.html' title='個人資料管理') 個人資料管理
+                a.dropdown-item(href='advMember.html' title='進階會員') 進階會員
+                a.dropdown-item(href='index.html' title='登出  ') 登出
+
+block script
+  script (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    |$('[data-bs-toggle="popover"]').popover('show')
+    | })}((window)))

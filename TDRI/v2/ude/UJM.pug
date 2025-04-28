@@ -1,0 +1,356 @@
+extends ./template/layout.pug
+block local
+  - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+  - const cardPersonaBg = require('./img/nobase64/card-persona.png')
+  - const ujmheaderbegin = require('./img/nobase64/ujm-begin.png')
+  - const ujmheaderprocess = require('./img/nobase64/ujm-process.png')
+  - const ujmheaderend = require('./img/nobase64/ujm-end.png')
+block body
+  svg(display='none')
+    defs
+      symbol#e1(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M16.8 17.7a.8.8 0 0 1-.5-.2l-1.1-.8-1.1.8c-.3.2-.8.2-1 0l-1.1-.8-1 .8a1 1 0 0 1-1.1 0l-1.1-.8-1 .8a1 1 0 0 1-1.3-.1 1 1 0 0 1 .1-1.3l1.6-1.2c.3-.2.8-.2 1 0l1 .8 1.1-.8a1 1 0 0 1 1.1 0l1 .8 1-.8a1 1 0 0 1 1.1 0l1.6 1.2c.4.3.5.8.2 1.3 0 .1-.2.3-.5.3zm0-4.8a.8.8 0 0 1-.5-.2L13.9 11c-.2-.2-.4-.5-.4-.8 0-.3.2-.5.4-.8l2.4-1.8a1 1 0 0 1 1.3.1c.3.4.2 1-.1 1.3l-1.4 1 1.4 1c.4.3.4.8.1 1.3-.3.5-.5.6-.8.6zm-9.6 0c-.3 0-.5-.2-.8-.4a1 1 0 0 1 .2-1.3l1.4-1-1.4-1a.9.9 0 0 1-.1-1.3c.3-.4.8-.5 1.3-.2l2.4 1.8c.2.2.4.5.4.8 0 .3-.1.5-.4.8l-2.4 1.7-.6.1z')
+      symbol#e2(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='m15.3 16.6-.3-.3c-.9-.6-1.9-1-3.1-1-1.1 0-2.2.4-3.1 1l-.3.3.8.3a14.7 14.7 0 0 0 5 0c.7-.1.9-.3 1-.3zm-.3 2c-.7.2-1.7.3-3 .3-1.2 0-2.2-.1-3-.3-.7-.2-1.3-.4-1.7-.9-.5-.5-.6-1.1-.4-1.7.2-.5.6-.9.9-1.2 1.2-.8 2.7-1.3 4.2-1.3s3 .5 4.1 1.4c.4.3.8.7.9 1.2.2.6.1 1.2-.4 1.7-.3.4-.9.7-1.6.8zM7.2 13a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l1.3-1-1.3-1a1 1 0 0 1-.2-1.4 1 1 0 0 1 1.4-.2l2.4 1.8c.3.2.4.5.4.8 0 .3-.1.6-.4.8l-2.4 1.8-.6.2zm9.6 0-.6-.2-2.4-1.8c-.3-.2-.4-.5-.4-.8s.1-.6.4-.8l2.4-1.8a1 1 0 0 1 1.4.2 1 1 0 0 1-.2 1.4l-1.3 1 1.3 1c.4.3.5 1 .2 1.4a1 1 0 0 1-.8.4z')
+      symbol#e3(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M15.6 18.9a.8.8 0 0 1-.5-.2 5.3 5.3 0 0 0-6.1 0c-.4.3-1 .2-1.3-.2s-.2-1 .2-1.3a7 7 0 0 1 8.3 0c.4.3.4.8.1 1.3-.2.3-.4.4-.7.4zm0-6.9c-.2 0-.5-.1-.8-.5-.2-.4-.4-.8-.4-1.3s.1-.9.4-1.3c.3-.4.7-.5.8-.5s.5.1.8.5c.2.4.4.8.4 1.3s-.1.9-.4 1.3c-.3.4-.6.5-.8.5zm-7.2 0c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e4(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M15.6 12c-.2 0-.5-.1-.8-.5-.2-.4-.4-.8-.4-1.3 0-.4.1-.9.4-1.3.3-.4.7-.5.8-.5s.5.1.8.5c.2.4.4.8.4 1.3 0 .4-.1.9-.4 1.3-.3.4-.6.5-.8.5zm-7.2 0c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8zm3.6 8.1c-1.8 0-3.3-1.7-3.3-3.9s1.5-3.9 3.3-3.9 3.3 1.7 3.3 3.9-1.5 3.9-3.3 3.9zm0-6c-.8 0-1.5 1-1.5 2.1s.7 2.1 1.5 2.1 1.5-1 1.5-2.1-.7-2.1-1.5-2.1z')
+      symbol#e5(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M8.4 17.7c-.4 0-.8-.3-.9-.8-.1-.5.2-1 .8-1.1l7.2-1.2c.4-.1 1 .2 1 .8.1.5-.2 1-.8 1l-7.2 1.2-.1.1zM9.6 7.5h-.2L7 6.9a1 1 0 1 1 .4-1.8l2.4.6c.4.2.8.6.7 1.1a1 1 0 0 1-.9.7zm4.8 0a1 1 0 0 1-.9-.7c-.2-.5.2-1 .7-1.1l2.4-.6c.5-.2 1 .1 1.1.7.1.5-.2 1-.7 1.1l-2.4.6h-.2zm2.4 2.7c0 1-.5 1.8-1.2 1.8s-1.2-.8-1.2-1.8.5-1.8 1.2-1.8 1.2.8 1.2 1.8zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e6(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M7.2 19.6c-.6 0-1.1-.4-1.2-1-.1-.7.3-1.3 1-1.4l9.6-1.6c.6-.1 1.3.3 1.4 1s-.3 1.3-1 1.4l-9.6 1.6h-.2zm11.2-10c0 1.3-.7 2.4-1.6 2.4s-1.6-1.1-1.6-2.4.7-2.4 1.6-2.4c.9 0 1.6 1.1 1.6 2.4zM7.2 12c.9 0 1.6-1.1 1.6-2.4s-.7-2.4-1.6-2.4c-.9 0-1.6 1.1-1.6 2.4S6.3 12 7.2 12z')
+      symbol#e7(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M15.6 17.7H8.4a.9.9 0 0 1-.9-.9c0-.5.4-.9.9-.9h7.2c.5 0 .9.4.9.9s-.4.9-.9.9zm1.2-7.5c0 1-.5 1.8-1.2 1.8s-1.2-.8-1.2-1.8.5-1.8 1.2-1.8 1.2.8 1.2 1.8zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e8(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M12 18.9c-1.5 0-2.9-.5-4.1-1.4-.4-.3-.5-.8-.1-1.3.2-.3.8-.4 1.2-.1a5.4 5.4 0 0 0 6.2 0 1 1 0 0 1 1.3.2c.3.4.2 1-.1 1.3a8.3 8.3 0 0 1-4.4 1.3zm4.8-8.7c0 1-.5 1.8-1.2 1.8s-1.2-.8-1.2-1.8.5-1.8 1.2-1.8 1.2.8 1.2 1.8zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e9(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='m8.7 15.8.3.3c.9.6 1.9 1 3.1 1s2.2-.4 3.1-1l.3-.3-.8-.3a14.7 14.7 0 0 0-5 0l-1 .3zm.4-2c.7-.2 1.7-.3 3-.3 1.2 0 2.2.1 3 .3.7.2 1.3.4 1.7.9.5.5.6 1.1.4 1.7-.2.5-.6.9-.9 1.2a6.8 6.8 0 0 1-8.2 0c-.4-.3-.8-.7-.9-1.2-.2-.6-.1-1.2.4-1.7.2-.5.8-.8 1.5-.9zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8zm7.2 0c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e10(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='m8.7 15.8.3.3c.9.6 1.9 1 3.1 1 1.1 0 2.2-.4 3.1-1l.3-.3-.8-.3a14.7 14.7 0 0 0-5 0c-.7.1-.9.3-1 .3zm.3-2c.7-.2 1.7-.3 3-.3 1.2 0 2.2.1 3 .3.7.2 1.3.4 1.7.9.5.5.6 1.1.4 1.7-.2.5-.6.9-.9 1.2a6.8 6.8 0 0 1-8.2 0c-.4-.3-.8-.7-.9-1.2-.2-.6-.1-1.2.4-1.7.2-.5.8-.8 1.5-.9zm10.2-2c-.6 0-1-.4-1-1 0-.8-.6-1.4-1.4-1.4-.8 0-1.4.6-1.4 1.4 0 .6-.4 1-1 1s-1-.4-1-1c0-1.9 1.5-3.4 3.4-3.4s3.4 1.5 3.4 3.4c0 .6-.4 1-1 1zm-9.6 0c-.6 0-1-.4-1-1 0-.8-.6-1.4-1.4-1.4s-1.4.6-1.4 1.4c0 .6-.4 1-1 1s-1-.4-1-1c0-1.9 1.5-3.4 3.4-3.4s3.4 1.5 3.4 3.4c0 .6-.4 1-1 1z')
+  #app.container-fluid.py-3
+    .flexbox.gx-2
+      .sp-2
+        include ./template/layout/udeAside.pug
+      .sp-10
+        .flexbox.a-end
+          .sp-7
+            h1.lh-xxl-tight
+              time.fz-12.t-82.fw-4(datetime='2024-04-22T24:02:02') 2024/4/22 24:02:02
+              br
+              img.rad-sm.mr-1(src=require('./img/user-blue.jpg') width='40' height='40' alt='陳小美洗衣服' title='陳小美洗衣服' loading='lazy')
+              | 陳小美洗衣服
+          .sp-auto
+            .tool-bar.gx-2
+              .sp-auto
+                button.btn(type='button' title='連結')
+                  span.fi-share
+              .sp-auto
+                button.btn(type='button' title='下載')
+                  span.fi-download
+              .sp-auto
+                button.btn.btn-light-pink(type='button') 建立AI範本
+              .sp-auto
+                button.btn.btn-purple(type='button' title='儲存')
+                  span.fi-save
+                  |儲存
+
+        .flexbox.gx-3
+          .sp-auto
+            .card.card-persona.bg-contain.sticky-top(style!='--card-bg:url(\'../img/card-persona.png\');--card-bg-checked:url(\'../img/card-persona.png\');width:18rem')
+              .card-header
+                span.badge.badge-outline.abs(style='top:2.5rem;left:1rem;border-radius:50rem') Persona
+                button.btn.abs.right-0.js-popovers-option(type='button' style='top: 2rem;' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!='<ul class=\'list-unstyled\'><li><a class=\'btn\' href=\'./udeCharacterList.html\' ><span class=\'fi-id-edit\'></span>前往編輯人物誌</a></li><li><a class=\'btn\' href=\'./udeCharacterList.html\'><span class=\'fi-id-reset\'></span>替換人物誌</a></li></ul>')
+                  span.fi-option-h
+                .avatar.mb-0
+                  img(src=require('./img/user-purple.jpg') width='45' height='45' alt='潘佳麗' title='潘佳麗' loading='lazy')
+                h4.t-333 潘佳麗
+                  span.fw-4
+                    span.t-82 &nbsp;小姐
+                    br
+                    | 社群行銷經理
+                p.card-text.limited-2-lines 喜愛廣交不同年齡層的社群行銷經理，會在每個月與區主管提案
+              .card-body.py-0
+                .flexbox.J-ctr
+                  .sp-6
+                    .rect
+                      span.t-purple 年齡
+                    p: strong 40歲
+                  .sp-6
+                    .rect
+                      span.fi-ap15
+                    p: strong 電暖器
+              .card-footer.b-0
+                .flexbox.J-ctr
+                  .sp-8
+                    a.btn.btn-gray(href='./createCharacter2.html' title='前往進階內容')
+                      span.fi-id-edit
+                      |前往進階內容
+
+          .sp
+            form#ujm-form.ujm-table(@keydown='autoTextareaHeight' @change='textHeight' style='height: calc(100vh - 7.5rem);')
+              .ujm-header(style='--bg-begin:url(\'../img/ujm-begin.png\');--bg-process:url(\'../img/ujm-process.png\');--bg-end:url(\'../img/ujm-end.png\')')
+                .cell.rel.z-top
+                  span.badge.badge-outline.abs(style='border-radius:50rem') User Journey Map
+                .cell.ujm-col(v-for='col,i of cols')
+                  button.btn.btn-sm.btn-col-option.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' :data-bs-content='colOptionHTML(i)')
+                    span.fi-option-h
+                  .bg-tag
+                    textarea.form-control.form-control-sm.js-auto-height(rows='1') {{ col }}
+                .cell.A-ctr(style='flex-basis:auto')
+                  button.btn.btn-purple.ratio-1(type='button' style='padding-inline: 7px;width:2.5rem;top:calc(50% - 1.25rem);right:-2rem')
+                    span.fi-plus.fz-12(style='vertical-align:middle')
+              .ujm-row(v-for='row, r of rows')
+                .cell.vertical-cell
+                  button.btn.btn-sm.btn-row-option.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' :data-bs-content='rowOptionHTML(r)')
+                    span.fi-option-v
+                  input.form-control(type='input' :value='row.title')
+
+                template(v-if='row.type===\'input\'')
+                  .cell(v-for='value of row.value')
+                    .input-group(v-for='text of value')
+                      textarea.form-control.form-control-sm.js-auto-height(rows='1') {{ text}}
+                      .input-group-append
+                        button.btn.append-btn(type='button')
+                          span.fi-close-cir
+                    textarea.form-control.form-control-sm.js-auto-height(rows='1' placeholder='新增項目')
+                    button.btn.t-purple(type='button') +新增文字便條
+                template(v-if='row.type===\'img\'')
+                  .cell.rel.A-ctr.t-ctr(v-for='value, c of row.value')
+                    img.img-fluid.rad-lg(v-if='value' :src='value' width='190' height='190' :alt='cols[c] + \'-\' +row.title' :title='cols[c] + \'-\' +row.title' loading='lazy')
+                    label.btn.btn-purple.ratio-1(v-else :for='\'img\'+c')
+                      span.fi-plus.fz-12
+                    input.hidden(type='file' :id='\'img\'+c')
+                    button.btn.btn-white.btn-sm.btn-remove-img(v-if='value' type='button')
+                      span.fi-close.fz-12
+                template(v-if='row.type===\'svg\'')
+                  .cell-svg
+                    svg(:width='14*16*row.value.length' height='264' style='user-select: none;' @mouseleave='handleMousedown' @mousedown='handleMousedown' @mousemove='handleMousemove' @mouseup='handleMouseup')
+                      path(:d='getBlockBg(row)' fill='#fafafa')
+                      path(:d='getScoreCircle()' fill='#bdbdbd')
+                      text(x='32' :y='y' v-for='y, score of scores' fill='#bdbdbd' alignment-baseline='middle' font-size='12') {{ 10 - score }}分
+                      path(:d='getLines()' stroke='#e0e0e0' stroke-dasharray='2,2')
+                      use(x='20' :y='i * 48 + 36' fill='#f2f2f2' transform='scale(0.5)' :xlink:href='\'#e\'+(10 - i)' v-for='y, i of scores')
+                      path(:d='getTargetPoints(row)+getSourcePoints(row)' fill='#bdbdbd' style='transition:d .3s')
+                      path(:d='getPath(row)' fill='none' stroke='#bdbdbd' style='transition:d .3s')
+                      g.draggable(@mousedown='setDragEl($event, row,i)' v-for='v, i of row.value' cursor='grab')
+                        circle(r='12' :cx='getX(i)' :cy='getY(row, i)' :fill='getColor(v)' style='transition:fill .3s')
+                        use(:xlink:href='\'#e\'+(v)' :x='getX(i,-12)' :y='getY(row, i)-12')
+                .bg-white(style='flex-basis: 3.5rem')
+              .ujm-footer.t-ctr
+                .dropdown.customize-dropdown(:style='{width:`calc(14rem * ${cols.length} + 6.5rem)`}')
+                  button.btn.btn-block.J-ctr(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                    span.fi-plus
+                    | 新增格式
+                  .dropdown-menu
+                    button.dropdown-item(type='button' @click='addRow(\'img\')') 圖片
+                    button.dropdown-item(type='button' @click='addRow(\'input\')') 新增文字便條
+                    button.dropdown-item(type='button' @click='addRow(\'svg\')') 情感表達
+                //- button.btn(type='button')
+                  span.fi-plus
+                  |新增格式
+  +modal({ nobtn, id: 'create-sample', label: 'modal-create-sample', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 請選擇一個範本開始使用
+      .flexbox.sps-1.t-ctr.gy-3.mb-3
+        - for(let i = 1; i < 7; i++)
+          .sp-4
+            button.btn.btn-rect-white.js-select-sample(type='button' data-sample='範本0'+i data-bs-dismiss='modal')
+              img.circle.evt-none(src=require('./img/user-blue.jpg') width='50' height='50')
+              br
+              |範本0#{i}
+    +footer
+      button.btn.btn-white(type='button' data-bs-dismiss='modal') 取消
+  +modal({ nobtn, id: 'upload-excel', label: 'modal-upload-excel', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 上傳 Excel
+      .bg-fa
+        .t-right
+          span.t-82.fi-question.info-tip(data-bs-toggle='popover' data-bs-custom-class='z-2000' data-bs-content=Array.from({ length: 10 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join(''))
+        .fileuploading
+          p 將文件拖曳至此
+            br
+            |或
+          label.btn.btn-purple(for='uploadExcel') 選擇檔案
+          input#uploadExcel.hidden(type='file' accept='.xlsx,.xls' @change='uploadExcel($event, \'upload-excel\')')
+      p.uploaded-file
+        span.fi-check-cir-fill(style='color:#27ae60')
+        span.filename aabbcc.xlsx
+        button.btn.fl-right(type='button')
+          span.fi-delete.t-red
+    +footer
+      .flexbox.g-2
+        .sp-2
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'upload-excel\')') 取消
+        .sp-4
+          button.btn.btn-white.btn-block(href='./#.xlsx' download='範例.xlsx') 下載範例檔案(.xlsx)
+        .sp-2.spl-4
+          button.btn.btn-purple.btn-block(type='button') 確定
+
+        .sp-12
+          p.t-82 *檔案須符合本平台提供的檔案格式
+
+  +modal({ nobtn, id: 'select-uj-modal', label: 'select-uj-modal-title', static, centered, v5})
+    +header({ cls: 't-ctr' }) 快速新增一個人物誌
+    +body
+      p.t-ctr.t-82.mb-3 AI將使用您選的人物誌來生成旅程地圖。
+      .flexbox.t-ctr.J-ctr.gy-3.mb-3
+        .sp-4
+          button.btn.btn-rect-white(type='button' data-bs-toggle='modal' data-bs-target='#select-built-modal')
+            span.rect.t-ctr.mr-1
+              span.fi-id-connect
+            br
+            |選擇人物誌
+        .sp-12.t-ctr 還沒有人物誌嗎?
+          button.btn.btn-link.p-0.t-underline.v-baseline(type='button' data-bs-toggle='modal' data-bs-target='#quick-add-modal') 快速建立
+
+    +footer({cls: 'J-start'})
+      a.btn.btn-white(href='./udeProjectList.html' title='上一步') 上一步
+  +modal({ nobtn, id: 'quick-add-modal', label: 'quick-add-modal-title', static, centered, scrollable, v5})
+    +header({ cls: 't-ctr' }) 快速新增一個人物誌
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          .alert.alert-danger
+            span.fi-info
+            | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+        .sp
+          label(for='select-product') 關注的產品*
+        .sp
+          select#select-product.custom-select.bg-white.b-1(name='product')
+            option(value='0' disabled) 請選擇關注的產品
+            option(value='1') 咖啡機
+            option(value='2') 咖啡機
+        .sp
+          label(for='personality') 個性*
+        .sp
+          textarea#personality.form-control(name='personality' rows='3' placeholder='請輸入個性 e.g. 積極、創意，對於咖啡文化有濃厚興趣')
+        .sp
+          label(for='background') 背景*
+        .sp
+          textarea#background.form-control(name='background' rows='3' placeholder='請輸入背景 e.g. 咖啡愛好者、自由工作者，喜歡在咖啡館中工作和品嚐新口味的咖啡。')
+        .sp
+          label(for='intro') 人物自述*
+        .sp
+          textarea#intro.form-control(name='intro' rows='3' placeholder='請輸入人物自述')
+        .sp
+          label(for='controller') AI敘述
+        .sp
+          textarea#controller.form-control(name='controller' rows='3' placeholder='最後使用者滿意/不滿意')
+      p.t-82.t-right 按下確認後將會扣除額度並開始生成
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#select-uj-modal') 上一步
+      button.btn.btn-pink(type='button' data-bs-dismiss='modal') 確定生成
+  +modal({ nobtn, id: 'select-built-modal', label: 'select-built-modal-title', scrollable, static, centered, v5})
+    +header({ cls: 't-ctr' }) 透過已有的人物誌建立
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          .alert.alert-danger
+            span.fi-info
+            | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+        .sp
+          label(for='select-product') 關注的產品*
+        .sp
+          select#select-product.custom-select.bg-white.b-1(name='product')
+            option(value='0' disabled) 請選擇關注的產品
+            option(value='1') 咖啡機
+            option(value='2') 咖啡機
+        - for(let i = 0; i < 6; i++)
+          .sp-4
+            button.btn.btn-rect-white(type='button')
+              img.circle(src=require('./img/user-blue.jpg') width='48' height='48' title='咖啡機產品設計師' alt='咖啡機產品設計師')
+              br
+              |咖啡機
+              br
+              |產品設計師
+
+        .sp
+          label(for='controller2') AI敘述
+        .sp
+          textarea#controller2.form-control(name='controller' rows='3' placeholder='最後使用者滿意/不滿意')
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#select-uj-modal') 上一步
+      button.btn.btn-pink(type='button' data-bs-dismiss='modal') 確定生成
+block script
+  script(src='https://unpkg.com/vue@3/dist/vue.global.js')
+  script
+    |document.addEventListener('DOMContentLoaded', function () {
+    include ./js/UJM.js
+    .
+      const { action } = Object.fromEntries(new URLSearchParams(location.search))
+
+      const actions = {
+        blank () {
+          console.log('空白範本')
+        },
+        sample () {
+          function getSample(e){
+            const { sample } = e.target.dataset
+            console.log(sample)
+          }
+          $('#create-sample').modal('show').one('hidden.bs.modal', function(){
+            $(this).find('.modal-body').off('click',getSample)
+          }).find('.modal-body').on('click', '.js-select-sample', getSample)
+        },
+        excel () {
+          $('#upload-excel').modal('show')
+        },
+        aisample() {
+          $('#select-uj-modal').modal('show')
+        }
+      }
+      actions[action]?.()
+
+      $('#uploadExcel').on('change', function(e){
+        const { name } = e.target.files[0]
+        $('.filename').txt(name)
+      })
+      $('.fileuploading').on('dragover dragenter dragleave', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+      }).on('drop', function(e){
+        e.preventDefault()
+        const fileInput = $('#uploadExcel')[0]
+        const {files} = e.dataTransfer
+        if (files.length) {
+          const { name } = files[0]
+          if(name.match(/xlsx?/)) {
+
+            $('.filename').txt(name)
+            fileInput.files = files
+
+            for (const file of files) {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+
+              reader.addEventListener('loadend', function (e) {
+                console.log(e.target.result)
+              })
+            }
+          }
+        }
+      })
+    |})
+    //- const colorEmo = [
+    //-   '#7DB1FF',
+    //-   '#7DB1FF',
+    //-   '#6FCF97',
+    //-   '#6FCF97',
+    //-   '#F2C94C',
+    //-   '#F2C94C',
+    //-   '#F2994A',
+    //-   '#F2994A',
+    //-   '#EC2222',
+    //-   '#EC2222',
+    //- ]
+    //- $('.cell-canvas').find('canvas').forEach((el, j) => {
+    //-   //- const c = ctx({el, w: 224 , h:338})
+    //-   //- const { path } = c.strokeDef({dasharray: [2], color: '#e0e0e0'})
+    //-   //- for(let i = 0; i < colorEmo.length; i++) {
+    //-   //-   path.M(0, 30 * i + 45).h(c.w)
+    //-   //- }
+    //-   //- path.end.stroke()
+
+    //-   //- c.strokeDasharray([]).circle(c.w/2, 30 * (j%colorEmo.length) + 45 , 16).fill(colorEmo[j%colorEmo.length])
+    //- })

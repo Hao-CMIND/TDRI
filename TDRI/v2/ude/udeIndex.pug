@@ -1,0 +1,342 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '使用者研究數位工具'
+  - pageType = 'ude'
+  - headerCls.push('ude-header')
+  // header  新增 ude-header
+  include ./template/components/svg.pug
+  // bodyAttr = { style: 'background-color:#e8e6f1' }
+  - bodyAttr = {class:'p-0 forbidden-page', style: 'background-color:#e8e6f1' }
+block body
+  .bg-ude-banner
+    - const landImgSize = [{ w: 1096, h: 841 }, { w: 369, h: 389 }, { w: 105, h: 147 }, { w: 804, h: 590 }, { w: 266, h: 266 }, { w: 675, h: 658 }]
+    - for(let i = 0; i < landImgSize.length; i++)
+      img.img-landing(class='u-b'+i src=require('./img/ude-b'+i+'.png') width=landImgSize[i].w height=landImgSize[i].h alt='landing'+i title='landing'+i loading='eager')
+  section
+    //.bg-cover
+    //(style!=`background-image:url(${require('./img/kv.jpg')});padding-top:25vh`)
+    .container
+      .flexbox.J-ctr.A-start.min-vh-100(style='padding-top:10vh')
+        .sp-l-8
+          h1.display-1.mb-4.pb-3 User
+            br
+            |Data Explore
+          .t-333
+
+            p.fz-24 國內首創可推薦
+              span.white-pill 真實使用者數據
+              |，並整合多樣研究方法論的
+              span.white-pill 數位使用者研究工具
+              |，協助未有專業研究背景的設計工作者在專案前期掌握大方向的使用者需求，並建構
+              span.white-pill 完整的目標客群分析報告
+              |，強化設計提案的說服力！
+        .sp-l-8
+          .t-ctr
+            a(href='./membership.html')
+              svg.circlepath-text(width='160' height='200')&attributes({ viewBox: '0 0 160 200' })
+                style.
+                  text {
+                    alignment-baseline: middle
+                  }
+                - const cx = 80
+                - const cy = 80
+                g
+                  animateTransform(dur='10s' type='rotate' from=`0 ${cx} ${cy}` to=`360 ${cx} ${cy}`)&attributes({ attributeName:'transform', repeatCount: 'indefinite' })
+                  g(fill='#000' font-size='20' font-family='Tenor Sans' text-anchor='middle')
+                    - const textPath = '●Product Data Explorer●Product Data Explorer'
+                    each t, i in textPath
+                      if t !== ' '
+                        - let degree = 360 / textPath.length * i
+                        if t === 'D'
+                          - degree -= 360 / textPath.length * 0.25
+                        - const toArc = Math.PI /180
+                        - const theta = toArc * (degree - 90)
+                        - let transform = `translate(${(80 + Math.cos(theta) * 71).toFixed(1)},${(80 + Math.sin(theta) * 71).toFixed(1)})` + (t !== '●' ? `rotate(${degree.toFixed(1)})` : '')
+                        text(font-size=t==='●'&&10 transform=transform) #{t}
+
+                circle(cx='80' cy='80' r='50' fill='#7856ff')
+                  animate#enterbtn(to='80' dur='.3s' begin='mouseenter' fill='freeze')&attributes({ attributeName: 'r', repeatCount: '1' })
+                  animate(to='#3c00b8' dur='.3s' begin='mouseenter' fill='freeze')&attributes({ attributeName: 'fill', repeatCount: '1' })
+                  animate#leavebtn(to='50' dur='.3s' begin='mouseleave' fill='freeze')&attributes({ attributeName: 'r', repeatCount: '1' })
+                  animate(to='#7856ff' dur='.3s' begin='mouseleave' fill='freeze')&attributes({ attributeName: 'fill', repeatCount: '1' })
+                text(x='38' y='50' fill='#fff' fill-opacity='0') Get Started
+
+                  animate(to='1' dur='.3s' begin='enterbtn.begin' fill='freeze')&attributes({ attributeName: 'fill-opacity', repeatCount: '1' })
+                  animate(to='0' dur='.3s' begin='leavebtn.begin' fill='freeze')&attributes({ attributeName: 'fill-opacity', repeatCount: '1' })
+                polyline(fill='none' stroke='#fff' points='80,71.8 91.5,71.8 91.5,83.3')
+                line(stroke='#fff' x1='68' y1='94.3' x2='91' y2='71.3' stroke-dasharray='20 6' stroke-dashoffset='5')
+                polyline(fill='none' stroke='#000' points='140,175 140,160 155,160')
+                path(fill='none' stroke='#000' d='M140 200 A21 21 0 0 0 140 160')
+              br
+              |還沒有帳號嗎？
+        .sp-l-8.t-ctr.pb-3
+          a.f-tenor(href='#next-sec') Scroll
+            br
+            svg(width='60' height='110')
+              polyline(fill='none' stroke='#000' points='41.6,95.9 30.2,107.2 18.9,95.9')
+              //- line(stroke='#000' x1='30.2' y1='12.5' x2='30.2' y2='4.2')
+              line(stroke='#000' x1='30.2' y1='107.2' x2='30.2' y2='4.2' stroke-dasharray='85% 15%')
+                animate(values='0;20%;50%;80%;100%' dur='1')&attributes({ keyTimes: '0;0.25;0.5;0.75;1', attributeName: 'stroke-dashoffset', repeatCount: 'indefinite' })
+
+  section#next-sec.bg-histogram(style!=`background-image:url(${require('./img/histogram.png')});padding-top:1px`)
+    .container.pb-6(style='margin-top: -10rem;perspective: 1000px')
+      .js-parallax.flexbox.J-ctr(style='--ease:1;transform:rotateX(calc(30deg * clamp(0,var(--ease),1)))translateY(calc(200px * clamp(0,var(--ease),1)));transition:transform .25s')
+        .sp-12
+          .card(style='background-color:rgba(251, 251, 251, 0.3);backdrop-filter:blur(6px);box-shadow:0 .125rem 4px 0 rgba(0, 0, 0, .15)')
+            .card-body.t-51.p-5
+              .flexbox.gx-3
+                .sp-4.A-ctr
+                  h2.fz-48 數位使用者研究結合 AI 自動分析
+                  p.fz-24.mb-4 人物誌、使用者旅程地圖、利益關係人地圖
+                  a.btn.btn-purple(href='./udeManagement2.html') Get Started
+                    span.fi-arr-right-up-broken
+                .sp-4
+                  img.w-100.h-100.img-cover.rad-lg(src=require('./img/ude-index-ai.jpg') width='432' height='605' alt='數位使用者研究結合 AI 自動分析' title='數位使用者研究結合 AI 自動分析' loading='lazy' style='object-position:-2rem -1rem')
+                .sp-4
+                  .flexbox.col.h-100.gap-3
+                    .flex-fill.px-3
+                      .card.h-100
+                        .card-body
+
+                          p
+                            span.t-purple
+                              span.fi-id-card
+                              span.fi-plus
+                              span.fi-ai-file
+                            br
+                            strong 人物誌｜Persona
+                          ul(style='padding-inline-start:1.5rem')
+                            li 透過大數據，快速掌握各類產品的使用者輪廓與需求
+                            li 一鍵生成 AI 人物誌
+                            li 自動將訪談紀錄轉化為人物誌
+                    .flex-fill.px-3
+                      .card.h-100
+                        .card-body
+                          p
+                            span.t-purple
+                              span.fi-target
+                              span.fi-plus
+                              span.fi-ai-file
+                            br
+                            strong 利害關係人洞察｜Stakeholder Map
+                          ul(style='padding-inline-start:1.5rem')
+                            li 一鍵生成 AI 利益關係人資料
+                            li 自動生成利益關係人地圖，快速掌握不同角色之間的權力關係以及對於專案的影響力
+                    .flex-fill.px-3
+                      .card.h-100
+                        .card-body
+                          p
+                            span.t-purple
+                              span.fi-signpost
+                              span.fi-plus
+                              span.fi-ai-file
+                            br
+                            strong 優化顧客旅程｜User Journey Map
+                          ul(style='padding-inline-start:1.5rem')
+                            li 一鍵生成 AI 使用者旅程地圖
+                            li 運用模板快速視覺化使用者體驗，洞悉產品與服務的缺口
+
+          //- h2.fz-48.lh-xxl-none.f-tenor Research With Data
+          //-   br
+          //-   span.fz-28 數據驅動的人物輪廓
+          //- p 解決傳統人物誌基於假設而不是數據的問題，輕鬆創建精確的人物輪廓。設計更具信心，更符合使用者需求。
+        //- .sp-10.sp-m-6.sp-l-5.pt-5.perspect
+          .white-card.pt-5.ani-fade-enter.enter-rotate-x
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/ft-1.png') width='215' height='188' alt='數據驅動的人物輪廓' title='數據驅動的人物輪廓' loading='lazy')
+            .t-left
+              h3.fz-28 數據驅動的人物輪廓
+              p 解決傳統人物誌基於假設而不是數據的問題，輕鬆創建精確的人物輪廓。設計更具信心，更符合使用者需求。
+        //- .sp-10.sp-m-4.pt-5.perspect
+          .white-card.pt-5.ani-fade-enter.enter-rotate-x
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/ft-2.png') width='232' height='188' alt='精準數據支持' title='精準數據支持' loading='lazy')
+            .t-left
+              h3.fz-28 精準數據支持
+              p 對應各種產品使用行為，自動導入特定產品的使用者資料，包括使用者需求、偏好等等，可以讓設計者更快速地進行研究和分析。
+        //- .sp-10.sp-m-4.pt-5.perspect
+          .white-card.pt-5.ani-fade-enter.enter-rotate-x
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/ft-3.png') width='232' height='188' alt='降低使用者研究門檻' title='降低使用者研究門檻' loading='lazy')
+            .t-left
+              h3.fz-28 降低使用者研究門檻
+              p 提供經典的使用者研究模板和指引，無論您專業背景如何，透過我們的平台，您能有效進行使用者研究，深入了解目標使用者，優化產品或服務。
+        //- .sp-10.sp-m-4.pt-5.perspect
+          .white-card.pt-5.ani-fade-enter.enter-rotate-x
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/ft-4.png') width='233' height='188' alt='提高數據質量' title='提高數據質量' loading='lazy')
+            .t-left
+              h3.fz-28 豐富研究樣本
+              p 使用語言模型分析了超過100萬則國內論壇的評論。這些數據既可以用來支持研究結果，也可以應用於模板中進行編輯，以增加研究成果和洞察的豐富性。
+    //- .container
+      .flexbox.J-ctr
+        .sp-6.sp-m-4.sp-l-3
+          a.btn.btn-purple.btn-block(href='./membership.html') Get Start
+
+  section.watermark.min-vh-full.r-left.bg-clock.pt-6(data-left='Research' data-bottom='With Data' style!=`background-image:url(${require('./img/clock.png')}),url(${require('./img/bulb.png')});;`)
+    .container.py-6.t-ctr.t-51
+      .flexbox.J-ctr.gy-4
+        .sp-12
+          h2.fz-48.lh-xxl-none.f-tenor 如何使用
+          p.fz-24 解決傳統人物誌基於假設而不是數據的問題，輕鬆創建精確的人物輪廓。設計更具信心，更符合使用者需求。
+          .card.p-4.t-left(style='background-color:rgba(251, 251, 251, 0.3);box-shadow:0 .125rem 4px 0 rgba(0, 0, 0, .15)')
+
+            .card-body
+              #carousel-use.carousel.slide(data-bs-ride='false')
+                .carousel-indicators.static.mx-0.mb-4
+                  .card-deck
+                    #card-use-1.card.active(data-bs-target='#carousel-use' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
+                      .card-body
+                        h3
+                          a.stretched-link(href='#' title='人物誌')
+                            span.fi-id-card.t-purple
+                            |人物誌
+                        p.pl-4 人物誌是特定一群人的側寫，例如一組客戶或使用者、市場區隔、一組員工或任何利害關係人族群。這個側寫不是刻板印象，而是以真實研究為基礎的原型。
+                    #card-use-2.card(data-bs-target='#carousel-use' data-bs-slide-to='1' aria-label='Slide 2')
+                      .card-body
+                        h3
+                          a.stretched-link(href='#' title='利益關係人地圖')
+                            span.fi-target.t-purple
+                            |利益關係人地圖
+                        p.pl-4 利害關係人描述了經驗中的各個利害關係人。讓我們了解在利害關係人在生態裡，釐清現有關係，找出厲害關係人之間的非正式的網絡或摩擦，並幫我們找到看不見得商業機會。
+                    #card-use-3.card(data-bs-target='#carousel-use' data-bs-slide-to='2' aria-label='Slide 3')
+                      .card-body
+                        h3
+                          a.stretched-link(href='#' title='使用者旅程地圖')
+                            span.fi-signpost.t-purple
+                            |使用者旅程地圖
+                        p.pl-4 旅程圖能讓我們清楚看見人們一段時間的經驗。旅程圖也幫助我們找到顧客體驗中的缺口並探索潛在的解決方案。
+                .carousel-inner
+                  .carousel-item.active
+                    #player-1.rad.max-w-100.js-yt-player(data-video='2PuFyjAs7JA' data-card='#card-use-1')
+                    //- img.d-block.w-100.rad(src=require('./img/ude-use-1.jpg') width='1264' height='799' alt='人物誌' title='人物誌' loading='lazy')
+                  .carousel-item
+                    #player-2.rad.max-w-100.js-yt-player(data-video='2PuFyjAs7JA' data-card='#card-use-2')
+                    //- img.d-block.w-100.rad(src=require('./img/ude-use-2.jpg') width='1264' height='799' alt='利益關係人地圖' title='利益關係人地圖' loading='lazy')
+                  .carousel-item
+                    #player-3.rad.max-w-100.js-yt-player(data-video='2PuFyjAs7JA' data-card='#card-use-3')
+                    //- img.d-block.w-100.rad(src=require('./img/ude-use-3.jpg') width='1264' height='799' alt='使用者旅程地圖' title='使用者旅程地圖' loading='lazy')
+              //- +carousel({ id: 'carousel-use', v5 })
+              //-   +item
+              //-     img.d-block.w-100.rad(src=require('./img/ude-use-1.jpg'))
+              //-   +item
+              //-     img.d-block.w-100.rad(src=require('./img/ude-use-1.jpg'))
+              //-   +item
+              //-     img.d-block.w-100.rad(src=require('./img/ude-use-1.jpg'))
+        //- br
+          //- span.fz-28 數據驅動人物誌的實際應用
+        //- .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+        //-   .white-card
+        //-     .nt-5.mb-5
+        //-       img.img-fluid(src=require('./img/persona-1.png') width='225' height='194' alt='定位目標' title='定位目標' loading='lazy')
+        //-     .t-left
+        //-       h3.fz-28 定位目標
+        //-       p 讓您更加個性化產品設計，以迎合特定使用群體的需求。協助您確定目標市場，提供針對特定需求更敏感的設計方案，進而提升產品在目標使用者中的吸引力。
+        //- .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+        //-   .white-card
+        //-     .nt-5.mb-5
+        //-       img.img-fluid(src=require('./img/persona-2.png') width='162' height='194' alt='理解需求' title='理解需求' loading='lazy')
+        //-     .t-left
+        //-       h3.fz-28 理解需求
+        //-       p 為您提供了一個深入了解不同使用者群體需求、期望和使用模式的基礎。通過了解不同人物誌，您可以調整產品功能、介面和性能，提高使用者滿意度。
+        //- .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+        //-   .white-card
+        //-     .nt-5.mb-5
+        //-       img.img-fluid(src=require('./img/persona-3.png') width='206' height='194' alt='功能迭代' title='功能迭代' loading='lazy')
+        //-     .t-left
+        //-       h3.fz-28 功能迭代
+        //-       p 您能夠辨識並優先處理不同使用者群體的關鍵需求、確定功能的開發順序，並在產品不斷迭代中根據實際使用情境進行改進。
+
+        .sp-6.sp-m-4.sp-l-3.sp-xl-2
+          a.btn.btn-purple.btn-block(href='./membership.html') Get Start
+            span.fi-arr-right-up-broken
+
+  //- .py-6.bg-bulb(style!=`background-image:url(${require('./img/bulb.png')});`)
+  //-   .py-4
+      //- .flexbox.J-ctr.gy-5.stagger-animate(data-stagger='0.3')
+        //- .sp-12
+          h2.fz-48.lh-xxl-none.f-tenor Coming Soon
+            br
+            span.fz-28 即將推出
+        //- .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+          .white-card
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/u-benifits-1.png') width='219' height='220' alt='全面人物誌工具' title='全面人物誌工具' loading='lazy')
+            .t-left
+              h3.fz-28.lh-xxl-normal Persona
+                br
+                |全面人物誌工具
+              p 透過引入互動式人物誌功能，協助設計師更快速地做好使用者研究。更分析百萬則的使用者評論，來提供 Persona 20多項分析欄位的資料，為設計師提供更全面且準確的人物誌建立。
+        .sp-10.sp-m-6.pt-5.ani-fade-enter
+          .white-card
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/u-benifits-2.png') width='178' height='220' alt='利害關係人洞察' title='利害關係人洞察' loading='lazy')
+            .t-left
+              h3.fz-28.lh-xxl-normal Stakeholder
+                br
+                |利害關係人洞察
+              p 結合利害關係人地圖模板，協助設計師深入了解關鍵利益關係人。這有助於建立更準確的產品需求，提高設計的精準性，確保滿足所有相關利益關係人的期望。
+        .sp-10.sp-m-6.pt-5.ani-fade-enter
+          .white-card
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/u-benifits-3.png') width='228' height='220' alt='優化顧客旅程' title='優化顧客旅程' loading='lazy')
+            .t-left
+              h3.fz-28.lh-xxl-normal Customer Journey Map
+                br
+                |優化顧客旅程
+              p 融入使用者旅程模板，優化顧客體驗。通過洞察顧客的每一個互動點，設計師能夠更好地了解顧客需求，從而創造更貼近用戶的產品和服務。
+
+  //- section.last-ude-sec
+    .container-fluid.t-white
+      .flexbox.J-ctr.gy-5
+        .sp-xl-8.sp-xxl-7
+          iframe.w-100.h-100.min-vh-50.rad-lg(src='https://www.youtube.com/embed/uDf7FBHI_VQ?si=ntqdayD4ER7u0DRQ&controls=0&showinfo=0' title='設計研究院' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen)
+        .sp-xl-4
+          .flexbox.gy-3
+            .sp-12
+              h2.feature-1.lh-xxl-none.f-tenor Product
+
+                br.hidden.inline-xl
+                |Data
+                br.hidden-m.inline-xl
+                |Explore
+                br
+                span.fz-28 產品數據工具
+            .sp-12
+              p.fz-24 專為產品設計團隊打造的一站式數據整合平台
+
+              p 整合0到1產品開發時需要的資訊，協助團隊快速找到市場缺口、洞察使用者偏好，精準定義設計目標，也可以降低設計前期研究成本、提升團隊溝通效率
+
+            .sp-6.sp-m-4
+              a.btn.btn-purple.btn-block(href='./pdeIndex.html') Get Start
+
+//- block script
+  // 請抓取/test/tdri/backend/staggerAnimate.js檔案，在首頁的時候 import 載入
+  // scroll事件如果可以使用throttle降低觸發頻率，有需要可以拆Lodash 出來
+  script(type='module').
+    import initStaggerAnimate from 'https://whatlife.no-ip.org/test/tdri/backend/staggerAnimate.js'
+    (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+      const staggerAnimate = initStaggerAnimate()
+      $(window).on('scroll',staggerAnimate)
+    })}((window)))
+block libscript
+  script(defer src='https://www.youtube.com/iframe_api')
+block mask
+  .mobile-overlap.t-white
+    svg(width='118' height='119')&attributes({viewBox:'0 0 118 119'})
+      defs
+        filter#shadow(x='0' y='0.5' width='118' height='118' color-interpolation-filters='sRGB')&attributes({filterUnits:'userSpaceOnUse'})
+          feFlood(flood-opacity='0' result='BackgroundImageFix')/
+          feColorMatrix(in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha')/
+          feOffset(dy='3')/
+          feGaussianBlur&attributes({stdDeviation: 8.5})/
+          feComposite(in2='hardAlpha' operator='out')/
+          feColorMatrix(type='matrix' values='0 0 0 0 1 0 0 0 0 0.376471 0 0 0 0 0.376471 0 0 0 0.6 0')/
+          feBlend(mode='normal' in2='BackgroundImageFix' result='drop_shadow')/
+          feBlend(mode='normal' in='SourceGraphic' in2='drop_shadow' result='shape')/
+      path(d='M17 98.5h84v-84H17v84Zm6-6v-60h72v60H23Zm72-72v6H23v-6h72Zm-27 24h4.8L59 58.3 45.2 44.5H50v-6H35v15h6v-4.8l13.8 13.8L41 76.3v-4.8h-6v15h15v-6h-4.8L59 66.7l13.8 13.8H68v6h15v-15h-6v4.8L63.2 62.5 77 48.7v4.8h6v-15H68v6Z' fill='#ff6161' filter='url(#shadow)')/
+    p.fz-24.mt-4 請使用電腦版，以獲得最佳體驗
+    p.mb-5 您的螢幕尺寸較小，請改用電腦或大螢幕設備
+      br
+      |以確保流暢操作與完整功能呈現。
+    a.t-white.t-underline(href='#' title='Design R&D Lab' rel='noreferrer noopener nofollow')  回到 Design R&D Lab

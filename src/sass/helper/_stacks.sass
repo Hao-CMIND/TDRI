@@ -1,0 +1,14 @@
+%stack
+  display: flex
+  align-self: stretch
+  gap: 1rem
+
+.hstack
+  @extend %stack
+  flex-direction: row
+  align-items: center
+
+.vstack
+  @extend %stack
+  flex: 1 1 auto
+  flex-direction: column

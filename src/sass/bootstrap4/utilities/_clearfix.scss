@@ -1,0 +1,5 @@
+@if $utl-float {
+.clearfix {
+  @include clearfix();
+}
+}

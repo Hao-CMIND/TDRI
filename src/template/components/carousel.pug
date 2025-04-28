@@ -1,0 +1,74 @@
+mixin carousel({ id, interval } = {})
+  - const { has } = getPropKeys(arguments)
+  - const dataset = isV5.bind(null, has('v5'))
+
+  mixin caption({ cls }={})
+    .carousel-caption(class=cls)
+      block
+
+  - const slots = []
+  mixin item({ interval }={})
+    - slots.push({ block, interval })
+  block
+
+  -
+    const className = {
+      'carousel-fade': has('fade')
+    }
+
+  -
+    const attr = {
+      id,
+      class: className,
+      [dataset('ride')]: !has('noTouching') && 'carousel',
+      [dataset('touch')]: has('noTouching') && 'false',
+      [dataset('interval')]: has('noTouching') && 'false' || interval
+    }
+  .carousel.slide&attributes(attr)
+    if has('indicators')
+      ol.carousel-indicators
+        each item, i in slots
+          -
+            const indicatorsAttr = {
+              [dataset('target')]: "#"+id,
+              [dataset('slide-to')]: i
+            }
+          li(class={ active: !i })&attributes(indicatorsAttr)
+    .carousel-inner
+      each item, i in slots
+        -
+          const itemAttr = {
+            class: { active: !i },
+            [dataset('interval')]: !has('noTouching') && item.interval
+          }
+        .carousel-item&attributes(itemAttr)
+          - item.block()
+
+    if has('control')
+      -
+        const prevAttr = {
+          type: 'button',
+          [dataset('target')]: '#'+id,
+          [dataset('slide')]: 'prev'
+        }
+      -
+        const nextAttr = {
+          type: 'button',
+          [dataset('target')]: '#'+id,
+          [dataset('slide')]: 'next'
+        }
+      button.carousel-control-prev&attributes(prevAttr)
+        span.carousel-control-prev-icon(aria-hidden='true')
+        span.sr-only Previous
+      button.carousel-control-next&attributes(nextAttr)
+        span.carousel-control-next-icon(aria-hidden='true')
+        span.sr-only Next
+//-
+  +carousel({ id: 'carousel', control, indicators, interval: 5000, ['v'+version]:version })
+    +item
+      a(href="#")
+        img.d-block.w-100(src='https://fakeimg.pl/1000x500/cccccc/888888/?text=First slide' alt='...')
+
+    +item
+      a(href="#")
+        img.d-block.w-100(src='https://fakeimg.pl/1000x500/cccccc/888888/?text=Second slide' alt='...')

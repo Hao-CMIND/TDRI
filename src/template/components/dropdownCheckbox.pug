@@ -1,0 +1,127 @@
+mixin badgeGroup(legend, id, labels, {showTitle=true, labelIcon=false, legendIcon=false, tip=''} = {})
+  if showTitle
+    // if showTitle
+    h6 #{legend}
+      if tip
+        span.info-tip.fi-info.fi-sm.t-82&attributes({ 'data-bs-placement': 'bottom', 'data-bs-toggle': 'popover', 'data-bs-content': tip })
+  .badge-group
+    .clearfix
+      legend
+        // if legendIcon
+        if legendIcon
+          - const [item, percentage] = legend.split(',')
+          span(class='fi-ap'+(productCategory.indexOf(item)+1))
+        |#{legend}
+      button.btn.btn-sm.js-btn-dropdown-option(type='button')
+        span.fi-plus
+    .hstack.wrap
+    .js-dropdown-option
+      .hstack.wrap.badge-checkbox-group
+
+        each label, i in labels
+          input(id=id+'-'+i type='checkbox' name=id value=label)
+          label.badge(for=id+'-'+i)
+            if labelIcon
+              // if labelIcon
+              - const [item, percentage] = label.split(',')
+              span(class='fi-ap'+(productCategory.indexOf(item)+1))
+            if legendIcon
+              // 11/2 新增icon
+              span(class='ic-bf ib-top-'+(i+1))
+            |#{label}
+      .flexbox.J-ctr
+        .sp-6
+          button.btn.btn-purple.btn-sm.btn-block.js-dropdown-save(type='button') 關閉
+
+mixin readonlyGroup(legend, id, tip)
+  h6 #{legend}
+    if tip
+      span.info-tip.fi-info.fi-sm.t-82&attributes({ 'data-bs-placement': 'bottom', 'data-bs-toggle': 'popover', 'data-bs-content': tip })
+  .badge-group-lg
+    .clearfix
+      legend #{legend}
+      button.btn.btn-sm.js-btn-dropdown-option(type='button')
+        span.fi-plus
+    .vstack.wrap
+      .badge-input
+        input.form-control.db-focus(type='text' name=id value='高溫清洗' readonly)
+        button.btn.js-rm-badge-input(type='button')
+          span.fi-close-cir.fi-normal
+      .badge-input
+        input.form-control.db-focus(type='text' name=id value='換新用了20年的直立式洗衣機' readonly)
+        button.btn.js-rm-badge-input(type='button')
+          span.fi-close-cir.fi-normal
+    .js-dropdown-option
+      +tabs({id: id+'-tab', v5, cls: ['dropdown-tab'], contentCls: 'dropdown-tab-content', fill })
+        +item({ id: id+'-fresh', title: '新舊', active })
+          .vstack
+            span.badge 一週一次
+              a.badge-link(href='#' title='一週一次' target='_blank' rel='noreferrer noopener nofollow')
+                span.fi-plain
+            span.badge 洗衣快速
+              a.badge-link(href='#' title='洗衣快速' target='_blank' rel='noreferrer noopener nofollow')
+                span.fi-plain
+            span.badge 靜音操作
+              a.badge-link(href='#' title='靜音操作' target='_blank' rel='noreferrer noopener nofollow')
+                span.fi-plain
+        +item({ id: id+'-authority', title: '權威度' })
+          .vstack
+            span.badge 可以省水和電
+            span.badge 可以一次性喜很多衣物
+        +item({ id: id+'-discussion', title: '討論數' })
+          .vstack
+            span.badge 一週一次
+            span.badge 洗衣快速
+            span.badge 靜音操作
+      .flexbox.J-ctr
+        .sp-6
+          button.btn.btn-purple.btn-sm.btn-block.js-dropdown-cancel(type='button') 關閉
+
+mixin radioToggle(color, attr, {labeltag,labeltextCls} = {})
+  .radio-toggle(class='radio-'+color)&attributes(attr)
+    input#local(type='radio' name='locale' value='local' checked)
+    label(for='local')
+      span.fi-taiwan
+      if labeltag
+        #{labeltag}(class=labeltextCls) 台灣市場
+      else
+        |台灣市場
+    input#global(type='radio' name='locale' value='global')
+    label(for='global')
+      span.fi-earth
+      if labeltag
+        #{labeltag}(class=labeltextCls) 全球市場
+      else
+        |全球市場
+
+mixin dropdownProducts(title='產品類別選擇',tip)
+  .dropdown&attributes(tip)
+    button.btn.btn-outline-white.rad-sm.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false') #{title}
+    .dropdown-menu
+      a.dropdown-item.ic-bf.ib-goldcn(href='#')
+        |全部
+      span.dropdown-item-text.bg-f2 子類別
+      a.dropdown-item(href='#')
+        span(class='fi-ap'+(productCategory.indexOf('冷/暖空調')+1))
+        |冷/暖空調
+      a.dropdown-item(href='#')
+        span(class='fi-ap'+(productCategory.indexOf('洗/烘衣機')+1))
+        |洗/烘衣機
+      a.dropdown-item(href='#')
+        span(class='fi-ap'+(productCategory.indexOf('冰箱/冰櫃')+1))
+        |冰箱/冰櫃
+      a.dropdown-item(href='#')
+        span(class='fi-ap'+(productCategory.indexOf('冰箱/冰櫃')+1))
+        |冰箱/冰櫃
+      a.dropdown-item(href='#')
+        span(class='fi-ap'+(productCategory.indexOf('廚衛三機')+1))
+        |廚衛三機
+      a.dropdown-item(href='#')
+        span(class='fi-ap'+(productCategory.indexOf('廚衛三機')+1))
+        |廚衛三機
+      span.dropdown-item-text.bg-f2 品類別
+      a.dropdown-item(href='#') 直立式
+      a.dropdown-item(href='#') 滾筒式
+      a.dropdown-item(href='#') 蒸氣洗衣機
+      a.dropdown-item(href='#') 烘衣機
+      a.dropdown-item(href='#') 脫水機

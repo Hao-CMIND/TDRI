@@ -1,0 +1,44 @@
+.fi-2xs {
+  font-size: .625em;
+  line-height: .1em;
+  vertical-align: .225em;
+}
+
+.fi-xs {
+  font-size: .75em;
+  line-height: .08333em;
+  vertical-align: .125em;
+}
+
+.fi-sm {
+  font-size: .875em;
+  line-height: .07143em;
+  vertical-align: .05357em;
+}
+.fi-normal {
+  // width: 100%;
+  font-size: 1em;
+  vertical-align: baseline;
+}
+.fi-lg {
+  font-size: 1.25em;
+  line-height: .05em;
+  vertical-align: -.075em;
+}
+
+.fi-xl {
+  font-size: 1.5em;
+  line-height: .04167em;
+  vertical-align: -.125em;
+}
+
+.fi-2xl {
+  font-size: 2em;
+  line-height: .03125em;
+  vertical-align: -.1875em;
+}
+.icon-btn-blue-gray > [class^='fi-'],
+.fi-cam {
+  width: 100%;
+  vertical-align: baseline;
+}

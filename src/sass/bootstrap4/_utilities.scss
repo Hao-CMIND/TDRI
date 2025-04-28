@@ -1,0 +1,70 @@
+$utl-display: false;
+$utl-flex: false;
+$utl-float: false;
+$utl-sizing: false;
+$utl-spacing: false;
+$utl-text-align: false;
+$utl-tracking: false;
+$utl-leading: false;
+
+$utl-text-transform: false;
+@import "utilities/align";
+@import "utilities/background";
+@import "utilities/borders";
+@import "utilities/display";
+// @import "utilities/embed";
+@import "utilities/flex";
+@import "utilities/float";
+@import "utilities/clearfix";
+// @import "utilities/interactions";
+@import "utilities/leading";
+@import "utilities/overflow";
+@import "utilities/position";
+@import "utilities/screenreaders";
+// @import "utilities/shadows";
+@import "utilities/sizing";
+@import "utilities/spacing";
+@import "utilities/stretched-link";
+@import "utilities/text";
+@import "utilities/tracking";
+@import "utilities/visibility";
+.ratio-1 {
+  aspect-ratio: 1
+}
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @if $utl-display { @include display($infix); }
+    @if $utl-flex { @include flex($infix); }
+    @if $utl-float { @include float($infix); }
+    @if $utl-sizing { @include sizing($infix); }
+    @if $utl-spacing { @include spacing($infix); }
+    @if $utl-text-align { @include text-align($infix); }
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-down($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @if $utl-tracking { @include tracking($infix); }
+    @if $utl-leading { @include leading($infix); }
+    // @if $enable-table-rwd { @include table-rwd($infix); }
+  }
+}
+
+$table-aligns: (ctr: (), left: (1), right: (2,4,6));
+
+@each $align, $cols in $table-aligns{
+  @each $col in  $cols{
+    .nth-#{$col}-#{$align} {
+      tr{
+        > :nth-child(#{$col}){
+          @extend .t-#{$align}
+        }
+      }
+    }
+  }
+}
+.evt-none {
+  pointer-events: none;
+}

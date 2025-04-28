@@ -1,0 +1,111 @@
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `$grid-columns`.
+
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+  // Common properties for all breakpoints
+  %grid-column {
+    position: relative;
+    width: 100%;
+    padding: 0 $gutter * .5;
+  }
+
+  @if $columns > 0 {
+    // Allow columns to stretch full width below their breakpoints
+    // @for $i from 1 through $columns {
+      .sp, [class^=sp-] {
+        @extend %grid-column;
+      }
+    // }
+  }
+
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    // .sp#{$infix}{
+    // .sp#{$infix}-auto {
+    //   @extend %grid-column;
+    // }
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      // Provide basic `.col-{bp}` classes for equal-width flexbox columns
+    }
+  }
+}
+@mixin create-columns($infix, $columns: $grid-columns) {
+  .sp#{$infix} {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+  @if $grid-row-columns > 0 {
+    @for $i from 1 through $grid-row-columns {
+      .sps#{$infix}-#{$i} {
+        @if $columns % $i != 0 {
+          @include row-cols($i);
+        }
+      }
+    }
+  }
+
+  @if $columns > 0 {
+    @for $i from 1 through $columns {
+      @if $i > 1 and $columns % $i == 0 {
+        .sps#{$infix}-#{calc($columns / $i)} > * {
+          @include make-col($i, $columns);
+        }
+      }
+    }
+    @for $i from 1 through $columns {
+      @if $i > 1 and $columns % $i == 0 {
+        .sp#{$infix}-#{$i} {
+          @include make-col($i, $columns);
+        }
+      }
+    }
+  }
+
+  .sp#{$infix}-auto {
+    @include make-col-auto();
+  }
+
+      @if $columns > 0 {
+        @for $i from 1 through $columns {
+        @if $i == 1 or $columns % $i > 0 {
+          .sp#{$infix}-#{$i} {
+            @include make-col($i, $columns);
+          }
+        }
+      }
+  }
+      @if $enable-flex-first-last {
+
+      .o#{$infix}-first { order: -1; }
+
+      .o#{$infix}-last { order: $columns + 1; }
+    }
+
+    @if $enable-flex-order {
+      @for $i from 0 through $columns {
+        .o#{$infix}-#{$i} { order: $i; }
+      }
+    }
+
+      @if $columns > 0 and $enable-columns-offset {
+    // `$columns - 1` because offsetting by the width of an entire row isn't possible
+        @for $i from 0 through ($columns - 1) {
+          @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
+            .spl#{$infix}-#{$i},
+            .spx#{$infix}-#{$i} {
+              @include make-col-offset($i, $columns, left);
+            }
+
+            .spr#{$infix}-#{$i},
+            .spx#{$infix}-#{$i} {
+              @include make-col-offset($i, $columns, right);
+            }
+      }
+    }
+  }
+}

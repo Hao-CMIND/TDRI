@@ -1,0 +1,233 @@
+extends ./template/layout.pug
+block local
+  // bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - headerH1 = false
+
+  - const cardBg = require('./img/nobase64/ude-card_hover.jpg')
+  - const cardPersonaBg = require('./img/nobase64/card-persona.png')
+  - const cardPersonaBgChecked = require('./img/nobase64/card-persona_checked.png')
+  - require('./img/goldcn.png')
+  - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+block body
+  .container-fluid.py-3
+    .flexbox.gx-2
+      .sp-2
+        include ./template/layout/udeAside.pug
+
+      .sp-10
+        .container
+          +breadcrumb({ cls: 'breadcrumb-slash-divider  mb-0', prev: [
+            { href: '#', page: '專案管理' },
+            { href: '#', page: '專案A' },
+            { href: '#', page: 'AI專案分析報告列表' },
+          ]})
+          h1.fz-32
+            span.rect.t-ctr.mr-1
+              span.fi-folder(style='vertical-align:.2em')
+            |AI專案分析報告列表
+          p.mb-5
+            span.fi-question
+            |AI 彙整專案中的「人物誌」、「利益關係人」和「顧客旅程地圖」，通過深入解析使用者特徵、利益相關者影響力以及使用者互動過程，自動分析這些數據生成詳細的報告，幫助您優化策略並提升決策品質。
+
+          .section-list.mb-4
+            .flexbox.sps-1.gx-2.gy-3.mb-3.a-ctr
+              .sp-auto
+                button.btn.btn-purple(type='button')
+                  span.fi-plus
+                  |新增
+              .sp-auto.mr-auto
+                button.btn.btn-outline-white(type='button')
+                  span.fi-download
+                  |下載
+              .sp-2
+                select.custom-select.bg-white.b-1(name='sort')
+                  option(value='0' selected) 依產品名稱排序
+                  option(value='1') 依加入時間排序(新到舊)
+                  option(value='2') 依加入時間排序(舊到新)
+              .sp-2
+                +inputGroup({type: 'search', id: 'search', name: 'search', label: '搜尋', placeholder: '請搜尋關鍵字...', cls: 'bg-white', prependCls: 'bg-white' })
+
+            .flexbox
+              .sp-12.t-ctr
+                img.img-fluid(src=require('./img/u-ai-report.png') width='180' height='auto' alt='準備開始建立你的第一個人物誌' title='準備開始建立你的第一個人物誌' loading='lazy')
+                p.fz-24.fw-7 準備開始建立你的第一個人物誌
+              - for(let i = 0; i < 3; i++)
+                .sp-auto
+                  input.custom-control-input.outer-check-purple(type='checkbox' id='character-'+i name='character')
+                  .card.bg-contain
+                    .card-header
+                      .custom-control.custom-checkbox.abs(style='top: 0rem;left:1rem;z-index:2')
+                        label.custom-control-label(for='character-'+i)
+                      button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'rename\'><span class=\'fi-pen\'></span>重新命名</button></li><li><button class=\'btn\' type=\'button\' data-action=\'analysis\'><span class=\'fi-file-star\'></span>AI專案分析</button></li><li><button class=\'btn\' type=\'button\' data-action=\'avatar\'><span class=\'fi-ap3\'></span>更變縮圖</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載整份專案</button></li><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>')
+                        span.fi-option-h
+
+                      h4.fz-16.card-title
+                        time.fz-12.t-82.fw-4(datetime='2024-4-22 24:02:02') 2024/4/22 24:02:02
+                        br
+                        |專案報告
+                    .card-body
+                      .card-desc.lh-xxl-normal
+                        ul.list-charts.t-left
+                          li
+                            span.t-82.pr-1
+                              |人物誌
+                              strong.t-black.fl-right 2組
+                          li
+                            span.t-82.pr-1
+                              |顧客旅程地圖
+                              strong.t-black.fl-right 2組
+                          li
+                            span.t-82.pr-1
+                              |利益關係人圖
+                              strong.t-black.fl-right 2組
+                        img.img-fluid(src=require('./img/nobase64/aireport.jpg') width='300' height='auto' alt='專案報告' title='專案報告' loading='lazy')
+                      a.stretched-link(href='./udeAIreportExport.html' title='未命名專案1')
+
+  +modal({ nobtn, id: 'ai-report-modal', label: 'ai-report-modal-title', static, size:'xl', centered, scrollable, v5})
+    +header({ cls: 't-ctr' }) AI 專案分析
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          .alert.alert-danger
+            span.fi-info
+            | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+        .sp
+          label(for='select-product') 關注的產品*
+        .sp
+          select#select-product.custom-select.bg-white.b-1(name='product')
+            option(value='0' disabled) 請選擇關注的產品
+            option(value='1') 咖啡機
+            option(value='2') 咖啡機
+        .sp
+          label(for='intro') 專案描述*
+        .sp
+          textarea#intro.form-control(name='intro' rows='3' placeholder='請輸入專案描述')
+
+      p.t-82.t-right 按下確認後將會扣除額度並開始生成
+    +footer({cls: 'J-between'})
+      button.btn.btn-pink(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal2') 下一步 (2/5)
+
+  +modal({ nobtn, id: 'ai-report-modal2', label: 'ai-report-modal2-title', static, size:'xl', centered, v5})
+    +header({ cls: 't-ctr' }) AI 專案分析
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          p 請選擇一個（含）以上的人物誌。已選擇：
+            span.t-l-purple 1
+        .sp
+          .bg-e7.rad-sm.py-3.pr-1
+            .of-y-auto(style='height: 350px')
+              .flexbox.gx-0.gy-4
+                - for(let i = 0; i < 4; i++)
+                  .sp-4
+                    input.custom-control-input.outer-check-pink(id='persona-'+i type='checkbox' name='persona')
+                    .card.card-persona.bg-contain.mx-auto(style!='--card-bg:url(\'../img/card-persona.png\');--card-bg-checked:url(\'../img/card-persona_checked.png\');width:18.5rem')
+                      .card-header
+                        .custom-control.custom-checkbox.abs(style='top: 2rem;right:1rem')
+                          label.custom-control-label(type='button' for='persona-'+i)
+
+                        .avatar
+                          img(src=require('./img/user-blue.jpg') width='80' height='80' alt='潘佳麗' title='潘佳麗' loading='lazy')
+                        h4.t-333 潘佳麗
+                          span.fw-4
+                            span.t-82 &nbsp;小姐
+                            br
+                            | 社群行銷經理
+                        p.card-text.limited-2-lines 喜愛廣交不同年齡層的社群行銷經理，會在每個月與區主管提案
+                      .card-body
+                        .flexbox
+                          .sp-6
+                            .rect
+                              span.t-purple 年齡
+                            p: strong 40歲
+                          .sp-6
+                            .rect
+                              span.fi-ap15
+                            p: strong 電暖器
+      p.t-82.t-right 按下確認後將會扣除額度並開始生成
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal') 上一步
+      button.btn.btn-pink(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal3') 下一步 (3/5)
+
+  +modal({ nobtn, id: 'ai-report-modal3', label: 'ai-report-modal2-title', static, size:'xl', centered, v5})
+    +header({ cls: 't-ctr' }) AI 專案分析
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          p 系統會自動選取相應的使用者旅程地圖。已選擇：
+            span.t-l-purple 1
+        .sp
+          .bg-e7.rad-sm.py-3.pr-1
+            .of-y-auto(style='height: 350px')
+              .flexbox.gx-0.gy-4
+                - for(let i = 0; i < 4; i++)
+                  .sp-4.py-1
+                    input.custom-control-input.outer-check-pink(id='ujm-'+i type='checkbox' name='ujm')
+                    .card.card-pink-shadow.mx-auto(style='width:18.5rem')
+                      .card-header
+                        .custom-control.custom-checkbox.abs(style='top: 1rem;right:1rem')
+                          label.custom-control-label(type='button' for='ujm-'+i)
+                        .flexbox.gx-3
+                          .sp-auto
+                            .avatar
+                              img.hidden.inline-m(src=require('./img/user-blue.jpg') width='48' height='48' alt='ABC洗衣機' title='ABC洗衣機' loading='lazy')
+                          .sp-auto.static
+                            h4.lh-xxl-tight
+                              time.fz-12.t-82.fw-4(datetime='2024-4-22 24:02:02') 2024/4/22
+                              br
+                              |陳小美洗衣服
+                      .card-body.pt-0
+                        p.t-333 使用者旅程地圖
+                          span.fl-right
+                            span.avatar.pr-1
+                              img(src=require('./img/user-blue.jpg') width='24' height='24' alt='潘佳麗' title='潘佳麗' loading='lazy')
+                            strong.t-black 潘嘉麗
+                        img.img-fluid(src=require('./img/nobase64/ujm.jpg') width='300' height='auto' alt='利益關係人' title='利益關係人' loading='lazy')
+      p.t-82.t-right 按下確認後將會扣除額度並開始生成
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal2') 上一步
+      button.btn.btn-pink(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal4') 下一步 (4/5)
+
+  +modal({ nobtn, id: 'ai-report-modal4', label: 'ai-report-modal2-title', static, size:'xl', centered, v5})
+    +header({ cls: 't-ctr' }) AI 專案分析
+    +body
+      .flexbox.sps-1.gy-3
+
+        .sp
+          p 請選擇一個利益關係人圖。已選擇：
+            span.t-l-purple 1
+        .sp
+          .bg-e7.rad-sm.py-3.pr-1
+            .of-y-auto(style='height: 350px')
+              .flexbox.gx-0.gy-4
+                - for(let i = 0; i < 4; i++)
+                  .sp-4.pt-1
+                    input.custom-control-input.outer-check-pink(id='st-'+i type='checkbox' name='st')
+                    .card.card-pink-shadow.mx-auto(style='width:18.5rem')
+                      .card-header
+                        .custom-control.custom-checkbox.abs(style='top: 1rem;right:1rem')
+                          label.custom-control-label(type='button' for='st-'+i)
+                        .flexbox.gx-3
+                          .sp-auto
+                            .avatar
+                              img.hidden.inline-m(src=require('./img/user-blue.jpg') width='48' height='48' alt='ABC洗衣機' title='ABC洗衣機' loading='lazy')
+                          .sp-auto.static
+                            h4.lh-xxl-tight
+                              time.fz-12.t-82.fw-4(datetime='2024-4-22 24:02:02') 2024/4/22
+                              br
+                              |智慧型洗衣機2
+                      .card-body.pt-0
+                        p.t-333
+                          |利益關係人
+                          strong.t-black.fl-right 10位
+                        img.img-fluid(src=require('./img/nobase64/stakeholder.jpg') width='300' height='auto' alt='利益關係人' title='利益關係人' loading='lazy')
+
+      p.t-82.t-right 按下確認後將會扣除額度並開始生成
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal3') 上一步
+      button.btn.btn-pink(type='button' data-bs-dismiss='modal') 下一步 (5/5)
+block script
+  script.
+    //- window.addEventListener('DOMContentLoaded', function (e) {
+    //-   $('.js-add-ai')
+    //- })

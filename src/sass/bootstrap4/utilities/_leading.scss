@@ -1,0 +1,9 @@
+$utl-leading: true;
+@mixin leading($infix) {
+  .lh#{$infix}-none         { line-height: 1; }
+  .lh#{$infix}-tight        { line-height: 1.25; }
+  .lh#{$infix}-snug         { line-height: 1.375; }
+  .lh#{$infix}-normal       { line-height: 1.5; }
+  .lh#{$infix}-relaxed      { line-height: 1.625; }
+  .lh#{$infix}-loose        { line-height: 2; }
+}

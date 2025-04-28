@@ -1,0 +1,537 @@
+extends ./template/layout.pug
+include ./template/components/stepList.pug
+
+block local
+  - const tab = require('./img/nobase64/tab-white.png')
+  -
+    bodyAttr = {
+      class: ['bg-grid']
+    }
+  -
+    const membersContent = [
+      { type: 'normal', img: require('./img/normalcn.png'), title: '一般會員', desc: '註冊即可免費使用，適用於：試用、推廣活動', fee: '免費', disabled: true },
+      { type: 'basic', img: require('./img/coppercn.png'), title: '初階會員', desc: '個人工作室、10人以下的小型設計公司、推廣工作訪', fee: 'NT$698' },
+      { type: 'advanced', img: require('./img/silvercn.png'), title: '進階會員', desc: '中型設計公司、接案類型較多元的設計公司、大專院校課程教材', fee: 'NT$7,900' },
+      { type: 'ultimate', img: require('./img/goldcn.png'), title: '尊榮會員', desc: '大型團體、研究單位', fee: 'NT$7,900' }
+    ]
+block body
+  section.py-5
+    .container
+      .flexbox.gy-3.J-ctr.sps-1.mb-4
+        .sp.t-left
+          a.t-333(href='./projectList.html')
+            svg.img-fluid(fill='currentColor' width='19' height='19')
+              use(href='./img/sprite.svg#arrow-left')
+            span.v-middle 返回價格方案
+        .sp
+          h1.fz-32.mb-5 會員升級
+        .sp-xl-11.sp-xxl-8
+          +upgradeStepList([['active done'], ['active']])
+        .sp
+          h2
+            img.mr-2(src=require('./img/nobase64/pde.png') width='32' height='32' alt='產品數據分析工具' title='產品數據分析工具' loading='lazy')
+            span.v-middle 產品數據分析工具
+    // ↓↓↓↓↓↓↓ 方案選擇 ↓↓↓↓↓↓↓
+    .container
+
+      .flexbox.gy-4.sps-1.J-ctr.mb-4
+        .sp-xl-11.sp-xxl-10
+          .card-deck.mt-5.t-ctr
+            each content in membersContent
+              input.radio-select(type='radio' name='member' id=content.type value=content.type disabled=content.disabled)
+              label.card.card-selection.mx-3(for=content.type)
+                .card-header.px-5
+                  img.img-fluid.nt-5(src=content.img width='160' height='auto' alt='' title='' loading='lazy')
+                .card-body.flex.col
+                  h3 #{ content.title }
+                  p.t-82.grow-1 #{ content.desc }
+                  p.fz-32
+                    strong #{ content.fee }
+                    if content.fee !== '免費'
+                      small.fz-16 /月
+        .sp-3
+          button.btn.btn-white.btn-block.rad-sm(type='button') 取消
+        .sp-3
+          button.btn.btn-green.btn-block.rad-sm(type='button') 訂購方案
+    // ↓↓↓↓↓↓↓ 產品選購 & 加購 ↓↓↓↓↓↓↓
+    .container-fluid
+      .flexbox.gx-0
+        .sp-10
+          .container.mr-0
+            .flexbox.sps-5.a-ctr.J-ctr.t-ctr
+              .sp-l-3.sp-xxl-2
+                .check-item-content.bg-l2-blue(style!='background-image:url('+require('./img/nobase64/手機p.png')+');')
+                p 音響/家庭劇院
+              .sp-auto
+                svg.img-fluid(fill='currentColor' width='56' height='56')
+                  use(xlink:href='./img/sprite.svg#pixel-arrow')
+              .sp-l-3.sp-xxl-2
+                .check-item-content.bg-l2-blue(style!='background-image:url('+require('./img/nobase64/手機p.png')+');')
+                p 音響/家庭劇院音響/家庭劇院
+        .sp-10
+          .container.mr-0
+            .flexbox.gx-2.gy-3
+              .sp-12
+                h2
+                  img.mr-2(src=require('./img/nobase64/pde.png') width='32' height='32' alt='產品數據分析工具' title='產品數據分析工具' loading='lazy')
+                  span.v-middle 產品數據分析工具
+              .sp-auto
+                .img-crown.silvercn
+                  img.img-fluid(src=require('./img/silvercn.png') width='110' height='auto' alt='進階會員' title='進階會員' loading='lazy')
+              .sp
+
+                h2.fz-32 進階會員
+                .flexbox.a-ctr.gx-2
+                  .sp-auto
+                    p.fz-14
+                      strong 已選
+                        span.fz-24 &nbsp;14&nbsp;
+                        |/ 15個
+                      span.badge.badge-black.ml-1.fz-14 還可選：品類 1 個或子類 1 個
+                    p.i-block.p-2.rad-sm.bg-white.t-82
+                      span
+                        strong.minor-ico.mr-1 子類
+                        |4個
+                      span.px-2 &plus;
+                      span
+                        strong.minor-ico.bg-f2.mr-1 品類
+                        |4個
+                      span.px-2 &plus;
+                      span
+                        span.fi-ai-file.mr-1
+                        |5分
+                  .sp-auto.fz-32 &plus;
+                  .sp-auto
+                    p
+                      strong
+                        span.fz-24 &nbsp;3&nbsp;
+                      span.badge.badge-black.ml-1.fz-14 NT$1,197
+                    p.i-block.p-2.rad-sm.bg-white
+                      span
+                        strong.minor-ico.mr-1 子類
+                        |1個
+                      span.px-2 &plus;
+                      span
+                        strong.minor-ico.bg-f2.mr-1 品類
+                        |2個
+                      span.px-2 &plus;
+                      span
+                        span.fi-ai-file.mr-1
+                        |5分
+
+              .sp-auto
+                p.fz-32
+                  strong NT$1,699
+                  small.fz-16 /月
+                button.btn.btn-white.btn-block.rad-sm(type='button') 略過
+              .sp-12
+                h3 產品子/品類別選擇
+                - const fields = ['領域一', '領域二']
+                //- , '領域三', '領域四'
+                - const majors = ['車輛']
+                //- , '汽車百貨', '相機/攝影', '水上運動', '機車用品'
+                - const minors = ['安全帽']
+                //- , '自行車收納配件', '自行車零/組件', '自行車配件'
+                - const products = ['自行車錶']
+                  //- , '自行車燈', '自行車手機架', '自行車水壺架', '自行車密碼鎖', '自行車密碼鎖', '自行車鑰匙鎖', '自行車車鈴'
+                ul#megamenu-tab.nav.nav-fill.nav-megamenu(role='tablist' style='--tab-bg: url(../img/tab-white.png)')
+                  each field, i in fields
+                    li.nav-item(role='presentation')
+                      button.nav-link(id=`pills-${i}-tab` class={'active':i===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}` type='button' role='tab' aria-controls=`pills-${i}` aria-selected=String(i===0)) #{field}
+
+                #megamenu-tabContent.tab-content.nav-megamenu-content
+                  each field, i in fields
+                    .tab-pane.fade(id=`pills-${i}` class={'show active':i===0} role='tabpanel' aria-labelledby=`pills-${i}-tab`)
+                      .flexbox.a-start.gx-0
+                        .sp-4
+                          h4.megamenu-categroy.fz-14.fw-4.py-2 大類
+                          .nav-scroll
+                            ul.nav.col(id=`major-tab-${i}` role='tablist' aria-orientation='vertical')
+                              each major, j in majors
+                                li.nav-item(role='presentation' class={'active':j===0})
+                                  button.nav-link(id=`pills-${i}-${j}-tab` class={'active':j===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}` type='button' role='tab' aria-controls=`pills-${i}-${j}` aria-selected=String(j===0))
+                                    span.fi-ap1
+                                    |#{major}
+                        .sp-8
+                          .tab-content(id=`major-tab-content-${i}`)
+                            each major, j in majors
+                              .tab-pane.fade(id=`pills-${i}-${j}` class={'show active':j===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-tab`)
+                                .flexbox.a-start.gx-0
+                                  .sp-6
+                                    .megamenu-categroy
+                                      .custom-control.custom-checkbox.custom-checkbox-right
+                                        input.custom-control-input.check-black(id=`minor-all-${i}-${j}` type='checkbox' value='true')
+                                        label.custom-control-label(for=`minor-all-${i}-${j}`) 子類
+                                    .nav-scroll
+                                      ul.nav.col(id=`minor-tab-${j}` role='tablist' aria-orientation='vertical')
+                                        each minor, k in minors
+                                          li.nav-item.flexbox.a-ctr.gx-0(role='presentation' class={'active':k===0})
+                                            button.nav-link.sp(id=`pills-${i}-${j}-${k}-tab` class={'active':k===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}-${k}` type='button' role='tab' aria-controls=`pills-${i}-${j}-${k}` aria-selected=String(k===0)) #{minor}
+                                            .custom-control.custom-checkbox.custom-checkbox-right.sp-auto
+                                              input.custom-control-input.check-black(id=`minor-${i}-${j}-${k}` type='checkbox' name='bought' value='true')
+                                              label.custom-control-label.t-none(for=`minor-${i}-${j}-${k}`) 選取
+                                  .sp-6
+                                    .tab-content(id=`minor-tab-content-${j}`)
+                                      each minor, k in minors
+                                        .tab-pane.fade(id=`pills-${i}-${j}-${k}` class={'show active':k===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-${k}-tab`)
+                                          .megamenu-categroy
+                                            .custom-control.custom-checkbox.custom-checkbox-right
+                                              input.custom-control-input.check-black(id=`product-all-${i}-${j}-${k}` type='checkbox' value='true')
+                                              label.custom-control-label(for=`product-all-${i}-${j}-${k}`) 品類
+                                          .nav-scroll
+                                            .nav.col
+                                              each p, l in products
+                                                .custom-control.custom-checkbox.custom-checkbox-right
+                                                  input.custom-control-input.check-black(id=`product-${i}-${j}-${k}-${l}` type='checkbox' name='bought' value='true')
+                                                  label.custom-control-label(for=`product-${i}-${j}-${k}-${l}`) #{p}
+                .abs.top-0.left-0.w-100.h-100.A-ctr.t-ctr.bg-fa(style='z-index: 1090; opacity:.75')
+                  p.fz-48 已購買尊榮方案全部子類品類皆可使用
+
+        .sp-2
+          .card.sticky-top.under-header
+            .card-header.px-3.py-2.bb-8
+              button.btn.btn-block.t-left.p-0(type='button' data-bs-toggle='collapse' data-bs-target='.selected-lists' aria-expanded='false' aria-controls='selected-lists')
+                .img-crown.sm.silvercn.p-1.i-block.mr-1
+                  img.img-fluid(src=require('./img/silvercn.png') width='21' height='auto' alt='進階會員' title='進階會員' loading='lazy')
+                | 已選擇
+                svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                  use(xlink:href='./img/sprite.svg#arrow-down')
+                span.fl-right
+                  strong 14
+                  | /15
+              p.fz-14 還可選：品類 1 個或子類 1 個
+
+            .card-body.selected-lists.px-3.py-2.bb-8
+              button.btn.btn-block.t-left.p-0.b-0.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#minor-selected' aria-expanded='false' aria-controls='minor-selected')
+                strong.minor-ico.mr-1 子
+                | 子類
+                svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                  use(xlink:href='./img/sprite.svg#arrow-down')
+                strong.fl-right x4
+              #minor-selected.collapse
+                - for(let i = 0; i < 4; i++)
+                  .my-3 手機
+                    .fl-right
+                      label.btn.btn-outline-white.t-danger.btn-sm(for='p-minor-0')
+                        span.fi-delete
+                //- each item, i in Object.values(products).map(p=>Object.keys(p)).flat().slice(0,4)
+                  .my-3
+                    span.minor-ico.mr-1
+                      //- img.img-contain(src=require('./img/nobase64/'+item+'p.png') width='16' height='16' alt=item title=item loading='lazy')
+                    |#{ item }
+                    .fl-right
+                      label.btn.btn-outline-white.t-danger.btn-sm(for='p-minor-'+i)
+                        span.fi-delete
+
+            .card-body.selected-lists.px-3.py-2.bb-8
+              button.btn.btn-block.t-left.p-0.b-0(type='button' data-bs-toggle='collapse' data-bs-target='#product-selected' aria-expanded='true' aria-controls='product-selected')
+                strong.minor-ico.bg-f2.mr-1 品
+                | 子類
+                svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                  use(xlink:href='./img/sprite.svg#arrow-down')
+                strong.fl-right x10
+              #product-selected.collapse.show
+                - for(let i = 0; i < 10; i++)
+                  .my-3 手機
+                    .fl-right
+                      label.btn.btn-outline-white.t-danger.btn-sm(for='p-minor-0')
+                        span.fi-delete
+                //- each item, i in Object.values(products).map(p=>Object.values(p)).flat(Infinity).slice(0,10).map(p=>p.replace(/\//,'-'))
+                  .my-3
+                    span.minor-ico.bg-f2.mr-1
+                      img.img-contain(src=require('./img/nobase64/'+item+'.png') width='16' height='16' alt=item title=item loading='lazy')
+                    |#{ item }
+                    .fl-right(for='product-'+i)
+                      label.btn.btn-outline-white.t-danger.btn-sm(for='product-'+i)
+                        span.fi-delete
+
+            .card-footer.px-3.py-2.b-0
+              p.mb-3 總計
+                strong.fl-right NT$1,699/月
+              +alertDanger('需要選擇完您購買方案的子類品類，才可以進行下一步', false)
+              button.btn.btn-green.btn-block.rad-sm.mt-2(type='button') 下一步
+    // ↓↓↓↓↓↓↓ 確認訂單 & 發票資訊 ↓↓↓↓↓↓↓
+    .container
+      .flexbox.sps-2
+        .sp-12
+          h2
+            img.mr-2(src=require('./img/nobase64/pde.png') width='32' height='32' alt='產品數據分析工具' title='產品數據分析工具' loading='lazy')
+            span.v-middle 產品數據分析工具
+        .sp.gap-3
+          h3.fz-22 訂單明細
+          .card
+            .card-header.bb-1
+              .flexbox
+                .sp-4.sp-xl-3
+                  .img-crown.silvercn.w-100
+                    img.img-fluid(src=require('./img/silvercn.png') width='130' height='130' alt='進階會員' title='進階會員' loading='lazy')
+                .sp-8.sp-xl-9
+                  h4.fz-22
+                    span.ic-bf.ib-silvercn 進階方案
+                  p.t-right.fz-32
+                    strong NT$1,699
+                    small.fz-16 /月
+            .card-body
+              .bg-fa.p-2.rad-sm
+                h5.fz-16.bb-1.mb-2.pb-2
+                  strong.minor-ico.fz-12.mr-2 子
+                  |子類
+                ul.list-unstyled
+                  - for(let i = 0; i < 3; i++)
+                    li.py-2 手機
+                      span.fl-right NT$399 / 月
+            .card-body
+              .bg-fa.p-2.rad-sm
+                h5.fz-16.bb-1.mb-2.pb-2
+                  strong.minor-ico.bg-f2.fz-12.mr-2 品
+                  |品類
+                ul.list-unstyled
+                  - for(let i = 0; i < 3; i++)
+                    li.py-2 手機
+                      span.fl-right NT$399 / 月
+          .card
+            .card-header.bb-1
+              .flexbox
+                .sp-4.sp-xl-3
+                  .minor-ico.minor-ico-lg.bg-f2
+                    img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/cart.png') width='130' height='130' alt=item title=item loading='lazy')
+                .sp-8.sp-xl-9
+                  h4.fz-22
+                    span.fi-cart
+                    |加購產品子類/品類
+                  p.t-right.fz-32
+                    strong
+                      span.fl-left.fz-22.mt-3 x3個
+                      |NT$1,699
+                    small.fz-16 /月
+                  .flexbox.J-end
+                    .sp-4
+                      .input-group
+                        .input-group-prepend
+                          button.btn.btn-black.btn-sm(type='button') &minus;
+                        input.form-control.form-control-sm.t-ctr(type='text' value='2' readonly)
+                        .input-group-append
+                          button.btn.btn-black.btn-sm(type='button') &plus;
+
+            .card-body
+              .bg-fa.p-2.rad-sm
+                h5.fz-16.bb-1.mb-2.pb-2
+                  strong.minor-ico.fz-12.mr-2 子
+                  |子類
+                ul.list-unstyled
+                  - for(let i = 0; i < 3; i++)
+                    li.py-2 手機
+                      span.fl-right NT$399 / 月
+            .card-body
+              .bg-fa.p-2.rad-sm
+                h5.fz-16.bb-1.mb-2.pb-2
+                  strong.minor-ico.bg-f2.fz-12.mr-2 品
+                  |品類
+                ul.list-unstyled
+                  - for(let i = 0; i < 3; i++)
+                    li.py-2 手機
+                      span.fl-right NT$399 / 月
+
+          .card
+            .card-header.bb-1
+              .flexbox
+                .sp-4.sp-xl-3
+                  .minor-ico.minor-ico-lg.bg-f2
+                    img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/AI.png') width='130' height='130' alt=item title=item loading='lazy')
+                .sp-8.sp-xl-9
+                  h4.fz-22
+                    span.fi-star
+                    |加購AI方案
+                  p.t-right.fz-32
+                    strong
+                      span.fl-left.fz-22.mt-3 x3組
+                      |NT$1,699
+                    small.fz-16 /月
+                  .flexbox.J-end
+                    .sp-4
+                      .input-group
+                        .input-group-prepend
+                          button.btn.btn-black.btn-sm(type='button') &minus;
+                        input.form-control.form-control-sm.t-ctr(type='text' value='2' readonly)
+                        .input-group-append
+                          button.btn.btn-black.btn-sm(type='button') &plus;
+            .card-body
+              .flexbox.gy-5.gx-3
+                .sp-4.sp-xl-3
+                  .minor-ico.minor-ico-lg.bg-f2
+                    img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/AIsample.png') width='130' height='130' alt='AI範本' title='AI範本' loading='lazy')
+                .sp-8.sp-xl-9
+                  h5.fz-22
+                    span.fi-id-connect
+                    | AI範本
+                  p.t-right.fz-24
+                    strong -
+                .sp-4.sp-xl-3
+                  .minor-ico.minor-ico-lg.bg-f2
+                    img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/AItext.png') width='130' height='130' alt='AI文本擷取' title='AI文本擷取' loading='lazy')
+                .sp-8.sp-xl-9
+                  h5.fz-22
+                    span.fi-text
+                    | AI文本擷取
+                  p.t-right.fz-24
+                    strong -
+                .sp-4.sp-xl-3
+                  .minor-ico.minor-ico-lg.bg-f2
+                    img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/AIreport.png') width='130' height='130' alt='AI報告' title='AI報告' loading='lazy')
+                .sp-8.sp-xl-9
+                  h5.fz-22
+                    span.fi-ai-file
+                    | AI報告
+                  p.t-right.fz-24
+                    strong -
+        .sp.gap-3
+          h3.fz-22 發票資訊
+            span.fi-question.info-tip(data-bs-toggle='popover' data-bs-content='填寫電子發票，以利貴方報帳。')
+          .card
+            .card-body
+              .flexbox.sps-1.gy-3
+                .sp
+                  label(for='title') 發票抬頭
+                  input#title.form-control(type='text' name='title' placeholder='請輸入公司行號')
+                .sp
+                  label(for='address') 地址
+                  input#address.form-control(type='text' name='address' placeholder='請輸入地址')
+                .sp
+                  label(for='tel') 電話
+                  input#tel.form-control(type='tel' name='tel' placeholder='請輸入電話')
+                .sp
+                  label(for='uni-num') 統一編號
+                  input#uni-num.form-control(type='tel' name='uni-num' placeholder='請輸入統一編號')
+          h3.fz-22 訂單內容
+          .card
+            .card-body
+              table.table.nth-2-right.bb-1
+                colgroup.bg-fa
+                tbody
+                  tr
+                    th(scope='row' width='145') 訂單編號
+                    td 2024030001
+                  tr
+                    th(scope='row') 委託單號
+                    td 2024030001
+                  tr
+                    th(scope='row') 購買產品
+                    td
+                      img.mr-2.circle(src=require('./img/nobase64/ude.png') width='24' height='24' alt='UDE產品數據工具' title='UDE產品數據工具' loading='lazy')
+                      |UDE使用者數據工具
+                  tr
+                    th(scope='row') 購買項目
+                    td
+                      span.ic-bf.ib-silvercn
+                      |進階會員
+                  tr
+                    th(scope='row') 詳細資訊
+                    td 方案資訊
+                  tr
+                    th(scope='row') 訂閱時間
+                    td
+                      timpe(timestamp='2023-03-01T00:00') 2023/03/01
+                      |~
+                      timpe(timestamp='2023-03-01T00:00') 2024/02/29
+                  tr
+                    th(scope='row') 加購項目
+                    td 藍芽耳機 (3)、數位攝影機、運動攝影機、加購AI方案
+                      strong x2份
+                  tr
+                    th(scope='row') 付款時間
+                    td
+                      timpe(timestamp='2024-02-29T13:39') 2024/02/29 13:39
+                  tr
+                    th(scope='row') 價格
+                    td
+                      strong NT$2,899/月
+                      ul.list-unstyled
+                        li
+                          .img-crown.sm.silvercn.p-1.i-block.mr-1
+                            img.img-fluid(src=require('./img/silvercn.png') width='21' height='auto' alt='進階會員' title='進階會員' loading='lazy')
+                          |進階會員(本期剩30天到期) NT$1,699
+                        li
+                          .img-crown.sm.goldcn.p-1.i-block.mr-1
+                            img.img-fluid(src=require('./img/goldcn.png') width='21' height='auto' alt='尊榮會員' title='尊榮會員' loading='lazy')
+                          |尊榮會員
+                          span.t-red -NT$1,699
+                        li
+                          span.fi-cart
+                          |加購項目 NT$1,200
+                tfoot
+                  tr
+                    td.bg-white(style='border-bottom-width:0'): h4.fz-22 金額總計
+                      span.fi-question.info-tip(data-bs-toggle='popover' data-bs-content='升級會員時，補差額的計算方法為：升級方案之每月金額除以30天，再乘以您當前會員資格的剩餘天數，最後四捨五入至整數。')
+                    td.fz-32(style='border-bottom-width:0')
+                      strong NT$ 2,899
+                      small.fz-16 / 月
+              .flexbox.sps-2.mb-4
+                .sp
+                  button.btn.btn-outline-white.btn-block.rad-sm(type='button') 取消
+                .sp
+                  button.btn.btn-green.btn-block.rad-sm(type='button') 確認付款
+              p.mb-3
+                span.fi-info.nl-2
+                |按下確認後將會跳轉到金流付款頁面
+              .custom-control.custom-checkbox.mb-3
+                input#get-e-news.custom-control-input.check-black(type='checkbox' name='e-news')
+                label.custom-control-label(for='get-e-news') 我願意收到付費會員電子報
+              .custom-control.custom-checkbox
+                input#agreed.custom-control-input.check-black(type='checkbox')
+                label.custom-control-label(for='agreed' require) 我已閱讀並同意
+                a.i-block.t-primary.t-underline(href='./termsOfUse.html' title='使用者條款' target='_blank')  使用者條款
+    // ↓↓↓↓↓↓↓ 付款完成 ↓↓↓↓↓↓↓
+    .container
+      .alert.alert-white.mb-6(role='alert')
+        span.fi-info
+        |付款完畢後，訂閱將於15分鐘內生效
+      p.fz-22.t-ctr.mb-5 感謝您的訂閱!!趕快去試試看開通後的新功能吧!!
+      .flexbox.sps-2.sps-m-3.sps-xl-4.J-ctr.a-end
+        .sp-3.t-right
+          svg.img-fluid(fill='currentColor' width='56' height='56')
+            use(xlink:href='./img/sprite.svg#pixel-arrow')
+        .sp.spr-3
+          .card(style='box-shadow:0 2px 0 4px #000')
+            img.card-img-top(src=require('./img/pde-tool.jpg') width='100%' height='auto' alt='pde tool' title='pde tool' loading='lazy')
+            .card-body.p-3
+              h3.fz-16.mb-2
+                img.img-fluid(src=require('./img/nobase64/pde.png') width='36' height='36' alt='pde icon' title='pde icon' loading='lazy')
+                span.tool-title 產品數據分析工具
+                  br
+                  |Product Data Explore
+              .tool-badge-group
+                span.badge(style='background-color:#cce0ff;') PM
+                span.badge(style='background-color:#e4ddff;') PO
+                span.badge(style='background-color:#d1f7df;') ID
+              p.tool-desc.mb-3 專為產品設計團隊打造的一站式數據整合平台
+              a(href='#' title='PDE工具' rel='noreferrer noopener nofollow')
+                svg(width='50' height='50')&attributes({viewBox:'0 0 50 50'})
+                  polyline(fill='#FFFFFF' stroke='#000' stroke-miterlimit='10' points='25,12 38,12 38,25 ')
+                  circle(fill='none' stroke='#000' stroke-miterlimit='10' cx='25' cy='25' r='24.5')
+                  line(fill='none' stroke='#000' stroke-miterlimit='10' x1='12' y1='38' x2='38' y2='12')
+      p.fz-22.t-ctr.mb-5 本次的購買未成功，請檢查您的網路環境或聯絡信用卡發行單位
+        br
+        |若有需要幫助請點擊連結前往
+        a.t-primary.t-underline(href='#' title='資源中心') 資源中心
+        |或連繫客服人員。
+      p.t-ctr.fz-22
+        a(href='tel:0212312312' title='客服專線') 客服專線
+          br
+          |02-12312312
+block script
+  script.
+    (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+      $('#filter-products').on('change', function(e) {
+        const checkboxex = [...this[e.target.name]]
+        const isAll = checkboxex.find(checkbox => checkbox.value ==='all')
+        const notAll = checkboxex.filter(checkbox => checkbox.value !=='all')
+        if(e.target.value === 'all') {
+          notAll.forEach(checkbox=> { checkbox.checked = e.target.checked })
+          return
+        }
+        isAll.checked = notAll.every(checkbox => checkbox.checked)
+      })
+      $('.nav-megamenu-content').on('click', '.nav-link', function(e){
+        $(e.target).parents('.nav-item').addClass('active').siblings().removeClass('active')
+      })
+    })}((window)))

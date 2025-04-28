@@ -1,0 +1,160 @@
+extends ./template/layout.pug
+block local
+  - pageType = 'pde'
+  - const chartImg = []
+  - for(let i = 1; i < 21; i++)
+    - chartImg.push(require('./img/nobase64/chart-'+i+'.png'))
+block body
+  #app
+    section.min-vh-full.py-5.print-section
+      .container.mb-3
+        .flexbox.gx-2.gy-3.a-ctr
+          .sp-12
+            a.t-333(href='./pdeProjectList.html')
+              svg.img-fluid(fill='currentColor' width='19' height='19')
+                use(href='./img/sprite.svg#arrow-left')
+              span.v-middle.pl-3 返回專案AAABBCC
+          .sp
+            .input-group
+              .input-group-prepend.a-ctr
+                span.fi-shape.fz-48
+              input.form-control.form-control-title(type='text' v-model='dashboard.Name')
+          .sp-auto
+            .flexbox.J-ctr.a-ctr.gx-2(:style='`height: 3.5rem;visibility: ${selectedChartIds.length ? "visible" : "hidden"}`')
+              .sp-auto
+                p 設計您的版型
+              .sp-auto
+                .flexbox.i-flex.gx-0.radio-toggle.radio-black.t-ctr.bg-fa.b-e0.p-1
+                  template(v-for='tpl, i in filterTpls')
+                    .sp-auto
+                      input(:id='"tp-l"+tpl.Type' type='radio' name='template' :value='tpl.Type' v-model.number='selectedTemplate')
+                      label.fz-14.w-100(:for='"tp-l"+tpl.Type')
+                        span(:class='"fi-tpl-"+tpl.Type')
+          .sp-auto
+            button.btn.btn-blue(type='button' @click='postDashboard')
+              span.fi-check-cir-fill
+              |完成編輯
+          .sp-auto
+            button.btn.btn-gray.circle.ratio-1.btn-sm(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'png\'>PNG</button></li><li><button class=\'btn\' type=\'button\' data-action=\'PDF\'>PDF</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'Excel\'>Excel</button></li></menu>')
+              span.fi-download
+          .sp-auto
+            button.btn.btn-gray(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-chart-select' aria-controls='offcanvasSelect')
+              span.fi-select
+              |選擇圖表
+
+      .container-fluid
+        div(:class='tplClassList')
+          .drop-placeholder.A-ctr(v-show='selectedTemplate===-1')
+            .container
+              .i-block.t-ctr
+                img.img-fluid(src=require('./img/p-benefits-3.png') width='226' height='210' alt='建立圖表' title='建立圖表' loading='lazy')
+                p.fw-7.fz-48 建立您的儀錶板
+          template(v-for='n, i in 4')
+            div(v-show='i<tpls[selectedTemplate]?.limited' :id='\'chart-\'+i' :class='[\'drop-zone\', \'cell-\'+[\'a\',\'b\',\'c\',\'d\'][i]]')
+              //- svg(width='100%' height='100%')
+              //-   rect(x='1' y='1' width='400' height='200' fill='none' stroke='red')
+              //-   text(x='100' y='100') ID {{selectedCharts[i]?.id}} Source {{selectedCharts[i]?.source}}
+    #offcanvas-chart-select.offcanvas.offcanvas-end(tabindex='-1' ref='sidemenu')
+      .offcanvas-header.a-stretch
+        p.fw-7.mb-3 選擇已收藏的圖表進行分析
+        button.btn.btn-blue(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+          span.fi-check-cir-fill
+          |預覽儀錶板
+
+      .offcanvas-body(style='width:800px')
+        .flexbox.gx-3
+          .sp-auto
+            .flexbox.gx-0.radio-toggle.radio-black.t-ctr.bg-fa.b-e0.p-1
+              .sp-6
+                input#local(type='radio' name='locale' :value='0' v-model.number='source')
+                label.fz-14.w-100(for='local')
+                  span.fi-taiwan
+              .sp-6
+                input#global(type='radio' name='locale' :value='1' v-model.number='source')
+                label.fz-14.w-100(for='global')
+                  span.fi-earth
+          .sp
+            .dropdown.customize-dropdown.pde-dropdown
+              button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false' ref='dropdownBrands')
+                span.placeholder.limited-1-lines {{ selectBrand?.length ? selectBrand?.join(',') : '全部' }}
+                span.fi-arr-down
+              .dropdown-menu(data-popper-placement='bottom-start')
+                .dropdown-item(v-for='brand, i of filterBrand' @click.stop)
+                  .custom-control.custom-checkbox.custom-checkbox-right
+                    input.custom-control-input.check-black(type='checkbox' :id='\'brand-\'+i' name='brand' :value='brand' v-model='selectBrand')
+                    label.custom-control-label(:for='\'brand-\'+i') {{ brand }}
+          .sp
+            .dropdown.customize-dropdown.pde-dropdown
+              button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false' ref='dropdownBrands')
+                span.placeholder.limited-1-lines {{ selectFactor?.length ? selectFactor?.join(',') : '全部' }}
+                span.fi-arr-down
+              .dropdown-menu(data-popper-placement='bottom-start')
+                .dropdown-item(v-for='factor, i of filterFactor' @click.stop)
+                  .custom-control.custom-checkbox.custom-checkbox-right
+                    input.custom-control-input.check-black(type='checkbox' :id='\'factor-\'+i' name='factor' :value='factor' v-model='selectFactor')
+                    label.custom-control-label(:for='\'factor-\'+i') {{ factor }}
+        .flexbox.J-between.a-ctr.fz-14.pb-3
+          .sp-auto
+            p.fw-7 已選擇 :&nbsp;
+              span(:class='{\'t-danger\': selectedChartIds.length===selectChartLimited}') {{selectedChartIds.length}} / {{selectChartLimited}}
+              |; 搜尋結果 : {{projectList.Chart.length}}
+
+          .sp-auto
+            button.btn.btn-outline-white.t-danger(type='reset' @click='reset')
+              span.fi-reset
+              |清除
+        .flexbox.sps-2.g-3
+          .sp(v-for='chart, i of filterList')
+            input.dashboard-card.check-card-shadow.hide-checkbox(type='checkbox' name='chart-select' :id='\'chart-select\'+i' :value='chart.ID' v-model.number='selectedChartIds' :disabled='disabledChart(chart.ID)')
+            label.card-shadow.card-chart-label.col(:for='\'chart-select\'+i' :style!='`background-image:url(./img/chart-${chart.imgIndex}.png);`')
+              span.custom-control.custom-checkbox.checkbox-index.custom-control-inline
+                span.custom-control-label.fz-16.fw-7(:data-index='findQueueIndex(chart.ID)') {{ chart.Name }}
+              span.limited-1-lines {{ chart.BrandName }}
+
+  //- +modal({ id: 'template-modal', label: 'template-modal-title', static, centered, v5, nobtn})
+  //-   +header({ cls: 't-ctr' }) 加入報告至專案A
+  //-   +body
+  //-     .dropdown.customize-dropdown.pde-dropdown
+  //-       button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+  //-         span.placeholder 手機
+  //-           time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+  //-         span.fi-arr-down
+  //-       .dropdown-menu(data-popper-placement='bottom-start')
+  //-         - for(let i = 0; i < 3; i++)
+  //-           a.dropdown-item(href='javascript:void') 手機
+  //-             time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+  //-   +footer()
+  //-     button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 確定
+block script
+  script(src='https://unpkg.com/vue@3/dist/vue.global.js')
+  script(type='module') const structure =
+    include ./JSON/structure.json
+    |
+    |
+    |
+    include ./js/chartV2/chartImgIndice.js
+    |
+    |
+    |
+    include ./js/d3/d3.js
+    |
+    |
+    |
+    include ./js/chartV2/Container.js
+    |
+    |
+    |
+    include ./js/chartV2/configuration.js
+    |
+    |
+    |
+    include ./js/chartV2/charts.js
+    |
+    |
+    |
+    include ./js/chartV2/chartTypes.js
+    |
+    |
+    |
+    //- include ./js/sw/main.js
+    include ./js/dashboard.js

@@ -1,0 +1,41 @@
+mixin canonical(langs)
+  //-主要url
+  link(rel='canonical' href=staticURL + '/en/' + filename)
+  //-多語言url除了 x-default 指向首頁，頁面路徑都要改語言的頁面
+  link(rel='alternate' hreflang='x-default' href=staticURL + '/en/index.html')
+  each lang, locale in langs
+    link(rel='alternate' hreflang=lang href=staticURL + '/' + locale + '/' + filename)
+
+title #{title + ' | ' + projectName}
+meta(name='description' content=desc)
+meta(charset='UTF-8')
+meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+meta(property='og:title' content=title + ' | ' + projectName)
+meta(property='og:description' content=desc)
+//- A short description of min. 2 max. 4 sentences
+meta(property='og:image' content=staticURL + '/img/'+(['pdeProjectList','pdeManagement2','dashboard','dataAnalysis2','dataVisualize','AIreportList','AIreportExport','pde500', 'pde404', 'pdeIndex', 'pdeManagement', 'history', 'productSelect', 'dataAnalysis'].includes(basename) ?'pde':'ude')+ '-og.jpg')
+//- The URL of the image, at least 600x315 pixels, preferable 1200x630 pixels
+
+meta(property='og:url' content=staticURL + '/' + filename)
+meta(property='og:site_name' content=title + ' | ' + projectName)
+!=headTags.filter(({ tagName }) => tagName === 'meta')
+//- meta(name='twitter:title' content=title)
+//-  A brief but comprehensive title of max. 70 characters
+//- meta(name='twitter:description' content=desc)
+//- A brief description of the tweet max. 200 characters. Do not re-use the title as the description
+//- meta(name='msapplication-square70x70logo' content=staticURL + '/img/tile-sm.png')
+//- meta(name='msapplication-square150x150logo' content=staticURL + '/img/tile-md.png')
+//- meta(name='msapplication-wide310x150logo' content=staticURL + '/img/tile-wide.png')
+//- meta(name='msapplication-square310x310logo' content=staticURL + '/img/tile-lg.png')
+//- meta(name='twitter:image' content=staticURL + '/img/og.jpg')
+//- Add a unique not a generic image representing the content at least 280x150 pixels
+
+//- meta(name='author' content='YuHaoSyu')
+//- meta(name='company' content='思脈數位股份有限公司')
+//- meta(name='copyright' content='')
+//- meta(name='revisit-after' content='1 days')
+//- meta(http-equiv='expires' content='0')
+//- +canonical(langs)
+link(rel='preconnect' href='https://fonts.googleapis.com')
+link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin)
+link(href='https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Tenor+Sans&display=swap' rel='stylesheet')

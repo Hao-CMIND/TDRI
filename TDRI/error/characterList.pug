@@ -1,0 +1,168 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '使用者研究數位工具'
+  - pageType = 'ude'
+block body
+  .container
+    .flexbox.sps-1.gy-3.mb-3
+      .sp
+        a.t-333(href='./projectList.html')
+          svg.img-fluid(fill='currentColor' width='19' height='19')
+            use(xlink:href='./img/sprite.svg#arrow-left')
+          span.v-middle 專案列表
+      .sp
+        h1.fz-32 專案內容
+  section.py-5
+    .container
+      .flexbox.sps-2.gy-3.mb-3
+        .sp-m-auto
+          +dropdownProducts
+        .sp-m-auto
+          select.custom-select.bg-none.b-1(name='sort')
+            option(value='0' selected) 依產品名稱排序
+            option(value='1') 依加入時間排序(新到舊)
+            option(value='2') 依加入時間排序(舊到新)
+      .layer.gap-4
+        .flexbox.a-ctr.gx-0.mb-3
+          .sp-m-6.sp-xl-4.mr-auto
+            +inputGroup({type: 'text', id: 'modify-title', name: 'project', label: '專案名稱', value: 'ABC滾筒洗衣機', groupCls:'a-ctr bb-1 mb-3 mb-m-0', cls: 'form-control-plaintext fz-32', readonly })
+              +prepend
+                img(src=require('./img/nobase64/pjicon.png') width='48' height='48' alt='ABC滾筒洗衣機' title='ABC滾筒洗衣機' loading='lazy')
+
+              //- +append
+                button.js-toggle-readoly.btn(type='button' data-toggle='#modify-title')
+                  svg.img-fluid(fill='currentColor' stroke='#828282' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#pen')
+          .sp-7.sp-m-3.sp-l-2
+            +inputGroup({type: 'search', id: 'search', name: 'search', label: '搜尋', placeholder: '請搜尋關鍵字...', cls: 'bg-none' })
+              +prepend
+                label.mb-0.pt-1(for='search')
+                  svg(fill='currentColor' stroke='#828282' width='20' height='20')
+                    use(xlink:href='./img/sprite.svg#magnifer')
+
+          .sp-5.sp-m-3.sp-l-auto
+            button.btn.btn-purple.btn-block(type='button')
+              span.fi-upload
+              |全部匯出
+        .layer
+          .flexbox.gx-0
+            .sp-auto.mr-auto
+              h3.fz-22.t-82 人物誌清單
+            .sp-auto
+              button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#character-list' aria-expanded='false' aria-controls='character-list')
+                svg.img-fluid(fill='currentColor' width='16' height='16')
+                  use(xlink:href='./img/sprite.svg#tri-top')
+            .sp-12
+              +alertDanger('一般會員只能建立3組人物誌')
+
+          #character-list.show
+            .flexbox.sps-1.sps-m-2.sps-xl-3.g-3.g-xxl-6
+              .sp
+                button.btn.btn-rect-purple.btn-block(type='button' data-bs-toggle='modal' data-bs-target='#create-adv')
+                  span.btn.btn-purple.ic-bf.ib-goldcn 創建人物誌
+              .sp.step-1
+                +UDEcreateBtn({ id: '#create-characters', btnContent: '創建人物誌' })
+                //- button.btn.btn-rect-purple.btn-block(href='./createCharacter.html')
+                //-   svg(stroke='currentColor' width='50' height='50')
+                //-     circle(cx='25' cy='25' r='23' fill='#603ae7' opacity='0')
+                //-     use(transform='translate(10, 10)scale(0.6, 0.6)' href='./img/sprite.svg#plus')
+                //-   br
+                //-   | 創建人物誌
+
+              - for(let i = 0; i < 9; i++)
+                .sp
+                  +UDEcard()
+                    ul.card-text-list
+                      li 潘嘉莉
+                        span.title  小姐
+                      li
+                        span.title 年齡層
+                        |40歲
+                      li
+                        span.title 家庭
+                        |結婚
+                      li
+                        span.title 居住
+                        |新北 板橋
+                      li
+                        span.title 人物角色
+                        span.avatar-list
+                          img.avatar-items(src='https://fakeimg.pl/24x24/ff88ff/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                          img.avatar-items(src='https://fakeimg.pl/24x24/888888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                          img.avatar-items(src='https://fakeimg.pl/24x24/888888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+  +adModal()
+  +createInterestedParty({ id: 'create-characters', dialogCls:'step-2', title: '創建人物誌' })
+  +changeAvatar()
+block script
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/shepherd.js/7.1.2/js/shepherd.min.js')
+  script (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    .
+      const hasTutorial = new URLSearchParams(location.search).get('tutorial') === 'true'
+      if (hasTutorial) {
+        $('.btn-rect-purple').prop('disabled', true)
+        const tour = new Shepherd.Tour({
+          useModalOverlay: true,
+          defaultStepOptions: {
+            scrollTo: true
+          }
+        })
+        tour.addSteps([{
+          title: '1.創建人物誌',
+          text: '<p>點選紫色「＋」號，即可開始創建資料。</p>',
+          // modalOverlayOpeningPadding: 32,
+          attachTo: {
+            element: '.step-1',
+            on: 'right'
+          },
+          buttons: [{
+            text: '下一步',
+            action () {
+              $('#create-characters')
+                .one('show.bs.modal', function (e) {
+                  $(e.target).children().css('background-color', 'transparent')
+                    .find('button').prop('disabled', true)
+                }).modal('show')
+              tour.next()
+            },
+            classes: 'btn btn-purple'
+          },
+          {
+            text: '略過 (1/5)',
+            action () {
+              $('.btn-rect-purple').prop('disabled', false)
+              tour.cancel()
+            },
+            classes: 'btn btn-outline-white'
+          }]
+        }, {
+          title: '2.新增範本',
+          text: '<p>點選需要的利益關係人範本，即可開始修改屬於您的利益關係人。</p>',
+          attachTo: {
+            element: '.step-2',
+            on: 'left'
+          },
+          buttons: [{
+            text: '下一步',
+            action () {
+              location = './createCharacter.html?tutorial=true'
+            },
+            classes: 'btn btn-purple'
+          },
+          {
+            text: '略過 (2/5)',
+            action () {
+              $('#create-characters').one('hide.bs.modal', function (e) {
+                $('.btn-rect-purple').prop('disabled', false)
+                $(e.target).find('button').prop('disabled', false)
+              }).modal('hide')
+              tour.cancel()
+            },
+            classes: 'btn btn-outline-white'
+          }]
+        }
+        ])
+
+        tour.start()
+      }
+
+    | })}((window)))

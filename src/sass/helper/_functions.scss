@@ -1,0 +1,31 @@
+@function round5($val) {
+  $dig: 10 * 10;
+  @return calc(round($val * $dig) / $dig);
+}
+
+@function fz-rwd($fz-1, $fz-2, $width-s: 320, $width-l: 992) {
+  $fz-s: $fz-1;
+  $fz-l: $fz-2;
+  $vw: round5(calc(($fz-l - $fz-s) / calc(($width-l - $width-s) / 100)));
+  $rem: round5(calc(($fz-s - $vw * calc($width-s / 100)) / 16));
+  @return clamp(#{$fz-s}px, calc(#{$rem}rem + #{$vw}vw), #{$fz-l}px);
+}
+
+@function reverse($list, $recursive: false) {
+  $result: ();
+
+  @for $i from length($list) * -1 through -1 {
+    @if type-of(nth($list, abs($i))) == list and $recursive {
+      $result: append($result, reverse(nth($list, abs($i)), $recursive));
+    } @else {
+      $result: append($result, nth($list, abs($i)));
+    }
+  }
+
+  @return $result;
+}
+
+@function breakpoint-prev($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+  $n: index($breakpoint-names, $name);
+  @return if($n != null and $n < length($breakpoint-names), nth($breakpoint-names, $n - 1), null);
+}

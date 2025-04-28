@@ -1,0 +1,13 @@
+$utl-float: true;
+// stylelint-disable declaration-no-important
+
+// @each $breakpoint in map-keys($grid-breakpoints) {
+//   @include media-breakpoint-up($breakpoint) {
+//     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+  @mixin float($infix) {
+    .fl#{$infix}-left  { float: left; }
+    .fl#{$infix}-right { float: right; }
+    .fl#{$infix}-none  { float: none; }
+  }
+//   }
+// }

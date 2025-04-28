@@ -1,0 +1,125 @@
+extends ./template/layout.pug
+block local
+  // body class
+  // a href 進階會員 => ./dataAnalysis.html
+  // bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - bodyAttr = { style: 'background-color:#f3f3f3;', class: 'pt-0' } // none-advmember
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+  -
+    const lock = {
+      'data-bs-trigger': 'focus',
+      tabindex: 0,
+      class: ['popover-disabled'],
+      'data-bs-custom-class': 'bg-fafafa p-3',
+      'data-bs-html': 'true',
+      'data-bs-content': '<h4 class=\'fz-16 t-ctr\'>挑選產品類別<br>剩餘額度 : <span class=\'t-purple\'>3份</span> <span class=\'t-red\'>0份</span></h4><p>您還有 N 個產品可選擇，需要此產品才能觀看豐富的數據，請確認是否前往加購？</p><p>您需要加購此產品才能觀看豐富的數據，請確認是否前往加購？</p><a href=\'./upgradeMember.html\' class=\'btn btn-block btn-purple mt-3\'>免費加購</a>',
+      'data-bs-toggle': 'popover',
+      'data-bs-placement': 'right',
+    }
+//- mixin scope(majorItems, major)
+//-   - const i = Object.keys(products).indexOf(major)
+//-   +item({ id: 'tab-'+i, title: major })
+//-     .container.py-3.py-l-5&attributes(containerAttr)
+//-       +productList(major, majorItems)
+block body
+  section.py-3.py-xl-5
+    .container-fluid.bg-cover.pt-5.pb-3.pb-l-6(style!=`background-image:url(${require('./img/pde-banner.jpg')});`)
+      h1.feature-1.lh-xxl-none.t-ctr.f-tenor.pt-l-6 Product
+        br
+        |Data Explore
+    .container.pt-4
+      .flexbox.sps-1.gy-3.J-ctr.mb-5
+        .sp-7.sp-xl
+          h2.fz-32 產品數據工具
+            span.fz-18.t-82.pl-3 產品類別選擇
+          p
+            span.fi-info
+            |請選擇一類您想查詢的產品
+        .sp-5.sp-xl-auto
+          .input-group.bg-white.of-hidden.pill
+            .input-group-prepend
+              label.px-2.pt-1(for='search')
+                svg(fill='currentColor' stroke='#828282' width='20' height='20')
+                  use(href='./img/sprite.svg#magnifer')
+            input#search.form-control.bg-none(type='search' name='search' placeholder='請搜尋關鍵字...' aria-label='搜尋')
+    .container
+      - const fields = ['領域一', '領域二']
+      //- , '領域三', '領域四'
+      //- - const majors = ['車輛']
+      //- , '汽車百貨', '相機/攝影', '水上運動', '機車用品'
+      //- - const minors = ['安全帽']
+      //- , '自行車收納配件', '自行車零/組件', '自行車配件'
+      //- - const products = ['自行車錶']
+        //- , '自行車燈', '自行車手機架', '自行車水壺架', '自行車密碼鎖', '自行車密碼鎖', '自行車鑰匙鎖', '自行車車鈴'
+      ul#megamenu-tab.nav.nav-fill.nav-megamenu(role='tablist' style='--tab-bg: url(../img/tab-white.png)')
+        each field, i in fields
+          li.nav-item(role='presentation')
+            button.nav-link(id=`pills-${i}-tab` class={'active':i===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}` type='button' role='tab' aria-controls=`pills-${i}` aria-selected=String(i===0)) #{field}
+
+      #megamenu-tabContent.tab-content.nav-megamenu-content
+        each field, i in fields
+          .tab-pane.fade(id=`pills-${i}` class={'show active':i===0} role='tabpanel' aria-labelledby=`pills-${i}-tab`)
+            .flexbox.a-start.gx-0
+              .sp-4.tab-list-1
+                h4.megamenu-categroy.fz-14.fw-4.py-2 大類
+                .nav-scroll
+                  ul.nav.col(id=`major-tab-${i}` role='tablist' aria-orientation='vertical')
+                    each major, j in majors
+                      li.nav-item(role='presentation')
+                        button.nav-link(id=`pills-${i}-${j}-tab` class={'active':j===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}` type='button' role='tab' aria-controls=`pills-${i}-${j}` aria-selected=String(j===0))
+                          span(class='fi-ap'+majorIndex.indexOf(major.Name))
+                          |#{major.Name}
+              .sp-8
+                .tab-content(id=`major-tab-content-${i}`)
+                  each major, j in majors
+                    .tab-pane.fade(id=`pills-${i}-${j}` class={'show active':j===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-tab`)
+                      .flexbox.a-start.gx-0
+                        .sp-6
+                          h5.megamenu-categroy.fz-14.fw-4.py-2 子類
+                            //- .custom-control.custom-checkbox.custom-checkbox-right
+                              input.custom-control-input.check-black(id=`minor-all-${i}-${j}` type='checkbox' value='true')
+                              label.custom-control-label(for=`minor-all-${i}-${j}`)
+                          .nav-scroll
+                            ul.nav.col(id=`minor-tab-${j}` role='tablist' aria-orientation='vertical')
+                              each minors, k in major.Sub
+                                li.nav-item(role='presentation')
+
+                                  button.nav-link.sp(id=`pills-${i}-${j}-${k}-tab` class={'active':k===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}-${k}` type='button' role='tab' aria-controls=`pills-${i}-${j}-${k}` aria-selected=String(k===0)) #{minors.Name}
+
+                                  //- .sp-auto
+                                    a.btn.p-0(class=k===2 ? 'disabled' : '' href=`./dataAnalysis2.html?ID=${minors.ID}&majorID=${majorIndex.indexOf(major.Name)}&majorName=${major.Name}&minorName=${minors.Name}&productName=${minors.Name}`)&attributes(k ===1 ? lock: {})
+                                      span(class=k===1 ? 'fi-cart' : 'fi-arr-right')
+                        .sp-6
+                          .tab-content(id=`minor-tab-content-${j}`)
+                            each minors, k in major.Sub
+                              .tab-pane.fade(id=`pills-${i}-${j}-${k}` class={'show active':k===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-${k}-tab`)
+                                h6.megamenu-categroy.fz-14.fw-4.py-2 品類
+                                  //- .custom-control.custom-checkbox.custom-checkbox-right
+                                    input.custom-control-input.check-black(id=`product-all-${i}-${j}-${k}` type='checkbox' value='true')
+                                    label.custom-control-label(for=`product-all-${i}-${j}-${k}`) 品類
+                                .nav-scroll
+                                  .nav.col
+                                    a.nav-link.A-ctr(href=`./dataAnalysis2.html?ID=${minors.ID}&majorID=${majorIndex.indexOf(major.Name)}&majorName=${major.Name}&minorName=${minors.Name}&productName=${minors.Name}`)&attributes(k ===2 ? lock: {}) 全部
+                                      span.fl-right.mt-2(class=l === 1 ? 'fi-cart' : 'fi-arr-right')
+                                    each p, l in minors.Sub
+                                      a.nav-link.A-ctr(href=`./dataAnalysis2.html?ID=${p.ID}&majorID=${majorIndex.indexOf(major.Name)}&majorName=${major.Name}&minorName=${minors.Name}&productName=${p.Name}`)&attributes(l === 1 ? lock: {}) #{p.Name}
+                                        span.fl-right.mt-2(class=l === 1 ? 'fi-cart' : 'fi-arr-right')
+        .t-ctr
+          p 請
+            a.t-blue(href='./membership.html') 登入
+            |，再選擇產品類別。
+          p 請前往
+            a.t-blue(href='./membership.html') 價格方案
+            |選擇您需要分析的產品類別，一般會員可以免費挑選1個子類及1個品類。
+
+block script
+  script.
+    (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+      //- $('.nav-megamenu-content').on('click', '.nav-link', function(e){
+      //-   $(e.target).parents('.nav-item').addClass('active').siblings().removeClass('active')
+      //- })
+      $('.popover-disabled').on('click', function(e){
+        e.preventDefault()
+      }).map(popover =>new $.bootstrap.Popover(popover))
+    })}((window)))

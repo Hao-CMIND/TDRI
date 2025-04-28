@@ -1,0 +1,628 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '使用者研究質性報告'
+  - pageType = 'ude'
+  - const card = require('./img/nobase64/card-persona-border.png')
+  - const ujmheaderbegin = require('./img/nobase64/ujm-begin.png')
+  - const ujmheaderprocess = require('./img/nobase64/ujm-process.png')
+  - const ujmheaderend = require('./img/nobase64/ujm-end.png')
+
+block style
+  style @media print{@page{size:a4 portrait;}.sp-12-print{flex:0 0 100%;max-width:100%;}.print-bg{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}}
+block body
+  svg(display='none')
+    defs
+      symbol#e1(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M16.8 17.7a.8.8 0 0 1-.5-.2l-1.1-.8-1.1.8c-.3.2-.8.2-1 0l-1.1-.8-1 .8a1 1 0 0 1-1.1 0l-1.1-.8-1 .8a1 1 0 0 1-1.3-.1 1 1 0 0 1 .1-1.3l1.6-1.2c.3-.2.8-.2 1 0l1 .8 1.1-.8a1 1 0 0 1 1.1 0l1 .8 1-.8a1 1 0 0 1 1.1 0l1.6 1.2c.4.3.5.8.2 1.3 0 .1-.2.3-.5.3zm0-4.8a.8.8 0 0 1-.5-.2L13.9 11c-.2-.2-.4-.5-.4-.8 0-.3.2-.5.4-.8l2.4-1.8a1 1 0 0 1 1.3.1c.3.4.2 1-.1 1.3l-1.4 1 1.4 1c.4.3.4.8.1 1.3-.3.5-.5.6-.8.6zm-9.6 0c-.3 0-.5-.2-.8-.4a1 1 0 0 1 .2-1.3l1.4-1-1.4-1a.9.9 0 0 1-.1-1.3c.3-.4.8-.5 1.3-.2l2.4 1.8c.2.2.4.5.4.8 0 .3-.1.5-.4.8l-2.4 1.7-.6.1z')
+      symbol#e2(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='m15.3 16.6-.3-.3c-.9-.6-1.9-1-3.1-1-1.1 0-2.2.4-3.1 1l-.3.3.8.3a14.7 14.7 0 0 0 5 0c.7-.1.9-.3 1-.3zm-.3 2c-.7.2-1.7.3-3 .3-1.2 0-2.2-.1-3-.3-.7-.2-1.3-.4-1.7-.9-.5-.5-.6-1.1-.4-1.7.2-.5.6-.9.9-1.2 1.2-.8 2.7-1.3 4.2-1.3s3 .5 4.1 1.4c.4.3.8.7.9 1.2.2.6.1 1.2-.4 1.7-.3.4-.9.7-1.6.8zM7.2 13a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l1.3-1-1.3-1a1 1 0 0 1-.2-1.4 1 1 0 0 1 1.4-.2l2.4 1.8c.3.2.4.5.4.8 0 .3-.1.6-.4.8l-2.4 1.8-.6.2zm9.6 0-.6-.2-2.4-1.8c-.3-.2-.4-.5-.4-.8s.1-.6.4-.8l2.4-1.8a1 1 0 0 1 1.4.2 1 1 0 0 1-.2 1.4l-1.3 1 1.3 1c.4.3.5 1 .2 1.4a1 1 0 0 1-.8.4z')
+      symbol#e3(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M15.6 18.9a.8.8 0 0 1-.5-.2 5.3 5.3 0 0 0-6.1 0c-.4.3-1 .2-1.3-.2s-.2-1 .2-1.3a7 7 0 0 1 8.3 0c.4.3.4.8.1 1.3-.2.3-.4.4-.7.4zm0-6.9c-.2 0-.5-.1-.8-.5-.2-.4-.4-.8-.4-1.3s.1-.9.4-1.3c.3-.4.7-.5.8-.5s.5.1.8.5c.2.4.4.8.4 1.3s-.1.9-.4 1.3c-.3.4-.6.5-.8.5zm-7.2 0c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e4(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M15.6 12c-.2 0-.5-.1-.8-.5-.2-.4-.4-.8-.4-1.3 0-.4.1-.9.4-1.3.3-.4.7-.5.8-.5s.5.1.8.5c.2.4.4.8.4 1.3 0 .4-.1.9-.4 1.3-.3.4-.6.5-.8.5zm-7.2 0c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8zm3.6 8.1c-1.8 0-3.3-1.7-3.3-3.9s1.5-3.9 3.3-3.9 3.3 1.7 3.3 3.9-1.5 3.9-3.3 3.9zm0-6c-.8 0-1.5 1-1.5 2.1s.7 2.1 1.5 2.1 1.5-1 1.5-2.1-.7-2.1-1.5-2.1z')
+      symbol#e5(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M8.4 17.7c-.4 0-.8-.3-.9-.8-.1-.5.2-1 .8-1.1l7.2-1.2c.4-.1 1 .2 1 .8.1.5-.2 1-.8 1l-7.2 1.2-.1.1zM9.6 7.5h-.2L7 6.9a1 1 0 1 1 .4-1.8l2.4.6c.4.2.8.6.7 1.1a1 1 0 0 1-.9.7zm4.8 0a1 1 0 0 1-.9-.7c-.2-.5.2-1 .7-1.1l2.4-.6c.5-.2 1 .1 1.1.7.1.5-.2 1-.7 1.1l-2.4.6h-.2zm2.4 2.7c0 1-.5 1.8-1.2 1.8s-1.2-.8-1.2-1.8.5-1.8 1.2-1.8 1.2.8 1.2 1.8zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e6(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M7.2 19.6c-.6 0-1.1-.4-1.2-1-.1-.7.3-1.3 1-1.4l9.6-1.6c.6-.1 1.3.3 1.4 1s-.3 1.3-1 1.4l-9.6 1.6h-.2zm11.2-10c0 1.3-.7 2.4-1.6 2.4s-1.6-1.1-1.6-2.4.7-2.4 1.6-2.4c.9 0 1.6 1.1 1.6 2.4zM7.2 12c.9 0 1.6-1.1 1.6-2.4s-.7-2.4-1.6-2.4c-.9 0-1.6 1.1-1.6 2.4S6.3 12 7.2 12z')
+      symbol#e7(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M15.6 17.7H8.4a.9.9 0 0 1-.9-.9c0-.5.4-.9.9-.9h7.2c.5 0 .9.4.9.9s-.4.9-.9.9zm1.2-7.5c0 1-.5 1.8-1.2 1.8s-1.2-.8-1.2-1.8.5-1.8 1.2-1.8 1.2.8 1.2 1.8zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e8(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='M12 18.9c-1.5 0-2.9-.5-4.1-1.4-.4-.3-.5-.8-.1-1.3.2-.3.8-.4 1.2-.1a5.4 5.4 0 0 0 6.2 0 1 1 0 0 1 1.3.2c.3.4.2 1-.1 1.3a8.3 8.3 0 0 1-4.4 1.3zm4.8-8.7c0 1-.5 1.8-1.2 1.8s-1.2-.8-1.2-1.8.5-1.8 1.2-1.8 1.2.8 1.2 1.8zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e9(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='m8.7 15.8.3.3c.9.6 1.9 1 3.1 1s2.2-.4 3.1-1l.3-.3-.8-.3a14.7 14.7 0 0 0-5 0l-1 .3zm.4-2c.7-.2 1.7-.3 3-.3 1.2 0 2.2.1 3 .3.7.2 1.3.4 1.7.9.5.5.6 1.1.4 1.7-.2.5-.6.9-.9 1.2a6.8 6.8 0 0 1-8.2 0c-.4-.3-.8-.7-.9-1.2-.2-.6-.1-1.2.4-1.7.2-.5.8-.8 1.5-.9zM8.4 12c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8zm7.2 0c.7 0 1.2-.8 1.2-1.8s-.5-1.8-1.2-1.8-1.2.8-1.2 1.8.5 1.8 1.2 1.8z')
+      symbol#e10(width='24' height='24')&attributes({viewBox:'0 0 24 24'})
+        path(d='m8.7 15.8.3.3c.9.6 1.9 1 3.1 1 1.1 0 2.2-.4 3.1-1l.3-.3-.8-.3a14.7 14.7 0 0 0-5 0c-.7.1-.9.3-1 .3zm.3-2c.7-.2 1.7-.3 3-.3 1.2 0 2.2.1 3 .3.7.2 1.3.4 1.7.9.5.5.6 1.1.4 1.7-.2.5-.6.9-.9 1.2a6.8 6.8 0 0 1-8.2 0c-.4-.3-.8-.7-.9-1.2-.2-.6-.1-1.2.4-1.7.2-.5.8-.8 1.5-.9zm10.2-2c-.6 0-1-.4-1-1 0-.8-.6-1.4-1.4-1.4-.8 0-1.4.6-1.4 1.4 0 .6-.4 1-1 1s-1-.4-1-1c0-1.9 1.5-3.4 3.4-3.4s3.4 1.5 3.4 3.4c0 .6-.4 1-1 1zm-9.6 0c-.6 0-1-.4-1-1 0-.8-.6-1.4-1.4-1.4s-1.4.6-1.4 1.4c0 .6-.4 1-1 1s-1-.4-1-1c0-1.9 1.5-3.4 3.4-3.4s3.4 1.5 3.4 3.4c0 .6-.4 1-1 1z')
+  main
+    .container-fluid.print-none
+      .flexbox
+        .sp-2.py-5.bg-f2
+        .sp.py-5
+          a.t-333(href='./projectList.html')
+            svg.img-fluid(fill='currentColor' width='19' height='19')
+              use(href='./img/sprite.svg#arrow-left')
+            span.v-middle 返回專案A
+        .sp-auto.py-5
+          a.btn.btn-gray(href='#' download='AI報告列表.pdf' title='下載報告')
+            span.fi-download
+            |下載報告
+    .container-fluid
+      .flexbox
+        .sp-2.bg-f2.print-none
+          .sticky-top
+            h2.fz-16.t-333 目錄
+            nav#scroll-spy-nav.nav.nav-spy-gray.list-number.col.nx-3
+              a.nav-link(href='#sec-1' title='總體設計趨勢') 導言
+              a.nav-link(href='#sec-2' title='專案利益關係人分析') 專案利益關係人分析
+              a.nav-link(href='#sec-3' title='使用者分析') 使用者分析
+              a.nav-link(href='#sec-4' title='設計機會點與產品策略') 設計機會點與產品策略
+        .sp-8.sp-12-print
+          .container
+            h1.fz-32.t-ctr 使用者研究質性報告
+              time(datetime='2024-02-28T15:34') 2024/11/12 08:11
+            +alertDanger('AI生成的內容可能包含錯誤或誤導資訊，請驗證內容的準確性。',false)
+            section.py-3.nest-counter.report-section(data-bs-spy='scroll' data-bs-target='#scroll-spy-nav' data-bs-offset='0' tabindex='0')
+              h2#sec-1.title-count 導言
+              .nest-counter
+                h3 產品研發報告：智慧手環的價值主張分析
+                p 本研究報告旨在設計並推出一款具備心率監測、步數計算、睡眠分析等功能的健康追蹤手環，幫助用戶更好地管理自己的健康狀況。研究方法包括利益關係人分析、使用者 persona 分析以及使用者共同需求設計機會點與產品策略的探討。結論指出，智慧手環在健康監控、運動數據追蹤和生活便利性方面具有顯著的價值，能夠滿足不同使用者的需求。然而，充電頻繁、佩戴不適和操作困難等痛點需要進一步解決。針對不同使用者群體的需求，產品設計應該考慮多樣化的錶帶設計和簡化操作界面，以提升整體使用體驗。
+                h3 研究目的
+                p 本研究的主要目的是設計並推出一款健康追蹤手環，具備心率監測、步數計算、睡眠分析等功能，幫助用戶更好地管理自己的健康狀況。透過深入分析利益關係人和使用者 persona，確定產品的核心功能和設計方向，以滿足不同使用者的需求。
+                h3 研究方法
+                ol.list-inside
+                  li 利益關係人分析：識別並分析健身教練、智慧手環供應商和健康愛好者等主要利益關係人的需求和影響力。
+                  li 使用者 persona 分析：根據不同使用者的需求和痛點，進行詳細的 persona 分析，確定產品的目標使用者群體。
+                  li 使用者共同需求設計機會點與產品策略：根據使用者的共同需求，提出具體的設計機會點和產品策略，確保產品能夠滿足市場需求。
+                h3 結論
+                p 在產品研發過程中，最優先關注的利益關係人應該是健身教練 Mark、智慧手環供應商和健康愛好者 Lisa。這三者之間的關係密切，互相影響，確保他們的需求得到滿足將有助於產品的成功。Mark 的專業意見和 Lisa 的使用體驗能夠提供寶貴的反饋，而供應商的產品質量和交付時間則是產品成功的關鍵。
+                p 智慧手環在健康監控、運動數據追蹤和生活便利性方面具有顯著的價值，能夠滿足不同使用者的需求。然而，充電頻繁、佩戴不適和操作困難等痛點需要進一步解決。針對不同使用者群體的需求，產品設計應該考慮多樣化的錶帶設計和簡化操作界面，以提升整體使用體驗。
+
+                p.b-e0.p-4 以上報告所提供之資訊，在尖端科技發展與產業變動中，無法保證資訊的時效性及完整性，使用者應自行承擔因使用本報告資料可能產生之任何損害。著作權歸工研院所有，非經書面允許，不得以任何形式進行局部或全部之重製、公開傳輸、改作、散佈或其他利用本報告資料之行為。
+
+              h2#sec-2.title-count 專案利益關係人分析
+              p 此部分旨在識別和分析在設計服務中涉及的所有利益關係人，並探討他們在項目中的需求和目標。列出已經搜集到的利益關係人的資料，包括他們的角色、需求和影響力。可以使用利益關係人矩陣或表格來呈現這些資訊，並且分別標註現有資料和推測資料，以便於清楚對比和理解。
+              .nest-counter
+                h3.title-count 既有資料整理
+                p 此章節將基於已搜集的資料，概述專案中的主要利益關係人，如用戶、企業、合作夥伴等。這部分內容將包括整理出的利益關係人表格，並說明這些資料如何幫助我們理解這些關係人的需求與期望。
+                .nest-counter
+                  h4.title-count.t-82 視展示各利益關係人的影響力分佈 - 同心圓圖
+                  img.img-fluid.mt-3.p-4.b-e0(src='data:image/png;base64,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')
+                  h4.title-count.t-82 圓上四區域與四圈的概述﹢表格呈現：盤點各區域的利益關係人，以下是針對咖啡機開發專案的利益關係人表格示例 :
+                  table.table.table-bordered.t-ctr.my-3
+                    thead
+                      tr
+                        th 權力利益矩陣
+                          br
+                          |X
+                          br
+                          |群體類型
+                        th 使用者
+                          br
+                          |(Users)
+                        th 影響者
+                          br
+                          |(Influencers)
+                        th 提供者
+                          br
+                          |(Providers)
+                        th 治理
+                          br
+                          |(Governance)
+                    tbody
+                      tr
+                        th 參與者
+                          br
+                          |(Participants)
+                        td 家庭用品、商業用戶
+                        td 產品經理、工業設計師
+                        td 電子零件供應商、塑膠外殼製造商
+                        td 國家標準與認證機構
+                      tr
+                        th 環境設定者
+                          br
+                          |(Setters)
+                        td
+                        td 市場分析師、專業咖啡師
+                        td 微處理器供應商、咖啡機元件供應商
+                        td 環境保護組織、消費者保護機構
+                      tr
+                        th 關注者
+                          br
+                          |(Observers)
+                        td 咖啡愛好者社群
+                        td 技術博客作者、家電評論家
+                        td 包裝設計供應商、物流服務提供商
+                        td 行業協會、貿易組織
+                      tr
+                        th 群眾
+                          br
+                          |(Crowd)
+                        td 潛在新客戶
+                        td 社交媒體用戶、公眾
+                        td
+                        td
+                  .b-e0.p-4.bg-f2.mb-3
+                    ul
+                      li 利益關係人有四大類：
+                        ol
+                          li 使用者（Users）：直接使用咖啡機的終端客戶，包括尋求便利家用解決方案的家庭用戶以及專業品質需求的商業用戶（如咖啡店）。
+                          li 影響者（Influencers）：對咖啡機產品設計和功能決策有直接或間接影響的人，包括內部的產品經理和工業設計師，以及外部的市場分析師和專業咖啡師，他們可能會提供市場趨勢或專業建議。
+                          li 提供者（Providers）：提供開發過程中所需的材料、零件或服務的企業和個體，如電子零件供應商、微處理器供應商和塑膠外殼製造商等。
+                          li 治理（Governance）：設立和維護產品開發相關法規、標準和政策的機構，如國家標準與認證機構、環境保護組織和消費者保護機構等。
+                      li 根據權力與興趣的選擇，有相應的策略規則：
+                        ol
+                          li 參與者須密切聯絡 (Engage Closely)：積極與這類人士互動，確保他們對你的工作感到滿意和支持。
+                          li 保持環境設定者滿意 (Keep Satisfied)：合理分配時間和資源以滿足這些人的需求，但避免過度溝通導致他們失去關注。
+                          li 持續關注者更新情況 (Keep Informed)：即時向這些人提供必要的更新和資訊，並聆聽他們的意見，以便利用他們在細節上的支持。
+                          li 持續監控群眾 (Monitor)：關注這些人的動態，但不需要過度介入或溝通，以免造成不必要的干擾。
+                h3.title-count 綜合分析
+                p 在這部分，我們將深入分析每個利益關係人的需求與痛點。通過資料的綜合分析，我們將探討這些痛點如何在資料中表現出來，並指出是否有未被現有資料涵蓋的潛在需求或痛點。這一節將為服務設計策略的制定提供依據。
+                p 根據提供的資料，以下是最優先關注的三名利益關係人及其需求和原因：
+                .b-e0.p-4
+                  ol
+                    li
+                      h4 健身教練 Mark
+                      ul
+                        li 留言
+                        li 建議修訂
+                        li 編輯此處
+                        li Stakeholder Name: 健身教練 Mark
+                        li 原因:
+                        li 高權力: 健身教練 Mark 擁有高權力，能夠直接影響產品的開發方向。
+                        li 利益高: 他對產品的成功有高度的興趣，因為這直接影響到他的工作效果和客戶滿意度。
+                        li 急迫性高: 需要即時且準確的數據來提供有效的健身和健康建議。
+                        li 需求:
+                        li 準確且即時的客戶健康數據: 這是他能夠提供有效建議的基礎。
+                        li 穩定的數據傳輸和顯示: 確保他能夠即時了解客戶的健康狀況。
+                    li
+                      h4 智慧手環供應商
+                      ul
+                        li Stakeholder Name: 智慧手環供應商
+                        li 原因:
+                        li 高權力: 作為產品的主要供應商，他們對產品的質量和交付時間有直接的控制權。
+                        li 利益高: 他們的業務成功與產品的成功密切相關。
+                        li 急迫性高: 需要穩定且高效的生產流程來確保按時交付高品質的產品。
+                        li 需求:
+                        li 穩定且高效的生產流程: 確保產品按時交付並符合品質標準。
+                        li 解決生產過程中的問題: 任何生產延遲或品質問題都需要及時解決。
+                    li
+                      h4 小米實體店
+                      ul
+                        li Stakeholder Name: 小米實體店
+                        li 原因:
+                        li 高權力: 作為主要的銷售渠道，他們對產品的市場表現有直接影響。
+                        li 利益高: 他們的銷售業績與產品的成功密切相關。
+                        li 急迫性高: 需要穩定的產品供應和良好的售後服務來滿足客戶需求。
+                        li 需求:
+                        li 穩定的產品供應: 確保庫存充足，避免銷售中斷。
+                        li 良好的售後服務: 解決客戶問題，提升客戶滿意度。
+                  h4 利益關係人之間的關係
+                  ul
+                    li
+                      p
+                        strong 健身教練 Mark  & 健康愛好者 Lisa
+                        br
+                        |健身教練 Mark 需要健康愛好者 Lisa 的健康數據來提供建議，Lisa 依賴 Mark 的建議來達到更健康的生活方式。兩者之間是互補的關係。
+                    li
+                      p
+                        strong 智慧手環供應商 & 小米實體店
+                        br
+                        |智慧手環供應商負責提供高品質的產品，小米實體店負責銷售這些產品。供應商的生產效率和產品質量直接影響到實體店的銷售和客戶滿意度。
+                    li
+                      p
+                        strong 小米實體店 & 健身教練 Mark
+                        br
+                        |小米實體店銷售的產品（如智慧手環）是健身教練 Mark 提供服務的工具。實體店的產品質量和供應穩定性影響到 Mark 的工作效果。
+                  p 這些利益關係人之間的互動和需求滿足是產品成功的關鍵。確保他們的需求得到滿足，並且他們之間的關係協調良好，將有助於產品的整體成功。
+              h2#sec-3.title-count 使用者分析
+              p 本節將重點放在使用者的需求與行為分析上，著重於理解目標使用者的需求、痛點及行為模式，從而為設計策略提供依據，並提出三個關鍵結果。
+              .nest-counter
+                h3.title-count 既有資料整理
+                p 基於現有資料進行的使用者分析，根據需求與痛點的契合度、使用頻率和重要性、影響力、市場規模等因素，包括使用者角色剖析、用戶旅程圖（User Journey Maps）的描繪。對3個persona進行排序如下：
+
+                .flexbox.gx-0.b-e0.p-3
+                  .sp-auto
+                    .card.card-persona.bg-contain.print-bg(style='--card-bg:url(\'../img/card-persona-border.png\');width:19.5rem')
+                      .card-header
+                        .avatar
+                          img(src=require('./img/user-blue.jpg') width='80' height='80' alt='潘佳麗' title='潘佳麗' loading='lazy' style='margin-bottom:0')
+                        h4.t-333
+                          a.stretched-link(href='./createCharacter2.html' title='潘佳麗') 潘佳麗
+                          span.fw-4
+                            span.t-82  小姐
+                            br
+                            | 社群行銷經理
+                        p.card-text.limited-2-lines 喜愛廣交不同年齡層的社群行銷經理，會在每個月與區主管提案
+                      .card-body
+                        .flexbox
+                          .sp-6
+                            .rect
+                              span.t-purple 年齡
+                            p
+                              strong 40歲
+                          .sp-6
+                            .rect
+                              span.fi-ap15
+                            p
+                              strong 電暖器
+
+                  .sp
+                    ol.mark-bold
+                      li
+                        h4 行銷主管 阿宇
+                        ul.list-inside
+                          li 動機與痛點：阿宇有心律不整的問題，想要監控自己的心跳，但每天都需要充電覺得麻煩。
+                          li 需求與目標：阿宇有心律不整的問題，對心率監測功能有強烈需求，且希望手環能發出警示，這與產品的核心功能高度契合。
+                          li 行為模式：每天使用，因為需要隨時監控心跳狀況，使用頻率高且重要性強。
+                          li 價值觀：
+                            ul
+                              li 市場規模：中年職場人士是健康追蹤手環的重要市場，市場規模大。
+                              li 代表受眾與市場潛力：中高階行銷主管經濟能力足夠，職場壓力增加，使用者對於健康管理需求上升，市場潛力大。
+                          li 影響力：作為行銷主管，阿宇在社交圈和職場中有一定的影響力，能夠推動產品的口碑傳播。
+                .flexbox.sps-5.gx-0.b-e0.p-3.t-ctr.print-bg
+                  .sp-12.t-left 顧客行為分析
+                  .sp.bg-contain.A-ctr(style!='min-height:5rem; background-image:url(\'./img/ujm-begin.png\');')
+                    p.t-white 投入待洗衣物
+                  .sp.bg-contain.A-ctr(style!='min-height:5rem; background-image:url(\'./img/ujm-process.png\');')
+                    p.t-white 設定洗滌條件/模式
+                  .sp.bg-contain.A-ctr(style!='min-height:5rem; background-image:url(\'./img/ujm-process.png\');')
+                    p.t-white 加入洗潔精
+                  .sp.bg-contain.A-ctr(style!='min-height:5rem; background-image:url(\'./img/ujm-process.png\');')
+                    p.t-white 等待洗滌完成
+                  .sp.bg-contain.A-ctr(style!='min-height:5rem; background-image:url(\'./img/ujm-end.png\');')
+                    p.t-white 取出洗滌完成的衣物
+
+                .b-e0.mb-4
+                  .pt-3.pl-3 顧客情感分析
+                  svg.img-fluid(width='100%' height='264' style='user-select: none;')&attributes({viewBox: '0 0 1120 264'})
+                    path(d='M224 0h224v266h-224ZM672 0h224v266h-224Z' fill='#fafafa')
+                    path(d='M10 24A6 6 0 1 1 10 25ZM10 48A6 6 0 1 1 10 49ZM10 72A6 6 0 1 1 10 73ZM10 96A6 6 0 1 1 10 97ZM10 120A6 6 0 1 1 10 121ZM10 144A6 6 0 1 1 10 145ZM10 168A6 6 0 1 1 10 169ZM10 192A6 6 0 1 1 10 193ZM10 216A6 6 0 1 1 10 217ZM10 240A6 6 0 1 1 10 241Z' fill='#bdbdbd')
+                    text(x='32' y='24' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 10分
+                    text(x='32' y='48' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 9分
+                    text(x='32' y='72' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 8分
+                    text(x='32' y='96' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 7分
+                    text(x='32' y='120' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 6分
+                    text(x='32' y='144' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 5分
+                    text(x='32' y='168' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 4分
+                    text(x='32' y='192' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 3分
+                    text(x='32' y='216' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 2分
+                    text(x='32' y='240' fill='#bdbdbd' alignment-baseline='middle' font-size='12') 1分
+                    path(d='M64 24H1120M64 48H1120M64 72H1120M64 96H1120M64 120H1120M64 144H1120M64 168H1120M64 192H1120M64 216H1120M64 240H1120' stroke='#e0e0e0' stroke-dasharray='2,2')
+                    use(x='20' y='36' fill='#f2f2f2' transform='scale(0.5)' href='#e10')
+                    use(x='20' y='84' fill='#f2f2f2' transform='scale(0.5)' href='#e9')
+                    use(x='20' y='132' fill='#f2f2f2' transform='scale(0.5)' href='#e8')
+                    use(x='20' y='180' fill='#f2f2f2' transform='scale(0.5)' href='#e7')
+                    use(x='20' y='228' fill='#f2f2f2' transform='scale(0.5)' href='#e6')
+                    use(x='20' y='276' fill='#f2f2f2' transform='scale(0.5)' href='#e5')
+                    use(x='20' y='324' fill='#f2f2f2' transform='scale(0.5)' href='#e4')
+                    use(x='20' y='372' fill='#f2f2f2' transform='scale(0.5)' href='#e3')
+                    use(x='20' y='420' fill='#f2f2f2' transform='scale(0.5)' href='#e2')
+                    use(x='20' y='468' fill='#f2f2f2' transform='scale(0.5)' href='#e1')
+                    path(d='M312 114L320 120L312 126ZM536 234L544 240L536 246ZM760 90L768 96L760 102ZM984 186L992 192L984 198ZM124 72A4 4 0 1 1 124 73ZM348 120A4 4 0 1 1 348 121ZM572 240A4 4 0 1 1 572 241ZM796 96A4 4 0 1 1 796 97Z' fill='#bdbdbd' style='transition: d 0.3s;')
+                    path(d='M124 72L212 72Q224 72 224 84L224 108Q224 120 236 120L320 120 M348 120L436 120Q448 120 448 132L448 228Q448 240 460 240L544 240 M572 240L660 240Q672 240 672 228L672 108Q672 96 684 96L768 96 M796 96L884 96Q896 96 896 108L896 180Q896 192 908 192L992 192' fill='none' stroke='#bdbdbd' style='transition: d 0.3s;')
+                    g.draggable
+                      circle(r='12' cx='112' cy='72' fill='#6FCF97' style='transition: fill 0.3s;')
+                      use(href='#e8' x='100' y='60')
+                    g.draggable
+                      circle(r='12' cx='336' cy='120' fill='#F2C94C' style='transition: fill 0.3s;')
+                      use(href='#e6' x='324' y='108')
+                    g.draggable
+                      circle(r='12' cx='560' cy='240' fill='#FF897D' style='transition: fill 0.3s;')
+                      use(href='#e1' x='548' y='228')
+                    g.draggable
+                      circle(r='12' cx='784' cy='96' fill='#6FCF97' style='transition: fill 0.3s;')
+                      use(href='#e7' x='772' y='84')
+                    g.draggable
+                      circle(r='12' cx='1008' cy='192' fill='#F2994A' style='transition: fill 0.3s;')
+                      use(href='#e3' x='996' y='180')
+                .b-e0.p-4.mb-4
+                  h3 小結
+                  p 排序的原因主要考慮了每個persona對產品功能的需求強度、使用頻率和重要性、在其社交圈中的影響力以及所屬市場的規模。阿宇和小君的需求與產品功能高度契合，使用頻率高且重要性強，影響力和市場規模也較大，因此排在前兩位。小潔和阿賢的需求與產品功能契合度中等，使用頻率和重要性也較高，但影響力和市場規模相對較小，因此排在中間。春昭的需求與產品功能契合度較低，對科技產品的接受度也較低，市場規模相對較小，因此排在最後。
+                h3.title-count 綜合分析
+                p 在這裡，我們將綜合現有資料，分析使用者在整個服務過程中的接觸點，並指出哪些接觸點已被資料詳細覆蓋，哪些接觸點可能需要進一步的研究或優化。同時，我們將根據用戶需求與期望的對應關係，分析哪些需求和痛點已被現有資料確認，並指出可能需要進一步探索的區域。
+                .b-e0.p-4
+                  h2.t-ctr 產品使用者分析報告
+                  ol.mark-bold
+                    li
+                      h3 相同痛點
+                      ul
+                        li
+                          p
+                            strong 使用說明複雜難懂：
+                            |使用說明複雜難懂：無論是男性家庭主夫還是女性上班族，都面臨選擇正確洗衣模式的困難。這些痛點來源於對不同衣物材質、髒污程度的認識不足，以及對複雜操作界面的不熟悉。
+                        li
+                          p
+                            strong 操作時間的限制：
+                            |兩位Persona都表示在洗衣過程中有時間的限制。男性家庭主夫需要在家庭管理的多重任務中找到合適的時間洗衣，而女性上班族則多半在下班後的有限時間內完成洗衣工作。
+                        li
+                          p
+                            strong 對衣物損壞的擔憂：
+                            |用戶都擔心在錯誤的洗滌設定下，會損壞衣物或影響衣物的質感。
+                        li
+                          p
+                            strong 操作介面的易用性不足：
+                            |對於兩位Persona來說，洗衣機的操作介面不夠直觀，功能選擇過於繁瑣，使得他們在使用過程中感到困擾，尤其是在操作繁忙時。
+                    li
+                      h3 共同需求
+                      ul
+                        li
+                          p
+                            strong 自動推薦最佳洗滌模式：
+                            |用戶希望洗衣機能夠自動識別衣物類型，並根據衣物材質和髒污程度自動推薦適當的洗滌模式。
+
+                        li
+                          p
+                            strong 洗衣時間管理功能：
+                            |用戶需要能夠靈活設定洗衣時間的功能，以便更好地與他們的生活節奏相配合，特別是對於需要在不同時間段完成洗衣的需求。
+                        li
+                          p
+                            strong 簡單直觀的操作介面：
+                            |簡單、直觀的操作界面是兩位使用者共同的需求，能夠減少在使用洗衣機時的學習曲線，提高使用體驗。
+                        li
+                          p
+                            strong 節能與環保功能：
+                            |用戶希望洗衣機能夠在保護衣物的同時，提供節能的洗滌模式，降低能源消耗。
+                    li
+                      h3 功能可能的衝突與取捨
+                      ul
+                        li
+                          p
+                            strong 簡單界面 vs. 多功能選項：
+                            |需要在界面的簡單易用性與功能的多樣性之間做出取捨，避免功能過載同時確保必要的選項易於訪問。
+                        li
+                          p
+                            strong 時間靈活性 vs. 能效：
+                            |靈活的時間安排功能可能會導致能源消耗增加，需要在用戶便利性和能效之間做出取捨。
+                        li
+                          p
+                            strong 智能化功能 vs. 手動控制：
+                            |設計需要在智能化和手動控制之間找到平衡，以滿足不同使用者的偏好。例如，有些用戶可能更喜歡自動化的操作，而另一些則偏好手動設置。
+                        li
+                          p
+                            strong 洗衣時間的效率 vs. 衣物保護：
+                            |提供快速洗滌選項可以滿足用戶的時間需求，但也可能對衣物的保護造成影響。設計時應考慮在效率和衣物保護之間的取捨。
+                        li
+                          p
+                            strong 節能模式 vs. 強力清潔：
+                            |節能模式與強力清潔功能之間的權衡將是設計中的一個關鍵點，必須考慮到用戶對節能的需求和對清潔效果的高要求。
+                    li
+                      h3 產品設計與功能機會點
+                      ul
+                        li
+                          p
+                            strong 整合AI智能識別技術：
+                            |開發能夠自動識別衣物並推薦適當洗滌設定的AI技術，為用戶提供更智能化的使用體驗。
+                        li
+                          p
+                            strong 時間管理與提醒功能：
+                            |增加能夠預約洗衣時間的功能，並結合提醒通知，讓用戶能夠更好地安排洗衣時間，避免與日常活動衝突。
+                        li
+                          p
+                            strong 設計友好的操作界面：
+                            |簡化洗衣機的操作面板，使其更加直觀和易用，同時保留進階功能供有需要的用戶使用。
+                        li
+                          p
+                            strong 推廣環保洗滌模式：
+                            |透過技術優化，提供更節能的洗滌選項，並在市場宣傳中強調環保和節能的理念。
+                    li
+                      h3 市場潛力與推廣策略
+                      ul
+                        li
+                          p(style='margin-bottom:0')
+                            strong 市場潛力
+                          ul
+                            li 中年職場人士（行銷主管、上班族）：市場規模大，有經濟能力，健康管◦理需求高。◦
+                            li 健身愛好者：市場規模中等，對運動數據追蹤有強烈需求。
+                            li 年輕學生：市場規模中等，但經濟能力有限。
+                            li 銀髮族：市場規模中等，對健康監控需求強烈，但需考慮科技產品接受◦
+                        li
+                          p(style='margin-bottom:0')
+                            strong 推廣策略
+                          ul
+                            li 行銷策略：
+                              ul
+                                li 針對不同用戶群體製作目標廣告，如中年職場人士的健康管理故事、健身   愛好者的運動效果展示。
+                                li 利用影響力人物（如行銷主管、健身教練）進行口碑傳播。◦產品體驗活動：
+                            li 產品體驗活動：
+                              ul
+                                li 舉辦免費試用活動，特別是針對銀髮族和年輕學生群體，增加產品曝光和接受度。◦社交媒體宣傳：
+                            li 社交媒體宣傳：
+                              ul
+                                li 利用社交媒體平台，針對年輕上班族和學生群體進行宣傳，通過用戶分享提升產品知名度。
+                    h3 結論
+                    p 智慧健康手環市場潛力巨大，涵蓋了各年齡段的用戶群體。針對不同用戶群體的需求和痛點設計相應的功能與操作模式，並通過有效的市場推廣策略，提高產品接受度和使用頻率。本產品需在功能性與續航、舒適度與美觀設計、簡單操作與高級功能之間取得平衡，從而達到最佳用戶體驗。"
+              h2#sec-4.title-count 設計機會點與產品策略
+              p 在這一部分，我們將現有資料中的發現與我們的專業見解進行對照，識別出具體的設計機會點並提出策略建議。我們將探討如何通過優化服務流程來解決使用者的痛點，以及如何將這些策略落實到具體的設計與實施計畫中。
+              p 本節旨在將前述分析結果轉化為具體的設計機會點，並提出相應的產品策略。在此部分，將現有資料與建議進行對照，並提出具體策略建議：
+
+              .nest-counter
+                h3.title-count 客戶概況
+                p 我們將對現有資料中的人物誌進行整理，並描述用戶在服務中的行為模式和心理動態。這一節的目的是識別出服務流程中的設計機會點，這些機會點將對應於使用者在各接觸點上的痛點。
+
+                ul.list-inside
+                  li 效益－顧客期望和需求的好處、令顧客滿意的因素以及可能增加採用價值主張的可能性的因素。
+                  li 痛點－客戶在完成工作的過程中所經歷的負面經驗、情緒和風險。
+                  li 任務－客戶試圖執行的功能、社交和情緒任務、他們試圖解決的問題以及他們希望滿足的需求。
+                .flexbox.J-ctr.bg-report-pie.print-bg
+                  .sp-12.spx-2
+                    .pie-top
+                      h4.t-ctr 任務 Jobs
+                      ol
+                        li
+                          p
+                            strong 健康管理：
+                            |隨時監控健康狀況，預防潛在健康問題。（阿宇、春昭）
+                        li
+                          p
+                            strong 運動目標達成：
+                            |透過數據追蹤和提醒，幫助使用者達成運動目標。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 提升生活品質：
+                            |減少充電頻率，提升生活便利性。（阿宇、春昭）
+                        li
+                          p
+                            strong 社交互動：
+                            |分享運動成就，提升在社交圈中的影響力。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 個性化表現：
+                            |透過多樣化設計，展現個人風格。（阿賢）
+                  .sp-6
+                    .pie-left
+                      h4 效益 Gains
+                      ol
+                        li
+                          p
+                            strong 健康監控：
+                            |即時監測心率、血壓等健康數據，提供健康警示。（阿宇、春昭）
+                        li
+                          p
+                            strong 運動數據追蹤：
+                            |記錄運動數據，幫助使用者達成運動目標。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 生活便利性：
+                            |長效電池減少充電頻率，提升使用便利性。（阿宇、春昭）
+                        li
+                          p
+                            strong 社交影響力：
+                            |透過社交媒體分享運動成就，提升社交影響力。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 多樣化設計：
+                            |提供多種錶帶款式，滿足不同使用者的個性化需求。（阿賢）
+                  .sp-6
+                    .pie-right
+                      h4.t-right 痛點 Pains
+                      ol
+                        li
+                          p
+                            strong 充電頻繁：
+                            |需要每天充電，使用不便。（阿宇）
+                        li
+                          p
+                            strong 佩戴不適：
+                            |手環佩戴感不適，影響使用體驗。（小君）
+                        li
+                          p
+                            strong 操作困難：
+                            |對科技產品的操作感到困惑，使用門檻高。（春昭）
+                        li
+                          p
+                            strong 運動計劃難以堅持：
+                            |工作繁忙導致無法堅持運動計劃。（小潔）
+                        li
+                          p
+                            strong 款式單一：
+                            |手環錶帶款式有限，無法滿足個性化需求。（阿賢）
+                .t-ctr
+                  img.img-fluid(src=require('./img/pdvl.png') width='185' height='93' alt='客戶概況 對應 產品價值圖' title='客戶概況 對應 產品價值圖' loading='lazy')
+                h3.title-count 產品價值主張
+                p 在這部分，我們將現有資料與服務設計策略進行對照，並提供建議。闡述已被資料充分支持的價值主張，並將需要再進行進一步驗證或調整內容，提供具體的實施步驟與時間表，確保策略的有效落實。
+                ul.list-inside.mb-3
+                  li 效益創造點－產品或服務如何創造顧客效益以及如何為顧客提供附加價值。
+                  li 痛點緩解點－產品或服務如何減輕顧客痛苦的具體描述。 產品和服務－創造收益、減輕痛苦、為顧客創造價值的產品和服務。
+                  li 產品和服務－創造收益、減輕痛苦、為顧客創造價值的產品和服務。
+                .flexbox.print-bg.b-2-black
+                  .sp-6.bg-df.py-3.b-2-black
+                    .p-3
+                      h4 效益創造點(Gain Creators)
+                      ol
+                        li
+                          p
+                            strong 健康監控 -
+                            span.t-pink 即時健康監測
+                            br
+                            |即時監測心率、血壓等健康數據，提供健康警示。即時心率監測和警示功能，讓使用者能夠及時應對健康問題。（阿宇、春昭）
+                        li
+                          p
+                            strong 運動數據追蹤 -
+                            span.t-pink 詳細運動數據記錄
+                            br
+                            |記錄日常運動數據如步數、卡路里消耗、運動距離等，幫助使用者達成運動目標。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 生活便利性 -
+                            span.t-pink 長效電池
+                            br
+                            |提供長效電池，減少頻繁充電的需求，提升使用的便利性。（阿宇、春昭）
+                        li
+                          p
+                            strong 運動數據追蹤 -
+                            span.t-pink 運動成就分享
+                            br
+                            |讓使用者能夠輕鬆分享運動成就和健康數據至社交媒體，提升社交影響力。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 運動數據追蹤 -
+                            span.t-pink 個性化錶帶選擇
+                            br
+                            |提供多種錶帶款式，滿足不同使用者的個性化需求，提升產品的吸引力。（阿賢）
+                  .sp-6.bg-f2.py-3.b-2-black
+                    .p-3
+                      h4 痛點緩解點(Pain Relievers)
+                      ol
+                        li
+                          p
+                            strong 充電頻繁 -
+                            span.t-l-purple 提升電池效能
+                            br
+                            |研發更高效能的電池技術，減少使用者每天充電的煩惱，使手環的使用體驗更佳。（阿宇）
+                        li
+                          p
+                            strong 佩戴不適 -
+                            span.t-l-purple 符合人體工學設計
+                            br
+                            |優化手環設計，使其佩戴更舒適，減少對皮膚的摩擦和壓力，提升使用者的佩戴體驗。（小君）
+                        li
+                          p
+                            strong 操作困難 -
+                            span.t-l-purple 簡化操作介面
+                            br
+                            |設計直觀易用的操作介面，為不熟悉科技產品的使用者降低使用門檻，使他們能更輕鬆地使用手環。（春昭）
+                        li
+                          p
+                            strong 運動計劃難以堅持 -
+                            span.t-purple 運動成就分享
+                            br
+                            |讓使用者能夠輕鬆分享運動成就和健康數據至社交媒體，提升社交影響力。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 運動數據追蹤 -
+                            span.t-purple 運動提醒和激勵機制
+                            br
+                            |運動計劃難以堅持 - 運動提醒和激勵機制提供個性化的運動提醒和激勵機制，幫助使用者在繁忙的工作中也能堅持運動計劃。（小潔）
+                  .sp-12.bg-l2-purple.py-3.b-2-black
+                    .p-3
+                      h4 產品和服務(Product and Services)
+                      ol
+                        li
+                          p
+                            strong 健康監控 -
+                            span.t-brown 健康管理應用
+                            br
+                            |同步手環數據至手機應用，提供健康建議和歷史數據分析，讓使用者能夠隨時監控健康狀況，預防潛在健康問題。（阿宇、春昭）
+                        li
+                          p
+                            strong 運動數據追蹤 -
+                            span.t-brown 運動追蹤應用
+                            br
+                            |透過數據追蹤和個性化提示設計，幫助使用者設定和達成運動目標，提升自我健康管理意識。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 提升生活品質 -
+                            span.t-brown 長效電池技術
+                            br
+                            |運用長效電池技術，延長手環的使用時間，減少充電頻率，提升生活便利性。（阿宇、春昭）
+                        li
+                          p
+                            strong 社交互動 -
+                            span.t-brown 社交分享功能
+                            br
+                            |整合社交媒體分享功能，讓使用者可以輕鬆分享個人運動成就和健康數據，提升在社交圈中的影響力。（小潔、小君、阿賢）
+                        li
+                          p
+                            strong 個性化表現 -
+                            span.t-brown 多樣化錶帶
+                            br
+                            |提供各種材質與風格的錶帶，讓使用者可以根據自己的喜好和風格選擇，展現個人品味和個性。（阿賢）

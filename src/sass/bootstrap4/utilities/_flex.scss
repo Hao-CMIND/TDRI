@@ -1,0 +1,52 @@
+$utl-flex: true;
+// stylelint-disable declaration-no-important
+
+// Flex variation
+//
+// Custom styles for additional flex alignment options.
+
+// @each $breakpoint in map-keys($grid-breakpoints) {
+//   @include media-breakpoint-up($breakpoint) {
+//     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @mixin flex($infix) {
+    .row#{$infix}        { flex-direction: row; }
+    .col#{$infix}         { flex-direction: column; }
+    .row#{$infix}-r          { flex-direction: row-reverse; }
+    .col#{$infix}-r           { flex-direction: column-reverse; }
+    .wrap#{$infix}            { flex-wrap: wrap; }
+    .nowrap#{$infix}            { flex-wrap: nowrap; }
+    .wrap#{$infix}-r          { flex-wrap: wrap-reverse; }
+    .flex#{$infix}-0            { flex: 0 0 auto; }
+    .flex#{$infix}-1            { flex: 1 1 0; }
+    .flex#{$infix}-fill         { flex: 1 1 auto; }
+    .grow#{$infix}-0           { flex-grow: 0; }
+    .grow#{$infix}-1           { flex-grow: 1; }
+    .shrink#{$infix}-0           { flex-shrink: 0; }
+    .shrink#{$infix}-1           { flex-shrink: 1; }
+    .J#{$infix}-start         { justify-content: flex-start; }
+    .J#{$infix}-end           { justify-content: flex-end; }
+    .J#{$infix}-ctr        { justify-content: center; }
+    .J#{$infix}-between       { justify-content: space-between; }
+    .J#{$infix}-around        { justify-content: space-around; }
+    .J#{$infix}-evenly        { justify-content: space-evenly; }
+    .a#{$infix}-start        { align-items: flex-start; }
+    .a#{$infix}-end          { align-items: flex-end; }
+    .a#{$infix}-ctr        { align-items: center; }
+    .a#{$infix}-baseline      { align-items: baseline; }
+    .a#{$infix}-stretch       { align-items: stretch; }
+    .A#{$infix}-start        { align-content: flex-start; }
+    .A#{$infix}-end          { align-content: flex-end; }
+    .A#{$infix}-ctr        { align-content: center; }
+    .A#{$infix}-between       { align-content: space-between; }
+    .A#{$infix}-around        { align-content: space-around; }
+    .A#{$infix}-evenly        { align-content: space-evenly; }
+    .A#{$infix}-stretch       { align-content: stretch; }
+    .as#{$infix}-auto         { align-self: auto; }
+    .as#{$infix}-start        { align-self: flex-start; }
+    .as#{$infix}-end          { align-self: flex-end; }
+    .as#{$infix}-ctr       { align-self: center; }
+    .as#{$infix}-baseline      { align-self: baseline; }
+    .as#{$infix}-stretch      { align-self: stretch; }
+    }
+//   }
+// }

@@ -1,0 +1,34 @@
+%limited-hidden
+  display: -webkit-box
+  margin: 0
+  overflow: hidden
+  -webkit-box-orient: vertical
+=limited($lines, $config: ('ie': false))
+  $fz: map-get($config, 'fz') or 1rem
+  $lh: map-get($config, 'lh') or 1.5
+  $bgc: map-get($config, 'bgc') or $black
+
+  .limited-#{$lines}-lines
+    @if map-get($config, 'ie')
+      position: relative
+      max-height: $fz * $lh * $lines
+      &:before
+        content: '...'
+        position: absolute
+        right: 0
+        bottom: 0
+      &:after
+        content: ''
+        position: absolute
+        right: 0
+        width: 1rem
+        height: $fz * $lh
+        background-color: $bgc
+
+    @else
+      @extend %limited-hidden
+      -webkit-line-clamp: $lines
+
++limited(1)
++limited(2)
++limited(3)

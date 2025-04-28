@@ -1,0 +1,1115 @@
+extends ./template/layout.pug
+block local
+  - const tab = require('./img/nobase64/tab-character.png')
+  - const pill = require('./img/nobase64/white-pill.png')
+  - const tabfirst = require('./img/nobase64/tab-character-first.png')
+  //- - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+  - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+
+block body
+  .container-fluid.py-3
+    .flexbox.gx-2
+      .sp-2
+        include ./template/layout/udeAside.pug
+      .sp-8
+        .container.pb-6
+          .flexbox.a-end
+            .sp
+              h1.lh-xxl-tight
+                time.fz-12.t-82.fw-4(datetime='2024-04-22T24:02:02') 2024/4/22 24:02:02
+                br
+                span.rect.t-ctr.mr-1
+                  span.fi-id-card(style='vertical-align:.2em')
+                |創建人物誌
+            .sp-auto
+              .tool-bar.gx-2
+                .sp-auto
+                  .flexbox.gx-0.radio-toggle.radio-purple.t-ctr.bg-fa.b-e0.p-1
+                    .sp-6
+                      input#local(type='radio' name='locale' value='0' checked)
+                      label.fz-14.w-100(for='local')
+                        span.fi-taiwan
+                        |台灣市場
+                    .sp-6
+                      input#global(type='radio' name='locale' value='1')
+                      label.fz-14.w-100(for='global')
+                        span.fi-earth
+                        |全球市場
+                .sp-auto
+                  button.btn(type='button' title='連結')
+                    span.fi-share
+                .sp-auto
+                  button.btn(type='button' title='下載')
+                    span.fi-download
+                .sp-auto
+                  button.btn.btn-light-pink(type='button') 建立AI範本
+                .sp-auto
+                  button.btn.btn-purple(type='button' title='儲存')
+                    span.fi-save
+                    |儲存
+          button.btn.btn-create-banner(type='button')
+            img.img-fluid(src!='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1360 270\'%3E%3Ccircle cx=\'680\' cy=\'124\' r=\'24\' fill=\'%23E5E0FF\'/%3E%3Cpath fill=\'none\' stroke=\'%237A59FF\' stroke-width=\'2\' d=\'M680 128.3c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3z\'/%3E%3Cpath fill=\'none\' stroke=\'%237A59FF\' stroke-width=\'2\' d=\'M678 132.3h4c2.8 0 4.2 0 5.2-.7l1.1-1.1c.7-1 .7-2.4.7-5.2s0-4.2-.7-5.2l-1.1-1.1c-1-.7-2.4-.7-5.2-.7h-4c-2.8 0-4.2 0-5.2.7l-1.1 1.1c-.7 1-.7 2.4-.7 5.2 0 2.8 0 4.2.7 5.2l1.1 1.1c1 .7 2.4.7 5.2.7zM686 122.3h-.5m-3-6.5h-5\'/%3E%3Ctext font-size=\'16\' transform=\'translate(632 172.5)\'%3E新增背景圖片%3C/text%3E%3C/svg%3E' width='1300' height='270' alt='' title='創建人物誌' loading='lazy')
+          form.flexbox
+            .sp-3
+              .card
+                .card-header.card-header-bb
+                  p.fw-7.pl-2.t-purple.mb-2 我們所關注的產品是...
+                    span.fi-question-solid
+                  button#dropdown-megamenu.btn.btn-light-purple.rad-sm.btn-block(type='button' data-bs-toggle='modal' data-bs-target='#select-product')
+                    span.placeholder 請選擇一項產品
+
+                      a.dropdown-item(href='javascript:void') 咖啡機
+                .card-body.t-ctr
+                  button.btn.btn-create-avatar.mb-4(type='button')
+                    img.img-fluid(src!='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' xml:space=\'preserve\' viewBox=\'0 0 190 190\'%3E%3Cpath fill=\'%23FFF\' d=\'M49.6 149.8a80.1 80.1 0 0 0 90.8 0c5.7-3.9 8.2-11.4 4.8-17.5-6.9-12.6-21.1-20.5-50.3-20.5-29.2 0-43.4 7.8-50.3 20.5a13.9 13.9 0 0 0 5 17.5zm45.5-66.3a28.4 28.4 0 1 1 0-56.7 28.4 28.4 0 0 1 0 56.7z\'/%3E%3Cpath fill=\'%237856FF\' fill-opacity=\'.2\' d=\'M49.6 149.8a80.1 80.1 0 0 0 90.8 0c5.7-3.9 8.2-11.4 4.8-17.5-6.9-12.6-21.1-20.5-50.3-20.5-29.2 0-43.4 7.8-50.3 20.5a13.9 13.9 0 0 0 5 17.5zm45.5-66.3a28.4 28.4 0 1 1 0-56.7 28.4 28.4 0 0 1 0 56.7z\'/%3E%3Cpath fill=\'none\' stroke=\'%237A59FF\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'3.9\' d=\'M75.3 102.7h39.4c1 0 2-.4 2.8-1.2a4 4 0 0 0 1.2-2.8V71.2c0-1-.4-2-1.2-2.8a4 4 0 0 0-2.8-1.2h-7.9l-3.9-5.9H87.1l-3.9 5.9h-7.9c-1 0-2 .4-2.8 1.2a4 4 0 0 0-1.2 2.8v27.6c0 1 .4 2 1.2 2.8.8.7 1.8 1.1 2.8 1.1z\'/%3E%3Cpath fill=\'none\' stroke=\'%237A59FF\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'3.9\' d=\'M95 92.8A9 9 0 0 1 95 75a9 9 0 0 1 0 17.8z\'/%3E%3C/svg%3E' width='190' height='190' alt='' title='未命名人物誌頭像' loading='lazy')
+                  input.form-control.input-border.mx-auto.t-ctr.t-purple.mb-2(type='text' placeholder='未命名人物誌' style='width:16ch')
+                  input.form-control.form-control-sm.input-border.mx-auto.t-ctr.mb-4(type='text' placeholder='請填寫職業' style='width:12ch')
+                  textarea.form-control.t-purple(type='text' rows='4' placeholder='請填寫人物自述')
+                .card-footer
+                  label.form-label-sm.pl-2 性別
+                  button.js-chart-popover.btn.btn.btn-light-purple.btn-sm.p-0(type='button' data-bs-placement='bottom' data-bs-custom-class='max-w-none popover-extend-data' data-bs-toggle='popover' data-bs-html='true' data-chart='性別' data-type='pie' data-product='手機' data-bs-content='' data-from='台灣' style='font-size: 12px; border-radius:0.5rem')
+                    span.fi-database-down.fz-16
+                    |推薦資料
+                    span.fi-piechart.fz-16
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇性別
+                    option(value='0' selected) 男
+                    option(value='1') 女
+                  .dropdown.customize-dropdown
+                    button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                      span.placeholder 請選擇性別
+                      span.fi-arr-down
+                    .dropdown-menu
+
+                      a.dropdown-item(href='javascript:void') 20-25歲
+                  label.form-label-sm.pl-2 年齡層
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇年齡層
+                    option(value='0' selected) 20-25歲
+                    option(value='1') 26-30歲
+                  .dropdown.customize-dropdown
+                    button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                      span.placeholder 請選擇年齡
+                      span.fi-arr-down
+                    .dropdown-menu
+
+                      a.dropdown-item(href='javascript:void') 20-25歲
+                  label.form-label-sm.pl-2 婚姻狀況
+                  button.js-chart-popover.btn.btn.btn-light-purple.btn-sm.p-0(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-custom-class='max-w-none popover-extend-data' data-bs-html='true' data-chart='婚姻' data-type='pie' data-product='手機' data-from='台灣' data-bs-content='' style='font-size: 12px; border-radius:0.5rem')
+                    span.fi-database-down.fz-16
+                    |推薦資料
+                    span.fi-piechart.fz-16
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇婚姻
+                    option(value='0' selected) 單身
+                    option(value='1') 離婚
+                  .dropdown.customize-dropdown
+                    button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                      span.placeholder 請選擇婚姻
+                      span.fi-arr-down
+                    .dropdown-menu
+
+                      a.dropdown-item(href='javascript:void') 20-25歲
+                  label.form-label-sm.pl-2 居住地
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇居住地
+                    option(value='0' selected) 國內
+                    option(value='1') 國外
+                  .dropdown.customize-dropdown
+                    button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                      span.placeholder 請選擇居住地g
+                      span.fi-arr-down
+                    .dropdown-menu
+                      a.dropdown-item(href='javascript:void') 20-25歲
+            .sp-9
+              nav.nb-1(style='--tab-pill:url(\'../img/white-pill.png\');--tab-bg:url(\'../img/tab-character.png\');--tab-first-bg:url(\'../img/tab-character-first.png\')')
+                #nav-tab.nav.nav-tabs.nav-tabs-character(role='tablist')
+                  button#nav-sec1-tab.nav-link.active.nav-character(data-bs-toggle='tab' data-bs-target='#nav-sec1' type='button' role='tab' aria-controls='nav-sec1' aria-selected='true')
+                    .icon
+                      span.fi-user
+                    .text
+                      small.fz-12 Section 1
+                      br
+                      |編輯基本資料
+                  button#nav-sec2-tab.nav-link.nav-character(data-bs-toggle='tab' data-bs-target='#nav-sec2' type='button' role='tab' aria-controls='nav-sec2' aria-selected='false')
+                    .icon
+                      span.fi-target
+                    .text
+                      small.fz-12 Section 2
+                      br
+                      |編輯角色
+                  button#nav-sec3-tab.nav-link.nav-character(data-bs-toggle='tab' data-bs-target='#nav-sec3' type='button' role='tab' aria-controls='nav-sec3' aria-selected='false')
+                    .icon
+                      span.fi-id-connect
+                    .text
+                      small.fz-12 Section 3
+                      br
+                      |編輯產品使用行為
+
+              #nav-tab-content.tab-content
+                #nav-sec1.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='nav-sec1-tab')
+                  .card.pt-4.pb-6
+                    .card-body
+                      p.p-3.b-e0.rad-sm.bg-f2.mb-5
+                        span.fi-question-solid
+                        |您可以藉由編輯基本資料和身份等基本特徵，簡要瞭解目標使用者的身份，從而深入理解他們的需求、行為和角色，並建立一個清晰的人物誌背景。
+                        br
+                        |※選擇產品後會帶入國內社群平台上，關注特定產品的使用者輪廓，作為填寫人物誌的參考資料。（資料時間：2022-2023年）
+                      h3.fz-24.t-ctr.mb-4
+                        span.rect.mr-1
+                          span.fi-user-circle
+                        | 基本資料
+                      .flexbox.gx-3
+                        .sp-6
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 人物簡介
+                            label.form-label-sm.pl-2 背景
+                            textarea.form-control.bg-f2.mb-3(type='text' placeholder='請輸入背景' aria-label='背景' rows='2') 每天忙碌的工作中難以找到品質好且快速沖泡的咖啡方式。
+                            label.form-label-sm.pl-2 個性
+                            textarea.form-control.bg-f2.mb-3(type='text' placeholder='請輸入個性' aria-label='個性' rows='1') 積極、細心，善於安排生活。
+                            label.form-label-sm.pl-2 教育程度
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+
+                            select.custom-select.custom-select-sm.mb-3
+                              option(value='' disabled) 請選擇教育程度
+                              option(value='0' selected) 碩士畢業
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 興趣議題
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+                                button.js-chart-popover.btn.btn.btn-light-purple.btn-sm.p-0(type='button' data-bs-placement='bottom' data-bs-custom-class='max-w-none popover-extend-data' data-bs-toggle='popover' data-type='bar' data-bs-html='true' data-chart='前十名興趣議題' data-product='手機' data-from='台灣' data-bs-content='' style='font-size: 12px; border-radius:0.5rem')
+                                  span.fi-database-down.fz-16
+                                  |推薦資料
+                                  span.fi-piechart.fz-16
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入興趣議題' rows='1') 運動體育
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入興趣議題' rows='1') 美食飲品
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入興趣議題' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 休閒活動
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+                                button.js-chart-popover.btn.btn.btn-light-purple.btn-sm.p-0(type='button' data-bs-placement='bottom' data-bs-custom-class='max-w-none popover-extend-data' data-bs-toggle='popover' data-type='pie' data-bs-html='true' data-chart='前十名休閒活動' data-product='手機' data-from='台灣' data-bs-content='' style='font-size: 12px; border-radius:0.5rem')
+                                  span.fi-database-down.fz-16
+                                  |推薦資料
+                                  span.fi-piechart.fz-16
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入休閒活動' rows='1') 烘焙
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入休閒活動' rows='1') 閱讀
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入休閒活動' rows='1') 健身
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入休閒活動' rows='1')
+                        .sp-6
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 關注品類、關注品類的品牌
+                            fieldset
+                              legend.form-label-sm.pl-2 關注品類
+                                button.js-chart-popover.btn.btn.btn-light-purple.btn-sm.p-0(type='button' data-bs-placement='bottom' data-bs-custom-class='max-w-none popover-extend-data' data-bs-toggle='popover' data-bs-html='true' data-chart='前十名關注品類' data-product='手機' data-from='台灣' data-type='group' data-bs-content='' style='font-size: 12px; border-radius:0.5rem')
+                                  span.fi-database-down.fz-16
+                                  |推薦資料
+                                  span.fi-piechart.fz-16
+                              p.t-333
+                                span.fi-question-solid
+                                |您可以藉由編輯基本資料和身份等基本特徵，簡要瞭解目標使用者的身份，從而深入理解他們的需求、行為和角色，並建立一個清晰的人物誌背景。
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus(style='line-height:1')
+                                label.t-82 咖啡機
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入咖啡機' rows='1') PHILIPS飛利浦
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入咖啡機' rows='1')
+                                hr.bb-82
+                                label.t-82 筆記電腦
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入筆記電腦' rows='1') 健身
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入筆記電腦' rows='1')
+
+                #nav-sec2.tab-pane.fade(role='tabpanel' aria-labelledby='nav-sec2-tab')
+                  .card.pt-4.pb-6
+                    .card-body.py-0
+                      .flexbox.J-end
+                        .sp-auto
+                          button.btn.fl-right.btn-reset(style='reset')
+                            span.fi-reset
+                            |清除
+                    .card-body
+                      h3.fz-24.t-ctr.t-purple.mb-4
+                        span.rect.mr-1
+                          span.fi-user-plus
+                        |職業婦女
+                      p.fw-7 職業角色示意圖
+                      .t-ctr
+                        .avatar
+                          img.img-fluid(src=require('./img/user-blue.jpg') width='96' height='96' alt='職業婦女' title='職業婦女' loading='lazy')
+                      .flexbox.gx-3
+                        .sp-6
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 資歷
+                            label.form-label-sm.pl-2 職業
+                            select.custom-select.custom-select-sm.mb-3
+                              option(value='' disabled) 請選擇職業
+                              option(value='0' selected) 資深主管
+                            label.form-label-sm.pl-2 所屬產業
+                            select.custom-select.custom-select-sm.mb-3
+                              option(value='' disabled) 請選擇所屬產業
+                              option(value='0' selected) 金融業
+                            label.form-label-sm.pl-2 產業規模
+                            select.custom-select.custom-select-sm.mb-3
+                              option(value='' disabled) 請選擇產業規模
+                              option(value='0' selected) 大型公司
+
+                        .sp-6
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 專業
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 專業技能
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入專業技能' rows='1')
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 資歷
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資歷' rows='1') 10年以上金融業經驗
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資歷' rows='1') 打工仔5年
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資歷' rows='1') 麥胞1年
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入資歷' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 使用工具
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='此人物會使用的軟/硬體工具。<br/>ex. Illustrator、Photoshop 或 雷射切割機...等')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用工具' rows='1') Lenovo ThinkPad
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用工具' rows='1') iPhone 20 Pro Max
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入資歷' rows='1')
+
+                      hr.bb-82
+                      h3.fz-24.t-ctr.mb-5
+                        span.rect.mr-1
+                          span.fi-achieve
+                        |任務目標
+                      .flexbox.gx-3
+                        .sp-4
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 作為
+                              span.fi-question-solid.js-popovers-option(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者：對於「誰」(who) 這個角色，填寫以下欄位透過形容詞和情境詞來更多的描述，完整描述這樣的人物角色。')
+                              span.t-purple 職業婦女
+
+                            label.form-label-sm.pl-2 有...責任
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這個使用者角色有怎麼樣的職責或責任？')
+                            textarea.form-control.bg-f2.mb-3(type='text' placeholder='有...責任' aria-label='有...責任' rows='2') 管理團隊、制定業務策略。
+                            label.form-label-sm.pl-2 遭遇...挫折
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這樣的使用者角色有甚麼樣的痛點跟困擾？')
+                            textarea.form-control.bg-f2.mb-3(type='text' placeholder='遭遇...挫折' aria-label='遭遇...挫折' rows='2') 每天忙碌的工作中難以找到品質好且快速沖泡的咖啡方式。
+                            label.form-label-sm.pl-2 核心需求
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這樣的使用者角色有甚麼樣態的需求？')
+                            textarea.form-control.bg-f2(type='text' placeholder='核心需求' aria-label='核心需求' rows='2') 方便快捷的咖啡製作流程、高品質的咖啡。
+                        .sp-4
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 我想要...
+                              span.fi-question-solid.js-popovers-option(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+                            label.form-label-sm.pl-2 達到...需求
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這樣的使用者想要做到甚麼？')
+                            textarea.form-control.bg-f2.mb-3(type='text' placeholder='達到...需求' aria-label='達到...需求' rows='2') 我想要一個能在短時間內完成沖煮的智能咖啡機。
+                            label.form-label-sm.pl-2 有...困難
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這些需求的達成會遇到甚麼樣的困難？')
+                            textarea.form-control.bg-f2(type='text' placeholder='有...困難' aria-label='有...困難' rows='2') 每天工作繁忙，需要一個能夠快速沖泡高品質咖啡的解決方案。
+                        .sp-4
+                          .card-fb
+                            h4.fz-22.t-ctr.mb-4 已完成...目標
+                              span.fi-question-solid.js-popovers-option(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+                            label.form-label-sm.pl-2 目標價值
+                            span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='最終想要達到的核心價值')
+                            textarea.form-control.bg-f2(type='text' placeholder='目標價值' aria-label='目標價值' rows='2') 提升在家工作時的品味享受。
+                #nav-sec3.tab-pane.fade(role='tabpanel' aria-labelledby='nav-sec3-tab')
+                  .card.pt-4.pb-6
+                    .card-body
+                      p.p-3.b-e0.rad-sm.bg-f2.mb-5
+                        span.fi-question-solid
+                        |編輯您人物誌與產品互動的方式和模式，定義人物誌的產品使用行為，使您了解使用者的操作習慣和期望，以更好地讓設計滿足這些行為模式，提升整體使用者體驗。
+                        br
+                        |※您可以用「請選擇品牌」來帶入國內外電商平台及國內社群平台上，關注特定品牌之產品的用戶使用行為，作為填寫人物誌的參考資料。（資料時間：2023年以前）
+                      p.fz-14.mb-3
+                        strong.pr-2 請選擇品牌
+                        span.fi-question-solid.fz-14
+                        |選擇品牌 選定品牌之後，下方會自動帶入「使用您品牌產品的人物」的使用行為資訊。
+                      .flexbox.mb-5
+                        .sp-auto
+                          label.fw-7 使用
+                            span.t-purple 咖啡機
+                            | 產品
+                        .sp
+                          select.custom-select.mb-3
+                            option(value='' disabled) 請選擇咖啡機
+                            option(value='0' selected) PHILIPS飛利浦
+                      nav#nav-sec3-spy.nav.nav-character-spy.nav-fill.mb-5
+                        a.nav-link.active(href='#behavier') 使用行為
+                        a.nav-link(href='#preference') 產品偏好
+                        a.nav-link(href='#satisfaction') 產品滿意度
+                        a.nav-link(href='#expectation') 產品期望
+                      div(data-bs-spy='scroll' tabindex='0' data-bs-target='#nav-sec3-spy' data-bs-offset='0')
+                        button.btn.fl-right.btn-reset(style='reset')
+                          span.fi-reset
+                          |清除
+                        h3#behavier.fz-24.t-ctr.mb-4
+                          span.rect.mr-1
+                            span.fi-user-search
+                          | 使用行為
+                        .flexbox.gx-3
+                          .sp-6
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 使用頻率
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者使用產品的頻率，即多久使用一次產品。可以是每天、每週、每月或不定期使用等，使用者的使用模式。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用頻率' rows='1') 每天早晨和工作間隙，至少兩次以上。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用頻率' rows='1')
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 使用目的
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者使用產品的特定目標或需求，例如工作、娛樂、學習、溝通、創作、完成某件事等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用目的' rows='1') 提升工作效率，享受高品質的咖啡。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用目的' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 使用場景
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='包含使用產品的場合和情境，包括使用場所（如辦公室、家庭、戶外）、時間（如白天、夜晚）、活動或工作（如工作、休閒娛樂）。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用場景' rows='1') 在家中的辦公室、客廳。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用場景' rows='1')
+                          .sp-6
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 使用習慣
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者在使用一個產品的習慣，包括特定的時間、地點、方式、順序或規律性的行為和習慣。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用習慣' rows='1') 開始工作前沖泡一杯提神，下午休息時享受放鬆時光。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用習慣' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 使用障礙
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者使用一個產品時，可能會遭遇到的各種問題、障礙、困難、挑戰，這些可能來自於整體產品的設計不良，或是特定產品結構、機構、元件、功能、表面材質處理上的問題，每種產品的使用障礙不盡相同。使用障礙也可能涉及學習曲線、文化差異等，人本身的因素。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用障礙' rows='1') 沖泡時間過長，影響工作進度。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用障礙' rows='1')
+
+                        hr.bb-82
+                        button.btn.fl-right.btn-reset(style='reset')
+                          span.fi-reset
+                          |清除
+                        h3#preference.fz-24.t-ctr.mb-4
+                          span.rect.mr-1
+                            span.fi-select
+                          | 產品偏好
+                        .flexbox.gx-3
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 競品品牌與影響者
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='競品品牌：列舉使用者可能會考慮的競品品牌。<br/> 影響者：描述可能影響使用者購買決策的因素，如評論家評價、社交媒體意見領袖、朋友推薦等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入競品品牌與影響者' rows='1') 沖泡速度
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入競品品牌與影響者' rows='1') 咖啡品質
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入競品品牌與影響者' rows='1') 清潔容易度
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入競品品牌與影響者' rows='1')
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 購買決策因素
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='指影響使用者在選購產品時的關鍵因素，通常會影響使用者最終的購買決策。這些因素包括產品價格、品質、品牌聲譽、功能特性、使用者評價、售後服務、可持續性、產品便利性、環保性、個人需求、口碑、感性因素、時間、可用性等。使用者會權衡這些因素，做出購買決策以滿足其需求和期望。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入購買決策因素' rows='1') 簡約現代風格，易於清潔的設計。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入購買決策因素' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 設計偏好
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者對於產品的外觀和設計方面的個人偏好。外型設計上的個人喜好包括顏色、材質、形狀、尺寸、重量、造型、外觀風格和其他視覺元素。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入設計偏好' rows='1') 簡約現代風格，易於清潔的設計。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入設計偏好' rows='1')
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 使用環境偏好
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者會偏好在特定的環境中使用產品。這包括特定的物理環境條件，例如光線、溫度、噪音水平、安靜、明亮、舒適度等。這些偏好可能受到使用者的生活方式和需求的影響。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用環境偏好' rows='1') 家中的辦公室
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用環境偏好' rows='1') 客廳
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用環境偏好' rows='1')
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 功能偏好
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者對產品所提供的功能的個人喜好，包括核心功能（如性能、效能）和附加功能（如應用程序、工具、設定選項等）。使用者可能更看重某些功能，並希望產品提供符合他們需求的特定功能。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入功能偏好' rows='1') 快速沖泡
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入功能偏好' rows='1') 可調整濃淡的功能
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入功能偏好' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 互動方式偏好
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者對於如何與產品互動的方式的喜好，包括使用者介面、操作方式、控制方法、觸控螢幕、語音控制等。使用者可能更傾向於某種互動方式，使他們更輕鬆地使用產品。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入互動方式偏好' rows='2') 操作簡單的按鍵式界面，可遠端控制。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入互動方式偏好' rows='1')
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 資訊偏好
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品相關資訊的喜好，包括資訊來源偏好、資訊呈現方式偏好、資訊深度偏好等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資訊偏好' rows='2') 操作簡單的按鍵式界面，可遠端控制。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入資訊偏好' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 體驗感受偏好
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者在使用產品後的整體體驗和情感反應的個人喜好，包括對於產品的使用感覺、介面的友好性、產品的可靠性、使用後的滿意度、舒適度、操作的流暢性，以及產品帶來的情感體驗。使用者也會在產品協助其成功完成任務、把任務變簡單時，喜歡這項產品帶來的體驗。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入體驗感受偏好' rows='2') 注重產品的使用便捷性和品質表現。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入體驗感受偏好' rows='1')
+
+                        hr.bb-82
+                        button.btn.fl-right.btn-reset(style='reset')
+                          span.fi-reset
+                          |清除
+                        h3#satisfaction.fz-24.t-ctr.mb-4
+                          span.rect.mr-1
+                            span.fi-like
+                          | 產品滿意度
+                        .flexbox.gx-3
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 好處、利益
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者使用產品後實際獲得的優點和好處，包括提高工作效率、節省時間、節省成本、提升生活品質、增添樂趣，或者其他具體的收益。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入好處、利益' rows='1') 提升工作效率，享受高品質咖啡。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入好處、利益' rows='1')
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 產品評分
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者對於產品的整體評分，可能以分數形式表示，如 1 到 5 分。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入產品評分' rows='1') 4.5/5
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入產品評分' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 使用體驗滿意度
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者在實際使用產品時的滿意度，包括使用感覺、介面友好性、產品可靠性、使用後的滿意度等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用體驗滿意度' rows='1') 4.9/5
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用體驗滿意度' rows='1')
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 產品價值滿意度
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品實際帶來的好處和價值的滿意度，包括提高工作效率、節省時間、增添樂趣等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入產品價值滿意度' rows='1') 4.9/5
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入產品價值滿意度' rows='1')
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 服務滿意度
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品相關服務（如售後服務、客戶支援等）的滿意度。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入服務滿意度' rows='1') 4.9/5
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入服務滿意度' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 產品品質滿意度
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品的整體品質滿意度，可能包括製造質量、材料耐久性等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入產品品質滿意度' rows='1') 4.9/5
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入產品品質滿意度' rows='1')
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 功能滿意度
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品所提供功能的滿意度，包括核心功能、附加功能等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入功能滿意度' rows='1') 4.9/5
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入功能滿意度' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 其他意見與反饋
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='除了「使用障礙」之外，使用者對產品或服務不滿意的地方，以及他們提出的建議、改進意見、批評、投訴或其他反饋意見，這些會與產品缺陷、使用障礙有關，可以協助開發者協助改進產品的品質和性能。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入其他意見與反饋' rows='1') 希望未來能有更多款式和口味的
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入其他意見與反饋' rows='1')
+                        hr.bb-82
+                        button.btn.fl-right.btn-reset(style='reset')
+                          span.fi-reset
+                          |清除
+                        h3#expectation.fz-24.t-ctr.mb-4
+                          span.rect.mr-1
+                            span.fi-star-5
+                          | 產品期望
+                        .flexbox.gx-3
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 產品發展方向期望
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品未來發展方向的期望，包括功能改進、性能提升、新特性期望等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入產品發展方向期望') 更迅速的沖泡速度、簡單清潔的設計。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入產品發展方向期望' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 新技術應用期望
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於未來產品可能應用的新技術的期望。')
+
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入新技術應用期望') 智能預約沖泡、一鍵式操作。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入新技術應用期望' rows='1')
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 購買和使用便利性期望
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者對於產品購買和使用的方便性的期望，可能包括 購買流程、產品設定過程、使用過程中的方便性等。')
+
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入購買和使用便利性期望') 咖啡膠囊的選擇應更加豐富。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入購買和使用便利性期望' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 使用場景擴展期望
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='描述使用者希望產品能夠在更多不同的使用場景中應用的期望，包括 新的使用場所、不同的活動或工作場景等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用場景擴展期望') 增加遠端控制功能，提升使用靈活性。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入使用場景擴展期望' rows='1')
+                          .sp-4
+                            fieldset.mb-3
+                              legend.form-label-sm.pl-2 產品價值提升期望
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者希望、建議產品可以改進的事情，可能是改變、增加、精進特定的功能、性能或外觀元素。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入產品價值提升期望') 擴大售後服務，提供更完善的支援。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入產品價值提升期望' rows='1')
+                            fieldset
+                              legend.form-label-sm.pl-2 其他期望與建議
+                                span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者對產品在非功能、效能和外觀方面的期望，如可持續性、可維護性、永續性、耐久性、安全性、服務品質等。')
+                              .bg-f2.px-3.py-1.rad-sm
+                                button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                                  span.fi-plus
+                                .input-group.input-group-sm.mb-3
+                                  textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入其他期望與建議') 加強App的使用者教育，提高使用者對智能功能的接受度。
+                                  .input-group-append
+                                    button.btn.btn-white.rad-sm
+                                      span.fi-close.bg-e6
+                                //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入其他期望與建議' rows='1')
+  +modal({ nobtn, id: 'create-sample', label: 'modal-create-sample', static, centered, v5 })
+    +header
+      h3.t-ctr 請選擇一個範本開始使用
+    +body
+      .flexbox.sps-1.t-ctr.gy-3.mb-3
+        - for(let i = 1; i < 7; i++)
+          .sp-4
+            button.btn.btn-rect-white.js-select-sample(type='button' data-sample='範本0'+i data-bs-dismiss='modal')
+              img.circle.evt-none(src=require('./img/user-blue.jpg') width='50' height='50')
+              br
+              |範本0#{i}
+    +footer
+      button.btn.btn-white(type='button' data-bs-dismiss='modal') 取消
+  +modal({ nobtn, id: 'upload-excel', label: 'modal-upload-excel', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 上傳 Excel
+      .bg-fa
+        .t-right
+          span.t-82.fi-question.info-tip(data-bs-toggle='popover' data-bs-custom-class='z-2000' data-bs-content=Array.from({ length: 10 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join(''))
+        .fileuploading
+          p 將文件拖曳至此
+            br
+            |或
+          label.btn.btn-purple(for='uploadExcel') 選擇檔案
+          input#uploadExcel.hidden(type='file' accept='.xlsx,.xls' @change='uploadExcel($event, \'upload-excel\')')
+      p.uploaded-file
+        span.fi-check-cir-fill(style='color:#27ae60')
+        span.filename aabbcc.xlsx
+        button.btn.fl-right(type='button')
+          span.fi-delete.t-red
+    +footer
+      .flexbox.g-2
+        .sp-2
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'upload-excel\')') 取消
+        .sp-4
+          button.btn.btn-white.btn-block(href='./#.xlsx' download='範例.xlsx') 下載範例檔案(.xlsx)
+        .sp-2.spl-4
+          button.btn.btn-purple.btn-block(type='button') 確定
+
+        .sp-12
+          p.t-82 *檔案須符合本平台提供的檔案格式
+
+  +modal({ nobtn, id: 'select-product', label: 'modal-select-product', size: 'xl', static, centered, v5 })
+    +header
+      h3.t-ctr.fz-22.lh-xxl-tight 這個人物是使用甚麼樣的產品?
+        br
+        | 請先選擇一個產品大類別
+    +body
+      - const fields = ['領域一', '領域二']
+      //- , '領域三', '領域四'
+      //- - const majors = ['車輛']
+      //- , '汽車百貨', '相機/攝影', '水上運動', '機車用品'
+      //- - const minors = ['安全帽']
+      //- , '自行車收納配件', '自行車零/組件', '自行車配件'
+      //- - const products = ['自行車錶']
+        //- , '自行車燈', '自行車手機架', '自行車水壺架', '自行車密碼鎖', '自行車密碼鎖', '自行車鑰匙鎖', '自行車車鈴'
+      ul#megamenu-tab.nav.nav-fill.nav-megamenu(role='tablist' style='--tab-bg: url(../img/tab-white.png)')
+        each field, i in fields
+          li.nav-item(role='presentation')
+            button.nav-link(id=`pills-${i}-tab` class={'active':i===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}` type='button' role='tab' aria-controls=`pills-${i}` aria-selected=String(i===0)) #{field}
+
+      #megamenu-tabContent.tab-content.nav-megamenu-content
+        each field, i in fields
+          .tab-pane.fade(id=`pills-${i}` class={'show active':i===0} role='tabpanel' aria-labelledby=`pills-${i}-tab`)
+            .flexbox.a-start.gx-0
+              .sp-4.tab-list-1
+                h4.megamenu-categroy.fz-14.fw-4.py-2 大類
+                .nav-scroll
+                  ul.nav.col(id=`major-tab-${i}` role='tablist' aria-orientation='vertical')
+                    each major, j in majors
+                      li.nav-item(role='presentation')
+                        button.nav-link(id=`pills-${i}-${j}-tab` class={'active':j===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}` type='button' role='tab' aria-controls=`pills-${i}-${j}` aria-selected=String(j===0))
+                          span(class='fi-ap'+majorIndex.indexOf(major.Name))
+                          |#{major.Name}
+              .sp-8
+                .tab-content(id=`major-tab-content-${i}`)
+                  each major, j in majors
+                    .tab-pane.fade(id=`pills-${i}-${j}` class={'show active':j===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-tab`)
+                      .flexbox.a-start.gx-0
+                        .sp-6
+                          h5.megamenu-categroy.fz-14.fw-4.py-2 子類
+                            //- .custom-control.custom-checkbox.custom-checkbox-right
+                              input.custom-control-input.check-black(id=`minor-all-${i}-${j}` type='checkbox' value='true')
+                              label.custom-control-label(for=`minor-all-${i}-${j}`)
+                          .nav-scroll
+                            ul.nav.col(id=`minor-tab-${j}` role='tablist' aria-orientation='vertical')
+                              each minors, k in major.Sub
+                                li.nav-item(role='presentation')
+
+                                  button.nav-link.sp(id=`pills-${i}-${j}-${k}-tab` class={'active':k===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}-${k}` type='button' role='tab' aria-controls=`pills-${i}-${j}-${k}` aria-selected=String(k===0)) #{minors.Name}
+
+                                  //- .sp-auto
+                                    a.btn.p-0(class=k===2 ? 'disabled' : '' href=`./dataAnalysis2.html?ID=${minors.ID}&majorID=${majorIndex.indexOf(major.Name)}&majorName=${major.Name}&minorName=${minors.Name}&productName=${minors.Name}`)&attributes(k ===1 ? lock: {})
+                                      span(class=k===1 ? 'fi-cart' : 'fi-arr-right')
+                        .sp-6
+                          .tab-content(id=`minor-tab-content-${j}`)
+                            each minors, k in major.Sub
+                              .tab-pane.fade(id=`pills-${i}-${j}-${k}` class={'show active':k===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-${k}-tab`)
+                                h6.megamenu-categroy.fz-14.fw-4.py-2 品類
+                                  //- .custom-control.custom-checkbox.custom-checkbox-right
+                                    input.custom-control-input.check-black(id=`product-all-${i}-${j}-${k}` type='checkbox' value='true')
+                                    label.custom-control-label(for=`product-all-${i}-${j}-${k}`) 品類
+                                .nav-scroll
+                                  .nav.col
+                                    button.js-select-product.nav-link.A-ctr(type='button')&attributes(k ===2 ? lock: {}) 全部
+                                      if k ===2
+                                        span.fl-right.mt-2.fi-cart
+                                    each p, l in minors.Sub
+                                      button.js-select-product.nav-link.A-ctr(type='button')&attributes(l === 1 ? lock: {}) #{p.Name}
+                                        if l === 1
+                                          span.fl-right.mt-2.fi-cart
+      p.t-82.t-right
+        sup *
+        |選擇產品才可查看相關數據
+    +footer
+      .sp-5
+        button.btn.btn-purple.btn-block(type='button' data-bs-dismiss='modal') 確定
+      .sp-5
+        button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 略過
+
+  +modal({ nobtn, id: 'select-uj-modal', label: 'select-uj-modal-title', static, centered, v5})
+    +header({ cls: 't-ctr' }) 快速新增一個人物誌
+    +body
+      p.t-ctr.t-82.mb-3 AI將使用您選的人物誌來生成旅程地圖。
+      .flexbox.t-ctr.J-ctr.gy-3.mb-3
+        .sp-4
+          button.btn.btn-rect-white(type='button' data-bs-toggle='modal' data-bs-target='#select-built-modal')
+            span.rect.t-ctr.mr-1
+              span.fi-id-connect
+            br
+            |選擇人物誌
+        .sp-12.t-ctr 還沒有人物誌嗎?
+          button.btn.btn-link.p-0.t-underline.v-baseline(type='button' data-bs-toggle='modal' data-bs-target='#quick-add-modal') 快速建立
+
+    +footer({cls: 'J-start'})
+      a.btn.btn-white(href='./udeProjectList.html' title='上一步') 上一步
+  +modal({ nobtn, id: 'quick-add-modal', label: 'quick-add-modal-title', static, centered, scrollable, v5})
+    +header({ cls: 't-ctr' }) 快速新增一個人物誌
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          .alert.alert-danger
+            span.fi-info
+            | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+        .sp
+          label(for='select-product') 關注的產品*
+        .sp
+          select#select-product.custom-select.bg-white.b-1(name='product')
+            option(value='0' disabled) 請選擇關注的產品
+            option(value='1') 咖啡機
+            option(value='2') 咖啡機
+        .sp
+          label(for='personality') 個性*
+        .sp
+          textarea#personality.form-control(name='personality' rows='3' placeholder='請輸入個性 e.g. 積極、創意，對於咖啡文化有濃厚興趣')
+        .sp
+          label(for='background') 背景*
+        .sp
+          textarea#background.form-control(name='background' rows='3' placeholder='請輸入背景 e.g. 咖啡愛好者、自由工作者，喜歡在咖啡館中工作和品嚐新口味的咖啡。')
+        .sp
+          label(for='intro') 人物自述*
+        .sp
+          textarea#intro.form-control(name='intro' rows='3' placeholder='請輸入人物自述')
+        .sp
+          label(for='controller') AI敘述
+        .sp
+          textarea#controller.form-control(name='controller' rows='3' placeholder='最後使用者滿意/不滿意')
+      p.t-82.t-right 按下確認後將會扣除額度並開始生成
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#select-uj-modal') 上一步
+      button.btn.btn-pink(type='button' data-bs-dismiss='modal') 確定生成
+  +modal({ nobtn, id: 'select-built-modal', label: 'select-built-modal-title', scrollable, static, centered, v5})
+    +header({ cls: 't-ctr' }) 透過已有的人物誌建立
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          .alert.alert-danger
+            span.fi-info
+            | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+        .sp
+          label(for='select-product') 關注的產品*
+        .sp
+          select#select-product.custom-select.bg-white.b-1(name='product')
+            option(value='0' disabled) 請選擇關注的產品
+            option(value='1') 咖啡機
+            option(value='2') 咖啡機
+        - for(let i = 0; i < 6; i++)
+          .sp-4
+            button.btn.btn-rect-white(type='button')
+              img.circle(src=require('./img/user-blue.jpg') width='48' height='48' title='咖啡機產品設計師' alt='咖啡機產品設計師')
+              br
+              |咖啡機
+              br
+              |產品設計師
+
+        .sp
+          label(for='controller2') AI敘述
+        .sp
+          textarea#controller2.form-control(name='controller' rows='3' placeholder='最後使用者滿意/不滿意')
+    +footer({cls: 'J-between'})
+      button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#select-uj-modal') 上一步
+      button.btn.btn-pink(type='button' data-bs-dismiss='modal') 確定生成
+  +modal({ nobtn, id: 'tutor-modal', label: 'tutor-modal-title', scrollable, size: 'xl', centered, v5})
+    +header
+      h2.fz-24.lh-xxl-none.f-tenor.t-ctr 利益關係人地圖
+    +body
+      #carousel-use.carousel.slide(data-bs-ride='false')
+        .carousel-indicators.static.mx-0.mb-4
+          .card-deck
+            .card.active(data-bs-target='#carousel-use' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
+              .card-body
+                h3.fz-18
+                  a.stretched-link(href='#' title='選擇右邊欲填入欄位')
+                    span.round-purple 1
+                    |選擇右邊欲填入欄位
+                p.pl-4 先點選右邊填入的欄位。
+            .card(data-bs-target='#carousel-use' data-bs-slide-to='1' aria-label='Slide 2')
+              .card-body
+                h3.fz-18
+                  a.stretched-link(href='#' title='框選左邊的上傳文本')
+                    span.round-purple 2
+                    |框選左邊的上傳文本
+                p.pl-4 在左邊文本，框選想要帶入右邊欄位的句子。
+            .card(data-bs-target='#carousel-use' data-bs-slide-to='2' aria-label='Slide 3')
+              .card-body
+                h3.fz-18
+                  a.stretched-link(href='#' title='貼上帶入框選文本')
+                    span.round-purple 3
+                    |貼上帶入框選文本
+                p.pl-4 點選貼上按鈕，讓句子帶入需填寫的欄位。
+        .carousel-inner.t-ctr
+          .carousel-item.active
+            iframe(width='560' height='315' src='https://www.youtube.com/embed/33JCDauWKnA?si=gGCotbZR9DiOZlXv' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+          .carousel-item
+            iframe(width='560' height='315' src='https://www.youtube.com/embed/33JCDauWKnA?si=gGCotbZR9DiOZlXv' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+          .carousel-item
+            iframe(width='560' height='315' src='https://www.youtube.com/embed/33JCDauWKnA?si=gGCotbZR9DiOZlXv' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+      .custom-control.custom-checkbox
+        input#noshow.custom-control-input.check-black(type='checkbox' name='noshow' value='true')
+        label.custom-control-label(for='noshow') 不要再顯示
+  button.btn.btn-black.js-open-card-tutorial(type='button' data-bs-html='true')
+    span.fi-question
+  .card.card-tutorial.invisible
+    .rel
+      img.card-img-top(src='https://i.ytimg.com/vi/33JCDauWKnA/hqdefault.jpg')
+      button.btn.btn-play(type='button' data-bs-toggle='modal' data-bs-target='#tutor-modal')
+        svg.img-fluid(fill='currentColor' width='24' height='24')
+          use(href='./img/sprite.svg#tri-top')
+    .card-body
+      p: strong 豐富研究樣本
+      p.fz-14 使用語言模型分析了超過100萬則國內論壇的評論。這些數據既可以用來支持研究結果，也可以應用於模板中進行編輯，以增加研究成果和洞察的豐富性。
+block script
+  script(type='module')
+    include ./js/d3/d3.js
+    include ./js/biographyOptions.js
+    include ./js/totalChart.js
+  script.
+    window.addEventListener('DOMContentLoaded', function (e) {
+      $('.js-select-product').on('click', function(){
+        $('.js-select-product').removeClass('active')
+        $(this).addClass('active')
+      })
+      $('#nav-tab').on('shown.bs.tab', function(e){
+        if(e.target.dataset.bsTarget === '#nav-sec3') {
+          $('[data-bs-spy="scroll"]').scrollspy('refresh')
+        }
+      })
+      const { action } = Object.fromEntries(new URLSearchParams(location.search))
+
+      const actions = {
+        blank () {
+          $('#select-product').modal('show')
+        },
+        sample () {
+          function getSample(e){
+            const { sample } = e.target.dataset
+            console.log(sample)
+          }
+          $('#create-sample').modal('show').one('hidden.bs.modal', function(){
+            $(this).find('.modal-body').off('click',getSample)
+            $('#select-product').modal('show')
+          }).find('.modal-body').on('click', '.js-select-sample', getSample)
+        },
+        excel () {
+          $('#upload-excel').modal('show')
+        },
+        aisample() {
+          $('#select-uj-modal').modal('show')
+        }
+      }
+      actions[action]?.()
+      $('#uploadExcel').on('change', function(e){
+        const { name } = e.target.files[0]
+        $('.filename').txt(name)
+      })
+      $('.fileuploading').on('dragover dragenter dragleave', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+      }).on('drop', function(e){
+        e.preventDefault()
+        const fileInput = $('#uploadExcel')[0]
+        const {files} = e.dataTransfer
+        if (files.length) {
+          const { name } = files[0]
+          if(name.match(/xlsx?/)) {
+
+            $('.filename').txt(name)
+            fileInput.files = files
+
+            for (const file of files) {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+
+              reader.addEventListener('loadend', function (e) {
+                console.log(e.target.result)
+              })
+            }
+          }
+        }
+      })
+    })

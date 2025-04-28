@@ -1,0 +1,238 @@
+$no-margin-collapse: 0.007813px
+=create-btn($config...)
+  $bg: map-get(keywords($config), 'bg') or $white
+  $border: map-get(keywords($config), 'border') or $bg
+  $color: map-get(keywords($config), 'color') or color-yiq($bg)
+
+  $hover-bg: map-get(keywords($config), 'hover-bg') or darken($bg, 7.5%)
+  $hover-border: map-get(keywords($config), 'hover-border') or darken($bg, 7.5%)
+  $hover-color: map-get(keywords($config), 'hover-color') or color-yiq($hover-bg)
+
+  $active-bg: map-get(keywords($config), 'active-bg') or darken($bg, 10%)
+  $active-border: map-get(keywords($config), 'active-border') or darken($border, 12.5%)
+  $active-color: map-get(keywords($config), 'active-color') or color-yiq($active-bg)
+
+  +button-variant($bg, $border, $color, $hover-bg, $hover-border, $hover-color, $active-bg, $active-border)
+
+=create-btn-outline($config...)
+  $color: map-get(keywords($config), 'color') or $white
+  $border: map-get(keywords($config), 'border') or $color
+  $color-hover: map-get(keywords($config), 'border') or map-get(keywords($config), 'color-hover') or color-yiq($color)
+  $active-bg: map-get(keywords($config), 'active-bg') or $color
+  $active-border: map-get(keywords($config), 'active-border') or $color
+
+  +button-outline-variant($color, $border, $color-hover, $active-bg, $active-border)
+
+=create-badge($config...)
+  $bg: map-get(keywords($config), 'bg') or $white
+  $color: map-get(keywords($config), 'color') or color-yiq($bg)
+
+  +badge-variant($bg, $color)
+.alert-white
+  +alert-variant($white, #e0e0e0, $black)
+.alert-gray
+  +alert-variant(#fafafa, #e0e0e0, $black)
+.btn-red
+  +create-btn($bg: #eb5757)
+.btn-light-blue
+  +create-btn($bg: #2f80ed)
+.btn-blue
+  +create-btn($bg: #323dff)
+.btn-purple
+  +create-btn($bg: #7856ff)
+.btn-light-purple
+  +create-btn($bg: #f4eeff, $color: #603ae7)
+.btn-pink
+  +create-btn($bg: #de5c9d, $color: $white)
+  background-image: linear-gradient(90deg, #de5c9d, #e7657d)
+.btn-light-pink
+  +create-btn($bg: #ffe9f2, $color: #de5c9d)
+.btn-white
+  +create-btn($bg: $white, $active-bg: $black, $active-border: $black, $active-color: $white)
+.btn-green
+  +create-btn($bg: #b2fb2f,  $border: $black)
+  box-shadow: 0 4px 0 0 $black
+
+.btn-gray
+  +create-btn($bg: #f2f2f2)
+.btn-reset
+  +create-btn($bg: #f2f2f2, $color: #eb5757)
+.btn-layout-toggle
+  +create-btn($bg: #f2f2f2, $color: $black, $active-bg: $black, $active-color: $white, $active-border: $black)
+  padding: 0.25rem
+  border-radius: 50%
+  border-block-width: 1px
+  aspect-ratio: 1
+.btn-deep-gray
+  +create-btn($bg: #e7e7e7)
+
+.btn-outline-white
+  +create-btn($bg: $white, $color: #333, $border: #dee2e6)
+  border-width: 1px
+  // +create-btn($bg: $white, $color: #333, $border: #fafafa)
+
+.btn-black
+  +create-btn($bg: #141316, $hover-bg: #4f4f4f,  $hover-border: #4f4f4f)
+  border-radius: .375rem
+.btn-circle-black
+  +create-btn($bg: #141316, $hover-bg: #4f4f4f,  $hover-border: #4f4f4f)
+  aspect-ratio: 1
+.icon-btn-blue-gray
+  width: 2.5rem
+  height: 2.5rem
+  +create-btn($bg: #f2f2f2, $border: #f2f2f2, $hover-bg: #323dff)
+
+.btn-third-pt
+  border: 1px solid #e5e5e5
+  border-radius: $input-border-radius
+  background-color: #fafafa
+  box-shadow: 0 0 .5rem #ccc
+  text-align: left
+.list-divider
+  .list-inline-item:not(:first-child)
+    position: relative
+    padding-left: 12px
+    &:before
+      content: ''
+      display: inline-block
+      position: absolute
+      top: 4.25px
+      left: 0
+      width: 1px
+      height: 28px - 11px
+      background-color: $white
+.badge-normal
+  padding: 0.5rem 1rem
+  font-size: 1em
+  font-weight: 400
+.badge-black
+  +create-badge($bg: $black, $color: $white)
+.badge-pill-l-gray
+  border-radius: 50rem
+  +create-badge($bg: #f2f2f2, $color: $black)
+.badge-pill-l-white
+  border-radius: 50rem
+  +create-badge($bg: $white, $color: $black)
+.badge-pill-l-dark-gray
+  border-radius: 50rem
+  +create-badge($bg: #828282, $color: $white)
+.badge-check-black
+  display: none
+  &:checked
+    + label
+      background-color: $black
+      color: $white
+.radio-select
+  display: none
+  &:checked
+    + label
+      box-shadow: 0 2px 0 4px $black
+  &:disabled
+    + label
+      border: 1px solid #000
+      background-color: #f2f2f2
+.check-opacity ~ .custom-control-label
+  &::after,
+  &::before
+    opacity: 0
+
+.check-black,
+.check-card-shadow
+  &:not(:disabled):active ~ .custom-control-label::before
+    border-color: #bdbdbd
+    background-color: #bdbdbd
+  &:focus
+    &:not(:checked) ~ .custom-control-label::before
+      border-color: #000
+    ~ .card-shadow .custom-control-label::before,
+    ~ .custom-control-label::before
+      box-shadow: 0 0 0 0.2rem #bdbdbd
+  &:checked
+    ~ .card-shadow .custom-control-label::before,
+    ~ .custom-control-label::before
+      border-color: $black
+      background-color: $black
+.check-card-shadow:checked
+  ~ .card-shadow
+    box-shadow: 0 0 0 .25rem #323dff
+    .custom-control-label::after
+      @extend %svg-check
+
+.custom-checkbox
+  .check-black:disabled:checked
+    ~ .custom-control-label::before
+      background-color: rgba($black, .5)
+
+.btn
+  svg
+    transition: transform .3s
+  &.collapsed
+    svg
+      transform: scaleY(-1)
+.list-group-item.list-group-item-l-gray
+  border-left: .25rem solid transparent
+  background-color: $white
+  color: #333
+  &.active
+    border-color: rgba(0, 0, 0, 0.125)
+    border-left-color: $black
+    background-color: #f2f2f2
+
+.h-uline:hover
+  text-decoration: underline
+  text-underline-offset: 0.25rem
+.alert-info
+  border-color: #2f80ed
+  background-color: #d5e6fb
+  color: #2f80ed
+.popover-danger
+  .popover-arrow:after
+    border-top-color: #ff5449 !important
+  .popover-body
+    background-color: #ff5449
+    color: $white
+.popover-purple
+  .popover-arrow:after
+    border-top-color: #7a59ff !important
+  .popover-body
+    background-color: #7a59ff
+    color: $white
+.popover-info
+  .popover-arrow:after
+    border-top-color: #2f80ed !important
+  .popover-body
+    background-color: #2f80ed
+    color: $white
+.popover-black
+  .popover-arrow:after
+    border-top-color: $black !important
+  .popover-body
+    background-color: $black
+    color: $white
+
+.form-control-title
+  border-width: 2px
+  background-color: $white
+  font-size: 2rem
+  &:focus
+    border-color: #323dff
+// .dropdown-select
+//   border-radius: $border-radius-sm
+//   text-align: left
+// .dropdown-arr
+//   float: right
+//   line-height: 1.5
+//   vertical-align: middle
+// .dropdown-select.show
+//   .dropdown-arr
+//     transform: scaleY(-1)
+// .dropdown-select-menu
+//   width: 100%
+// .dropdown-select-black
+//   .btn
+//     border-width: 0 0 2px
+//     border-color: transparent
+//     border-style: solid
+//     &.show
+//       border-radius: 0
+//       border-bottom-color: $black

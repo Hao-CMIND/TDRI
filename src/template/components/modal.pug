@@ -1,0 +1,53 @@
+mixin modal({ id, label, size, cls, contentCls, dialogCls, btnText='Launch demo modal',ref } = {})
+  - const { has, is, isnot } = getPropKeys(arguments)
+  - const dataset = isV5.bind(null, has('v5'))
+
+  unless has('nobtn')
+    - const toggleAttr = { [dataset('toggle')]: 'modal', [dataset('target')]: '#'+id }
+    button.btn.btn-primary(type='button')&attributes(toggleAttr) #{btnText}
+  mixin header({ tag='h5', id, cls } = {})
+    - const { has } = getPropKeys(arguments)
+    - const attr = { id, type: 'button', [dataset('dismiss')]: 'modal', 'aria-label': 'Close' }
+    .modal-header
+      #{tag}.modal-title(id=label class=cls): block
+      if has('closebtn')
+        button.close&attributes(attr)
+          span(aria-hidden='true') ×
+  mixin body({ cls }={})
+    .modal-body(class=cls)
+      block
+  mixin footer({ cls } = {})
+    .modal-footer(class=cls)
+      //屬性 data-bs-dismiss='modal' 關閉modal功能
+      block
+  -
+    const dialogClassName = {
+      ['modal-' + size]: size,
+      'modal-dialog-scrollable': has('scrollable'),
+      'modal-dialog-centered': has('centered'),
+    }
+  -
+    const attr = {
+      ref,
+      id,
+      class: cls,
+      ':class': vCls,
+      tabindex: '-1',
+      'aria-labelledby': label,
+      'aria-hidden': 'true',
+      [dataset('backdrop')]: has('static') && 'static',
+      [dataset('keyboard')]: isnot('static'),
+    }
+  .modal.fade&attributes(attr)
+    .modal-dialog(class=dialogClassName)&attributes({class: dialogCls})
+      .modal-content(class=contentCls)
+        block
+//-
+  +modal({ id: 'exp', label: 'modal-title', static, scrollable, centered, size: 'lg', v5 })
+    +header 標題
+
+    +body
+      p lorem500
+    +footer
+      button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+      button.btn.btn-primary(type='button') Save changes

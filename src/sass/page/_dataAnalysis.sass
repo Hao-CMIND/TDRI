@@ -1,0 +1,549 @@
+%tab-pseudo
+  content: ''
+  position: absolute
+  bottom: 0
+  width: 2rem
+  height: 50%
+.popover-wider
+  max-width: 40rem
+.tab-charts
+  align-items: flex-end
+  padding: 1rem 1rem 0
+  border-bottom-width: 0
+  &-container
+    padding: 2rem 3rem
+    border-radius: 2rem
+    background-color: #e0e0e0
+  // &-content
+    // .tab-pane
+      // padding: 1.5rem 3rem
+      // background-color: #e0e0e0
+  .tab-text
+    padding: 0.25rem
+    border-bottom: 4px solid transparent
+  .nav-item
+    position: relative
+    z-index: 2
+    padding: 0 .5rem
+    border-radius: $rounded-pill
+    &.active
+      z-index: 1
+    // background-color: #f3f3f3
+    // &:has(.active)
+    //   z-index: 0
+    //   padding: 0
+  .nav-link
+    margin-bottom: .5rem
+    padding: 0.5rem
+    border: none
+    border-radius: $rounded-pill
+    // +border-bottom-radius(.75rem)
+    background-color: $white
+    &:hover
+      background-color: darken($white, 7.5%)
+
+
+    &.active
+      position: relative
+      margin-bottom: 0
+      padding: .25rem .75rem .75rem
+      border-radius: 1.25rem 1.25rem 0 0
+      border-color: #e0e0e0
+      background-color: #e0e0e0
+      font-size: 20px
+      font-weight: $font-weight-bold
+      .tab-text
+        border-bottom-color: #323dff
+        &:before
+          @extend  %tab-pseudo
+          right: 100%
+          background-color: #e0e0e0
+        &:after
+          @extend  %tab-pseudo
+          left: 100%
+          background-color: #e0e0e0
+      &:after,
+      &:before
+        @extend  %tab-pseudo
+        z-index: 1
+        background-color: #f3f3f3
+      &:before
+        right: 100%
+        border-bottom-right-radius: 1.25rem
+      &:after
+        left: 100%
+        border-bottom-left-radius: 1.25rem
+.js-scroll
+  display: none
+
+.scroll-container
+  display: flex
+  align-items: flex-end
+  white-space: nowrap
+  .btn
+    display: inline-block
+    margin-bottom: 0.5rem
+    padding: .25rem
+  .nav
+    flex-grow: 1
+    flex-shrink: 1
+    flex-wrap: nowrap
+    overflow: hidden
+    scroll-behavior: smooth
+.product-style
+  padding: 1rem 0.5rem
+  border: 2px solid #e6e6e6
+  border-radius: 1.25rem
+  background-color: #f2f2f2
+  &:hover
+    background-color: #fff
+    .img-clamp-2
+      text-decoration: underline
+.product-discount
+  font-weight: $font-weight-bold
+  text-decoration: none
+.product-img
+  max-width: 100%
+  aspect-ratio: 1
+  object-fit: contain
+// [id^='chart-svg']
+//   min-height: 611px
+
+.chart-area
+  // padding: 1.5rem
+  // border-radius: 1rem
+  // background-color: $white
+  .badge
+    margin: 0 .5rem
+.chart-title
+  margin-bottom: 0
+  font-size: 24px
+  text-align: center
+.img-clamp-2
+  display: -webkit-box
+  overflow: hidden
+  -webkit-line-clamp: 2
+  -webkit-box-orient: vertical
+.checkbox-collapse
+  display: none
+  + .table
+    display: none
+  &:checked
+    + .table
+      display: table
+    // + .chart-desc
+    //   // height: auto
+    //   overflow: visible
+    //   -webkit-line-clamp: none
+    //   -webkit-box-orient: horizontal
+    // + *:not(.chart-desc)
+    //   display: none
+
+$offset: 100
+$duration: 1.5s
+.container:has(.tab-charts)
+  position: sticky
+  z-index: 1030
+  top: $header-height
+.container:has(.tab-charts, .sticky-header)
+  background: #f3f3f3
+  transition: transform 0.3s
+// .sticky-pde-intro
+//   z-index: 1031
+//   padding-top: 1rem
+//   transition: transform 0.3s
+.nav-input-group
+  width: auto
+  margin-bottom: 0.5rem
+  margin-left: auto
+.slide-down-visible
+  visibility: hidden
+.slide-down
+  .input-col
+    flex-basis: auto
+    max-width: 50%
+  // .sticky-pde-intro
+  //   max-width: 20%
+  //   margin-right: calc(50vw - 760px)
+  // .scroll-container
+  //   width: 75%
+  .slide-down-invisible
+    visibility: hidden
+  .slide-down-visible
+    visibility: visible
+
+  .container:has(.tab-charts, .sticky-header)
+    transform: translateY(-$header-height)
+    // .nav-link
+    //   padding-block: 0.25rem
+  &.scroll-up
+    // .sticky-pde-intro
+    //   transform: translateY($header-height)
+    .container:has(.tab-charts, .sticky-header)
+      transform: translateY(0)
+      // .nav-link
+      //   padding-block: 0.5rem
+    .toast-container-top
+      transform: none
+  .toast-container-top
+    transform: translateY(calc(-100% + 2rem))
+
+  .iframe-modal-open .modal-open-container
+    bottom: 2rem
+@keyframes rotator
+  100%
+    transform: rotate(1.25turn)
+@keyframes dash
+  0%
+    stroke-dashoffset: $offset
+    stroke: #2f80ed
+  50%
+    stroke-dashoffset: calc($offset / 4)
+    stroke: lighten(#2f80ed, 20%)
+    transform: rotate(90deg)
+  100%
+    stroke-dashoffset: $offset
+    stroke: lighten(#2f80ed, 60%)
+    transform: rotate(360deg)
+
+.ani-dash-circle
+  stroke-dasharray: $offset
+  stroke-dashoffset: 0
+  animation: dash $duration ease-in-out infinite
+
+.spinner
+  animation: rotator $duration linear infinite
+// .scroll-toogle-opacity.active
+//   visibility: hidden
+@keyframes stroking
+  0%
+    transform: translate(-242px) scaleX(0)
+  35%
+    transform: translate(0) scaleX(1)
+  100%
+    transform: translate(242px) scaleX(0)
+
+.ani-progress-bar
+  transform-origin: center
+  animation: stroking 2s linear infinite
+
+.badge-outline,
+.badge-purple,
+.badge-blue,
+.badge-l-gray
+  padding: 0.375rem 0.25rem
+  border: 1px solid #e0e0e0
+  border-radius: 0.25rem
+  font-size: 0.875rem
+.badge-purple
+  background-color: #e0e0ff
+.badge-blue
+  background-color: #ddeaff
+.badge-l-gray
+  background-color: #f2f2f2
+.badge-blue-lg,
+.badge-black-lg
+  padding: 6px 8px
+  border-radius: 8px
+  color: $white
+  font-size: 14px
+.badge-blue-lg
+  background-color: #0005aa
+.badge-black-lg
+  background-color: $black
+
+.list-day
+  border-top: 1px solid #e0e0e0
+  border-bottom: 1px solid #e0e0e0
+  background: #fafafa
+  color: #333
+
+.tip-title
+  color: #333
+  font-size: 16px
+.tip-label
+  padding-right: 1rem
+  color: #828282
+.tip-val
+  float: right
+  font-weight: $font-weight-bold
+  // color: #323dff
+
+%toast-container
+  position: fixed
+  z-index: 5
+  left: calc(50% - 250px)
+  width: 500px
+  .toast
+    margin: 0 auto
+.toast-container,
+.toast-container-bottom
+  @extend %toast-container
+  bottom: 1rem
+
+.toast-container-top
+  @extend %toast-container
+  top: $header-height
+
+.toast-msg
+  position: fixed
+  z-index: 5
+  bottom: 1rem
+  left: 1rem
+  width: 500px
+  .toast
+    position: absolute
+    bottom: 0
+    background-color: #2f80ed
+    color: #f2f2f2
+  .close
+    margin-left: 0.25rem
+    padding: .25rem
+    border-radius: 50%
+    background-color: #333
+    color: #fff
+    font-size: 1rem
+    text-shadow: none
+
+.popover-list
+  min-width: 100%
+  li
+    border-radius: .5rem
+    background-color: #eee
+    line-height: 1.5
+    padding-inline: .5rem
+    + li
+      margin-top: 0.5rem
+  a
+    display: inline-block
+    width: 100%
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+.toast-download
+  position: fixed
+  bottom: 0
+.container-a4
+  width: 297mm
+.hide-checkbox
+  position: absolute
+  opacity: 0
+.card-chart-label.card-shadow
+  display: flex
+  border-radius: .5rem
+  background-color: $white
+  background-repeat: no-repeat
+  background-position: center bottom 25%
+  background-size: 90%
+.checkbox-index
+  .custom-control-label:before,
+  .custom-control-label:after
+    width: 1.25rem
+    height: 1.25rem
+  .custom-control-label:after
+    content: attr(data-index)
+    color: $white
+    line-height: 1.25
+    text-align: center
+  .custom-control-label:before
+    border-radius: 50%
+.check-card-shadow
+  &:checked ~ .card-chart-label
+    .custom-control-label:before
+      border-color: #323dff
+      background-color: #323dff
+    .custom-control-label:after
+      background-image: none
+.dashboard-card:disabled + label
+  filter: grayscale(0.5)opacity(0.5)
+.drop-tpl
+  display: grid
+  margin: 0 auto
+  // outline: 1px solid #f00
+  aspect-ratio: 1.414
+  gap: 16px
+  // &.active
+  //   .drop-zone
+  //     position: relative
+  //     &:before
+  //       content: '請拖曳圖表'
+  //       position: absolute
+  //       top: 50%
+  //       left: 50%
+  //       color: #aaa
+  //       transform: translate(-50%, -50%)
+
+.drop-tpl-0
+  grid-template-columns: repeat(2, 1fr)
+  aspect-ratio: 2
+.drop-tpl-1
+  grid-template-rows: repeat(2, 1fr)
+.drop-tpl-2
+  grid-template-columns: repeat(2, 1fr)
+  .cell-c
+    grid-column: span 2
+.drop-tpl-3
+  grid-template-columns: repeat(2, 1fr)
+  .cell-a
+    grid-column: span 2
+.drop-tpl-4
+  grid-template-columns: repeat(2, 1fr)
+  grid-template-rows: repeat(2, 1fr)
+
+
+// :is(.drop-tpl-3, .drop-tpl-4, .drop-tpl-5, .drop-tpl-6, .drop-tpl-7) .cell-c ~ *,
+// :is(.drop-tpl-1, .drop-tpl-2) .cell-b ~ *
+//   display: none
+
+.frame
+  width: 100%
+  height: 100%
+  cursor: grab
+// .dragging
+//   cursor: grabbing
+.drop-zone
+  border: 1px solid #e0e0e0
+  border-radius: .5rem
+  padding-block: 1rem
+// .dragover
+//   border-color: #aaa
+//   cursor: grabbing
+
+// .cell-a
+//   grid-area: a
+// .cell-b
+//   grid-area: b
+// .cell-c
+//   grid-area: c
+// .cell-d
+//   grid-area: d
+.chart-card
+  display: flex
+  flex-direction: column
+  padding: .5rem
+  border: 4px solid transparent
+  border-radius: .25rem
+  background-color: $white
+  background-image: var(--chart-img)
+  background-repeat: no-repeat
+  background-position: bottom 16px center
+  background-size: calc(100% - 32px)
+  transition: background-color .35s, color  .35s
+  aspect-ratio: 1
+  &.active
+    border-color: #323dff
+
+  &:hover
+    background-color: #323dff
+    background-image: none
+    color: $white
+    .chart-card-desc
+      opacity: 1
+
+    .chart-card-btn,
+    .chart-card-change
+      opacity: 1
+  &-title
+    font-size: 1rem
+  &-desc
+    display: -webkit-box
+    margin: 0
+    overflow: hidden
+    opacity: 0
+    color: $white
+    transition: opacity .35s
+    -webkit-box-orient: vertical
+    -webkit-line-clamp: 3
+  &-btn,
+  &-change
+    flex-grow: 1
+    opacity: 0
+    color: $white
+    transition: opacity .35s
+    &:hover
+      color: #f2f2f2
+
+.chart-card-change,
+.btn-toggle-overlay
+  display: none
+.iframe-modal-open
+  .chart-card-btn,
+  .aside.chart-filter
+    display: none
+  .chart-card-change,
+  .btn-toggle-overlay
+    display: block
+  .modal-open-static
+    position: static
+  .modal-open-section
+    position: absolute
+    inset: 0
+  .btn-toggle-overlay
+    position: absolute
+    z-index: 1070
+    bottom: 210px
+    left: 50%
+    transform: translate(-50%)
+
+    // transform: translate(-50%)
+  .modal-open-container
+    position: absolute
+    z-index: 1070
+    right: 0
+    bottom: 0
+    left: 0
+    max-width: 100%
+    padding-top: .25rem
+    padding-bottom: .25rem
+    overflow-x: scroll
+    background-color: #141316
+  .modal-open-nowrap
+    flex-wrap: nowrap
+    align-items: end
+    > *
+      flex: 0 0 195px
+      opacity: 0.7
+      &:hover
+        opacity: 1
+      &:has(.active)
+        flex: 0 0 13.5rem
+        opacity: 1
+    .chart-card-title
+      font-size: 14px
+    .chart-card-desc
+      display: none
+    .chart-card
+      padding: 0.5rem
+  .css-show-charts
+    display: none
+.popover-list-link
+  li
+    border-radius: .5rem
+    background-color: #f2f2f2
+    padding-inline: 0.25rem
+    + li
+      margin-top: .5rem
+.hide-overlay
+  .modal-open-container
+    transform: translateY(100%)
+  .btn-toggle-overlay
+    bottom: -.5rem
+    transform: translate(-50%)rotate(.5turn)
+.modal-chart-iframe
+  .modal-content
+    max-height: calc(80vh - 3.5rem)
+.after-none:after
+  content: none
+.badge.abs-badge-alert
+  position: absolute
+  bottom: 100%
+  left: 100%
+  padding: 0.5rem
+  border-radius: 50%
+  background-color: #eb5757
+  transform: translate(-70%, -10%)
+// .modal-open-static
+//   min-height: 160rem
++media-breakpoint-up(xxl)
+  .chart-card-desc
+    -webkit-line-clamp: 4

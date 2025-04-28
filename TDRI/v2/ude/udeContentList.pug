@@ -1,0 +1,83 @@
+extends ./template/layout.pug
+block local
+  - require('./img/goldcn.png')
+  - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+block body
+  .container-fluid.py-3
+    .flexbox.gx-2
+      .sp-2
+        include ./template/layout/udeAside.pug
+      .sp-10
+        .container
+          +breadcrumb({ cls: 'breadcrumb-slash-divider  mb-0', prev: [
+            { href: '#', page: '專案管理' },
+            { href: '#', page: '專案A' }
+          ]})
+          h1.fz-32 專案A
+          p.mb-5 專案描述
+            br
+            |本專案旨在設計和開發一款具有智慧型功能的洗衣機，以滿足現代生活中對於高效、節能、便捷的需求。
+
+          .section-list.mb-4
+            .flexbox.sps-1.gx-2.gy-3.mb-3.a-ctr
+              .sp-auto
+                button.btn.btn-purple.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><a class=\'btn\' href=\'./udeCharacterList.html?add=true\'><span class=\'fi-id-card\'></span>人物誌</a></li><li><a class=\'btn\' href=\'./udeStakeholderList.html?add=true\'><span class=\'fi-target\'></span>利益關係人地圖</a></li><li><a class=\'btn\' href=\'./udeUJMList.html?add=true\'><span class=\'fi-signpost\'></span>使用者旅程地圖</a></li></menu>')
+                  |新增
+                  span.fi-arr-down
+
+              .sp-auto.mr-auto
+                button.btn.btn-outline-white(type='button')
+                  span.fi-download
+                  |下載
+              .sp-2
+                .dropdown.customize-dropdown.ude-dropdown
+                  button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                    span.placeholder 全部
+                    span.fi-arr-down
+                  .dropdown-menu.w-100
+                    a.dropdown-item(href='javascript:void') 全部
+                    a.dropdown-item(href='javascript:void') 人物誌
+                    a.dropdown-item(href='javascript:void') 使用者旅程地圖
+                    a.dropdown-item(href='javascript:void') 利益關係人地圖
+              .sp-2
+                +inputGroup({type: 'search', id: 'search', name: 'search', label: '搜尋', placeholder: '請搜尋關鍵字...', cls: 'bg-white', prependCls: 'bg-white' })
+          table.table
+            thead
+              tr
+                th 名稱
+                th
+                  button.btn(type='button') 上次修改時間↓ ↑
+                th
+                  button.btn(type='button') 建立時間↓ ↑
+                th
+            tbody
+              tr.rel
+                th
+                  a.stretched-link(href='./createCharacter2.html' title='潘嘉麗')
+                    span.fi-id-card
+                    |潘嘉麗
+                td 上午9:40
+                td 2024年11月4日
+                td.t-right
+                  button.rel.z-top.btn.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'character\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>')
+                    span.fi-option-h
+              tr.rel
+                th
+                  a.stretched-link(href='./drawStakeholder.html' title='智慧型洗衣機')
+                    span.fi-signpost
+                    |智慧型洗衣機
+                td 上午9:40
+                td 2024年11月4日
+                td.t-right
+                  button.rel.z-top.btn.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'character\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>')
+                    span.fi-option-h
+              tr.rel
+                th
+                  a.stretched-link(href='./UJM.html' title='陳小美洗衣服')
+                    span.fi-target
+                    |陳小美洗衣服
+                td 上午9:40
+                td 2024年11月4日
+                td.t-right
+                  button.rel.z-top.btn.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'character\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>')
+                    span.fi-option-h

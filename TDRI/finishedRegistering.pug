@@ -1,0 +1,91 @@
+extends ./template/layout.pug
+include ./template/components/stepList.pug
+block local
+  -
+    bodyAttr = {
+      class: ['bg-grid']
+    }
+
+block body
+  //- h2.fz-16 會員等級與權限 (產品數據工具)
+  //- ul.mark-crown
+  //-   li
+  //-     h3.fz-16 一般會員
+  //-     p 只能查看一個產品子類別中，子類別和其中一個品類的分析結果
+  //-   li
+  //-     h3.fz-16 進階會員
+  //-     p 可不限次數查看所有產品子類別、品類的分析結果，並可下載圖表
+  //- a.btn.btn-blue(href='./advMember.html') 聯絡我們升級會員
+  section(style='padding:10vh 0')
+    .container.mb-5
+      .flexbox.gy-5.a-ctr.sps-1.t-ctr.col
+        .sp
+          h1.fz-32.lh-xxl-none 您已經註冊完成
+          p.fz-18 感謝您的註冊您可開始建立專案使用
+        .sp-s-10.sp-m-6.sp-l-5.sp-xxl-4
+          +stepList([['active done'], ['active done'], ['active done']])
+        .sp-l-6.sp-xxl-3
+          .bg-white.rad-sm
+            p.ic-bf.ib-silvercn 當前會員等級：一般會員
+              span.badge.badge-pill-l-gray.badge-normal.ml-1 永久免費
+              // PDE tip
+              button.btn.js-popovers-option.p-0(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!='<h2 class=\'fz-16 mb-3\'>會員等級與權限 (產品數據工具)</h2><ul class=\'mark-crown\'><li><h3 class=\'fz-16\'>一般會員</h3><p>只能查看一個產品子類別中，子類別和其中一個品類的分析結果</p></li><li><h3 class=\'fz-16\'>進階會員</h3><p>可不限次數查看所有產品子類別、品類的分析結果，並可下載圖表</p></li></ul><a class=\'btn btn-blue btn-block\' href=\'./advMember.html\'>聯絡我們升級會員</a>' style='color:#bdbdbd')
+                span.fi-info
+              // UDE tip
+              button.btn.js-popovers-option.p-0(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!='<h2 class=\'fz-16 mb-3\'>會員等級與權限 (使用者數據工具)</h2><ul class=\'mark-crown\'><li><h3 class=\'fz-16\'>一般會員</h3><p>只能建立一個專案，且專案中只能建立3組人物誌與6組利益關係人資料</p></li><li><h3 class=\'fz-16\'>進階會員</h3><p>可無限建立專案、人物誌與利益關係人資料</p></li></ul><a class=\'btn btn-blue btn-block\' href=\'./advMember.html\'>聯絡我們升級會員</a>' style='color:#bdbdbd')
+                span.fi-info
+        .sp
+          img.img-fluid(src=require('./img/normalcn.png') width='168' height='166' alt='一般會員' title='一般會員' loading='lazy')
+        .sp
+          p.t-82 若有疑慮請聯繫客服人員
+            a.t-reset(href='mailto:rdlab_contact@tdri.org.tw') rdlab_contact@tdri.org.tw
+        .sp-s-10.sp-m-6.sp-l-5.sp-xxl-4
+          a.btn.btn-black.btn-block(href='./index.html' title='產品數據工具') 探索各網站並找到適合您的數位開發工具
+
+    .container
+      p.fw-7.fz-22.mb-4 您可以試試...
+      .flexbox.sps-2.sps-m-3.sps-xl-4.gx-3.gy-4
+        .sp
+          .card
+            img.card-img-top(src=require('./img/pde-tool.jpg') width='100%' height='auto' alt='pde tool' title='pde tool' loading='lazy')
+            .card-body.p-3
+              h3.fz-16.mb-2
+                img.img-fluid(src=require('./img/nobase64/pde.png') width='36' height='36' alt='pde icon' title='pde icon' loading='lazy')
+                span.tool-title 產品數據分析工具
+                  br
+                  |Product Data Explore
+              .tool-badge-group
+                span.badge(style='background-color:#cce0ff;') PM
+                span.badge(style='background-color:#e4ddff;') PO
+                span.badge(style='background-color:#d1f7df;') ID
+              p.tool-desc 專為產品設計團隊打造的一站式數據整合平台
+        .sp
+          .card
+            img.card-img-top(src=require('./img/ude-tool.jpg') width='100%' height='auto' alt='ude tool' title='ude tool' loading='lazy')
+            .card-body.p-3
+              h3.fz-16.mb-2
+                img.circle(src=require('./img/nobase64/ude.png') width='36' height='36' alt='ude icon' title='pde icon' loading='lazy')
+                span.tool-title 產品數據分析工具
+                  br
+                  |Product Data Explore
+              .tool-badge-group
+                span.badge(style='background-color:#ebd1f7;') UI
+                span.badge(style='background-color:#cce0ff;') UX
+              p.tool-desc 具備精準使用者輪廓與資料推薦功能的數位使用者研究平台
+        - for(let i = 0; i < 6; i++)
+          .sp
+            .card
+              img.card-img-top(src='https://picsum.photos/640/360/' width='100%' height='auto' alt='' title='' loading='lazy')
+
+              .card-body.p-3
+                h3.fz-16.mb-2
+                  img.circle.circle(src='https://picsum.photos/36/36/' width='36' height='36' alt='pde icon' title='pde icon' loading='lazy')
+                  span.tool-title.
+                    #{ String.fromCharCode('C'.charCodeAt() + i) + '工具' }
+                    #[br]
+                    #{ String.fromCharCode('C'.charCodeAt() + i) + 'Tool' }
+                .tool-badge-group
+                  span.badge(style='background-color:#e4ddff;') PO
+                  span.badge(style='background-color:#fff3cc;') RD
+                  span.badge(style='background-color:#ebd1f7;') UI
+                p.tool-desc #{'最多兩行，最多兩行，最多兩行，最多兩行，最多兩行，最多兩行，最多兩行，最多兩行，最多兩行，'.slice(0, (i+1)*7)}

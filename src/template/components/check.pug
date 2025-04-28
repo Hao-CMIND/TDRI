@@ -1,0 +1,39 @@
+mixin formCheck({ name, type='checkbox', cls }={})
+  - const { has } = getPropKeys(arguments)
+  - const isInline = has('inline')
+  - const isRequired = has('required')
+  - const isCustom = has('custom') ? 'custom-control' : 'form-check'
+
+  -
+    const formCheckCls = [
+      cls,
+      isCustom,
+      isInline && isCustom + '-inline',
+      {
+        ['custom-'+type]: isCustom
+      }
+    ]
+  mixin checkItem({ label, id, value } ={})
+    - const { has } = getPropKeys(arguments)
+    -
+      const inputAttr = {
+        id, type, name, value,
+        class: isCustom + '-input',
+        checked: has('checked'),
+        disabled: has('disabled'),
+        required: isRequired,
+      }
+    div(class=formCheckCls)
+      input&attributes(inputAttr)
+      label(class=isCustom + '-label' for=id): block
+
+  block
+//-
+  +formCheck({ name: 'meal', custom, inline, required })
+    +checkItem({ id: 'checkbox1', checked }) check1
+    +checkItem({ id: 'checkbox2', checked }) check2
+    +checkItem({ id: 'checkbox3', disabled }) check3
+  +formCheck({ name: 'meal2',custom, type: 'radio' })
+    +checkItem({ id: 'radio1', checked , value:'1'}) radio1
+    +checkItem({ id: 'radio2', disabled, value:'2' }) radio2
+    +checkItem({ id: 'radio3', value:'3' }) radio3

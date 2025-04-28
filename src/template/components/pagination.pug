@@ -1,0 +1,38 @@
+mixin pagination({ pages, current, prev='&laquo;', next='&raquo;', size, cls, label='Search results pages' } = {})
+  - const { has } = getPropKeys(arguments)
+  nav(aria-label=label)
+    ul.pagination(class=[cls, { ['pagination-'+size]:size }])
+      - const prevIsDiabled = has('current') && current===1
+      li.page-item(class={disabled: prevIsDiabled})
+        if has('icon')
+          a.page-link.px-0(href='#' aria-label='First page')
+            span.fi-prev-end(aria-hidden='true')
+            //- !=prev
+        else
+          a.page-link(href='#') Previous
+      li.page-item(class={disabled: prevIsDiabled})
+        if has('icon')
+          a.page-link.px-0(href='#' aria-label='Previous')
+            span.fi-prev(aria-hidden='true')
+        else
+          a.page-link(href='#') Previous
+      - for(let i = 0; i < pages; i++)
+        - const isCurrent = has('current')&&(i+1)===current
+        li.page-item(class={active: isCurrent} href='#' aria-current=isCurrent && "page")
+          a.page-link=i+1
+      - const nextIsDiabled = has('current') && current===pages
+      li.page-item(class={disabled: nextIsDiabled})
+        if has('icon')
+          a.page-link.px-0(href='#' aria-label='Next')
+            span.fi-next(aria-hidden='true')
+            //- !=next
+        else
+          a.page-link(href='#') Next
+      li.page-item(class={disabled: nextIsDiabled})
+        if has('icon')
+          a.page-link.px-0(href='#' aria-label='Last Page')
+            span.fi-next-end(aria-hidden='true')
+        else
+          a.page-link(href='#') Next
+//-
+  +pagination({ pages: 5, icon, current: 5, size: 'lg', cls: 'justify-content-center' })

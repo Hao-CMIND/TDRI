@@ -1,0 +1,299 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '使用者研究數位工具'
+  - pageType = 'ude'
+  //  bodyAttr = { style: 'background-color:#f3f3f3;' }
+  //  headerH1 = true
+  - bodyAttr = { style: 'background-color:#f3f3f3;' }
+block body
+  template#badge-label-template
+    label.badge(for='{{htmlFor}}') {{val}}
+      span.fi-close-cir.fi-normal
+  .container
+    .flexbox.sps-1.gy-3.mb-3
+      .sp
+        a.t-333(href='./projectList.html')
+          svg.img-fluid(fill='currentColor' width='19' height='19')
+            use(xlink:href='./img/sprite.svg#arrow-left')
+          span.v-middle 專案列表
+  section.py-5
+    nav#scroll-spy.nav.sticky-spy
+      a.nav-link.spy-anchor.active(href='#step-1')
+        span.fi-user
+        span.i-block Step1
+          br
+          span.nav-text 編輯基本資料
+      a.nav-link.spy-anchor(href='#step-2')
+        span.fi-check-rect
+        span.i-block Step2
+          br
+          span.nav-text 編輯任務目標
+    form.container(data-bs-spy='scroll' data-bs-target='#scroll-spy' data-bs-offset='0' tabindex='0')
+      .flexbox.a-ctr.gx-2.gy-3.sticky-header
+        .sp-s-6.sp-m-4.sp-xl-3.mr-auto
+          select.custom-select.bg-none.fz-32.t-333(name='sort')
+            option(value='0' selected) ABC滾筒洗衣機專案
+
+        .sp-auto
+          button.btn.btn-outline-white.t-red(type='button')
+            span.fi-delete
+            span 刪除專案
+        .sp-auto
+          button.btn.btn-outline-white(type='button')
+            span.fi-copy
+            |複製專案
+        .sp-auto
+          button.btn.btn-purple(type='button')
+            span.fi-upload
+            |全部匯出
+        .sp-auto
+          button.btn.btn-purple(type='button')
+            span.fi-check-cir
+            |儲存利益人關係
+      .flexbox.sps-1.a-ctr.gx-2.gy-3.mb-3
+        .sp
+          h2.fz-24
+            span.fi-target
+            |創建利益關係人
+          p
+            span.fi-info
+            | 利益關係人：針對產品開發上所有利害關係的角色加以具體描述，思考該關係人所遭遇的情境，並且判斷其影響力。
+        //- .sp
+        //.flexbox.sps-1.J-between.gx-2.gy-3.mb-3
+        .sp-4.sp-s-2.sp-m-4.sp-xl-3.mr-m-auto
+          h3.fz-18.t-82 基本資料
+        .sp-8.sp-s-auto
+          +dropdownProducts('選擇利益關係人範本', {'data-bs-content': '請選利益關係人', 'data-bs-placement': 'top', 'data-bs-toggle': 'popover', 'data-bs-custom-class':'popover-danger'})
+
+        .sp-auto
+          button.btn.btn-purple(type='button') 帶入範本
+        .sp-auto
+          button.btn.js-popovers-option.p-0(ref='download' type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.modify)
+            span.fi-option-v
+
+      #card-info.layer.gap-3.show.step-3
+        .card.card-purple.h-auto
+          .card-header
+          .card-body
+            .flexbox.a-ctr.gx-2
+              .sp-auto.mr-auto
+                +inputGroup({type: 'text', id: 'modify-title', name: 'project', label: '專案名稱', value: '利益關係人', groupCls:'a-ctr bb-1 i-flex w-auto', cls: 'form-control-plaintext fz-32', readonly })
+                  +prepend
+                    img(src=require('./img/nobase64/pjicon.png') width='48' height='48' alt='利益關係人' title='利益關係人' loading='lazy')
+
+                  //- +append
+                    button.js-toggle-readoly.btn.fz-32(type='button' data-toggle='#modify-title')
+                      span.fi-pen
+              .sp-auto
+                button.btn.p-0(type='reset')
+                  span.fi-reset
+              .sp-auto
+                button.btn(type='button' data-bs-toggle='collapse' data-bs-target='.card-info' aria-expanded='false' aria-controls='card-info')
+                  svg.img-fluid(fill='currentColor' width='16' height='16')
+                    use(xlink:href='./img/sprite.svg#tri-top')
+        #step-1.card.card-info.show
+          .card-body
+            .flexbox.gy-3
+              .sp-12
+                h4 角色
+              .sp-l-4.gap-2
+                h5 頭像、影響力
+                  span.fi-info.t-82.fi-sm
+                h6 頭像
+                .img-round-avatar(data-bs-toggle='modal' data-bs-target='#change-avatar')
+                  img(src=require('./img/avatar0.png') width='96' height='96' alt='產品業務' title='產品業務' loading='lazy')
+                h6 頭像、影響力
+                  span.fi-info.t-82.fi-sm
+                ul.list-radio
+                  li.list-radio-item
+                    input#impact-high.list-input(type='radio' name='impact' value='high' checked)
+                    label.list-label(for='impact-high') 高
+                  li.list-radio-item
+                    input#impact-medium.list-input(type='radio' name='impact' value='medium')
+                    label.list-label(for='impact-medium') 中
+                  li.list-radio-item
+                    input#impact-low.list-input(type='radio' name='impact' value='low')
+                    label.list-label(for='impact-low') 低
+              .sp-l-4.gap-2
+
+                h5 教育背景
+                h6 教育程度
+                select.custom-select(name='edu')
+                  option(value='0' selected) 大學畢業
+                  option(value='1') 小學畢業
+                h5 職涯
+                h6 職業
+                select.custom-select(name='job')
+                  option(value='0' selected) 設計師
+                  option(value='1') 魔術師
+                h6 所屬產業
+                select.custom-select(name='industrial')
+                  option(value='0' selected) 供貨商老闆
+                  option(value='1') 魔術師
+                h6 產業規模
+                select.custom-select(name='scope')
+                  option(value='0' selected) 1000萬
+              .sp-l-4.gap-2
+                h5 專能、資歷
+                +badgeGroup('專業技能', 'skill', ['UI', 'UX', '平面', '影片', '社群經營'])
+
+                h6 資歷
+                select.custom-select(name='qualifications')
+                  option(value='0' selected) 1000萬
+                +badgeGroup('使用工具', 'tool', ['MAC', 'Microsoft', 'Adobe'])
+        #step-2.card.card-info.show.step-4
+          .card-body
+            .flexbox.gy-3
+              .sp-12
+                h4 任務目標
+              .sp-l-4.gap-2
+                h5 作為 設計師
+                h6 責任、職責
+                +inputGroup({input:'textarea', id: 'resp-1', name: 'responsibilities1', label: '職責', value: '每週9:00-18:00，執行公司行銷任務。包括製作社群短影音、貼文圖片等。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#resp-1')
+                      span.fi-pen
+
+                h6 痛點、困擾
+                +inputGroup({input:'textarea', id: 'troubled-1', name: 'troubled1', label: '困擾', value: '想拓展其他設計觸角，產業公司有薪水與技能天花板。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#troubled-1')
+                      span.fi-pen
+
+                h6 核心需求
+                +inputGroup({input:'textarea', id: 'needs-1', name: 'needs1', label: '核心需求', value: '每週練習蓋一個家電產品3D', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#needs-1')
+                      span.fi-pen
+              .sp-l-4.gap-2
+                h5 任務、工作
+                h6 責任、職責
+                +inputGroup({input:'textarea', id: 'resp-2', name: 'responsibilities2', label: '職責', value: '每週9:00-18:00，執行公司行銷任務。包括製作社群短影音、貼文圖片等。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#resp-2')
+                      span.fi-pen
+
+                h6 痛點、困擾
+                +inputGroup({input:'textarea', id: 'troubled-2', name: 'troubled2', label: '困擾', value: '想拓展其他設計觸角，產業公司有薪水與技能天花板。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#troubled-2')
+                      span.fi-pen
+
+                h6 核心需求
+                +inputGroup({input:'textarea', id: 'needs-2', name: 'needs2', label: '核心需求', value: '每週練習蓋一個家電產品3D', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#needs-2')
+                      span.fi-pen
+              .sp-l-4.gap-2
+                h5 目標、目的
+                h6 目標、目的
+                +inputGroup({input:'textarea', id: 'resp-3', name: 'responsibilities3', label: '專案名稱', value: '每週練習蓋一個家電產品3D', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#resp-3')
+                      span.fi-pen
+            .divider
+            .flexbox.gy-3
+
+              .sp-l-4.gap-2
+                h5 作為 設計師
+                h6 責任、職責
+                +inputGroup({input:'textarea', id: 'resp-4', name: 'responsibilities4', label: '職責', value: '每週9:00-18:00，執行公司行銷任務。包括製作社群短影音、貼文圖片等。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#resp-4')
+                      span.fi-pen
+                h6 痛點、困擾
+                +inputGroup({input:'textarea', id: 'troubled-3', name: 'troubled3', label: '困擾', value: '想拓展其他設計觸角，產業公司有薪水與技能天花板。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#troubled-3')
+                      span.fi-pen
+
+                h6 核心需求
+                +inputGroup({input:'textarea', id: 'needs-3', name: 'needs3', label: '核心需求', value: '每週練習蓋一個家電產品3D', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#needs-3')
+                      span.fi-pen
+              .sp-l-4.gap-2
+                h5 任務、工作
+                h6 責任、職責
+                +inputGroup({input:'textarea', id: 'resp-5', name: 'responsibilities5', label: '職責', value: '每週9:00-18:00，執行公司行銷任務。包括製作社群短影音、貼文圖片等。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#resp-5')
+                      span.fi-pen
+
+                h6 痛點、困擾
+                +inputGroup({input:'textarea', id: 'troubled-4', name: 'troubled4', label: '困擾', value: '想拓展其他設計觸角，產業公司有薪水與技能天花板。', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#troubled-4')
+                      span.fi-pen
+
+                h6 核心需求
+                +inputGroup({input:'textarea', id: 'needs-4', name: 'needs4', label: '核心需求', value: '每週練習蓋一個家電產品3D', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#needs-4')
+                      span.fi-pen
+              .sp-l-4.gap-2
+                h5 目標、目的
+                h6 目標、目的
+                +inputGroup({input:'textarea', id: 'resp-6', name: 'responsibilities6', label: '專案名稱', value: '每週練習蓋一個家電產品3D', cls: 'form-control-plaintext', readonly })
+                  //- +append
+                    button.js-toggle-readoly.btn(type='button' data-toggle='#resp-6')
+                      span.fi-pen
+            .divider
+            button.btn.btn-purple.btn-block.rad-sm(type='button')
+              |新增一組任務目標
+  +changeAvatar()
+block script
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/shepherd.js/7.1.2/js/shepherd.min.js')
+  script (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    include ./js/createUDE.js
+    .
+      $('.dropdown[data-bs-toggle="popover"]').popover('show')
+      /*
+        popover 關閉
+        $('.dropdown[data-bs-toggle="popover"]').popover('hide')
+      */
+      // createInterestedParty.js
+      const hasTutorial = new URLSearchParams(location.search).get('tutorial') === 'true'
+      if (hasTutorial) {
+        const tour = new Shepherd.Tour({
+          useModalOverlay: true,
+          defaultStepOptions: {
+            scrollTo: true
+          }
+        })
+        function buttons (step) {
+          return [{ text: '下一步', action: tour.next, classes: 'btn btn-purple' },
+            { text: '略過 (' + step + '/4)', action: tour.cancel, classes: 'btn btn-outline-white' }]
+        }
+        tour.addSteps([{
+          title: '3.修改範本 (基本資料)',
+          text: '<p><br/></p>',
+          scrollTo: false,
+          attachTo: {
+            element: '.step-3',
+            on: 'top'
+          },
+          buttons: [{
+            text: '下一步',
+            action () {
+              $('.step-4').css('background-color', '#fff')
+              tour.next()
+            },
+            classes: 'btn btn-purple'
+          },
+          { text: '略過 (3/4)', action: tour.cancel, classes: 'btn btn-outline-white' }]
+        }, {
+          title: '4.修改範本 (任務目標)',
+          text: '<p><br/></p>',
+          attachTo: {
+            element: '.step-4',
+            on: 'top'
+          },
+          buttons: buttons(4)
+        }
+        ])
+
+        tour.start()
+      }
+
+    | })}((window)))

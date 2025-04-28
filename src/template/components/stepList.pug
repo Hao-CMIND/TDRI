@@ -1,0 +1,58 @@
+mixin stepList([step0=['active'], step1=[], step2=[]]=[])
+  ul.step-list
+    li.step-item(class=step0.join(' '))
+      svg.img-fluid.step-done(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#user')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 設定帳號
+    li.step-line
+    li.step-item(class=step1.join(' '))
+      svg.img-fluid.step-active(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#shield')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 信箱驗證
+    li.step-line
+    li.step-item(class=step2.join(' '))
+      svg.img-fluid(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#pen')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 基本資訊
+mixin upgradeStepList([step0=['active'], step1=[], step2=[], step3=[], step4=[]]=[])
+  ul.step-list.step-green
+    li.step-item(class=step0.join(' '))
+      svg.img-fluid.step-done(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#user')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 方案選擇
+    li.step-line
+    li.step-item(class=step1.join(' '))
+      svg.img-fluid.step-active(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#check-rect')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 產品類別選擇
+    li.step-line
+    li.step-item(class=step2.join(' '))
+      svg.img-fluid(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#cart')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 加購選擇
+    li.step-line
+    li.step-item(class=step3.join(' '))
+      svg.img-fluid(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#list')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 確認資訊
+    li.step-line
+    li.step-item(class=step4.join(' '))
+      svg.img-fluid(fill='currentColor' width='40' height='40')
+        circle(stroke='none' cx='20' cy='20' r='20')
+        use.step-progress(xlink:href='./img/sprite.svg#card')
+        use.step-check(xlink:href='./img/sprite.svg#check')
+      p.step-text 付款完成

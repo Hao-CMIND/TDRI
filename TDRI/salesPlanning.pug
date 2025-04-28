@@ -1,0 +1,465 @@
+extends ./template/layout.pug
+block local
+  -
+    bodyAttr = {
+      class: ['bg-grid']
+    }
+block body
+  section
+    .container.py-5
+      h1.fz-32 價格方案
+      +tabs({id: 'tab-salse-planning', v5, cls: ['tab-products', 'tab-project'], contentCls: ['tab-products-content', 'tab-project-content', 'pt-5'] })
+
+        +item({ id: 'intro', title: '方案介紹', active })
+          .card.mb-5
+            .card-body.p-0
+              ul#plan-tab.flexbox.list-unstyled.gx-1(role='tablist')
+                li.sp-auto(role='presentation')
+                  button.btn.btn-white.rad.active(type='button' data-bs-toggle='tab' data-bs-target='#pde-tool' role='tab' aria-controls='pde-tool' aria-selected='true')
+                    img.mr-2.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                    span.v-middle PDE產品數據工具
+                li.sp-auto(role='presentation')
+                  button.btn.btn-white.rad(type='button' data-bs-toggle='tab' data-bs-target='#ude-tool' role='tab' aria-controls='ude-tool' aria-selected='false')
+                    img.mr-2.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE使用者數據工具' title='UDE使用者數據工具' loading='lazy')
+                    span.v-middle UDE使用者數據工具
+                - for(let i = 1; i < 4; i++)
+                  - const toolname = String.fromCharCode('c'.charCodeAt() + i)
+                  li.sp-auto(role='presentation')
+                    button.btn.btn-white.rad(type='button' data-bs-toggle='tab' data-bs-target='#'+toolname+'-tool' role='tab' aria-controls=toolname+'-tool' aria-selected='false')
+                      img.mr-2.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt=toolname + '工具' title=toolname + '工具' loading='lazy')
+                      span.v-middle #{ toolname + '工具' }
+          #plan-tab-content.tab-content
+            #pde-tool.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='pde-tool')
+              .card.mb-5
+                .card-body
+                  table.table.table-borderless.t-ctr.nth-1-left.column-4th-black
+                    thead
+                      tr
+                        th(scope='col' width='210')
+                        th(scope='col' width='0')
+                          img.img-fluid(src=require('./img/normalcn.png') width='140' height='140' alt='一般會員' title='一般會員' loading='lazy')
+                          br
+                          strong
+                            span.fz-22 一般會員
+                            br
+                            | 免費
+                        th(scope='col' width='0')
+                          img.img-fluid(src=require('./img/coppercn.png') width='140' height='140' alt='初階會員' title='初階會員' loading='lazy')
+                          br
+                          strong
+                            span.span.fz-22 初階會員
+                            br
+                            |NT$698/月
+                        th.bg-green.bx-black-4(scope='col' width='0')
+                          .nt-4
+                            span.bg-black.t-white.rad-sm.py-1.px-2.fz-14 熱門方案🔥
+                          img.img-fluid(src=require('./img/silvercn.png') width='140' height='140' alt='進階會員' title='進階會員' loading='lazy')
+                          br
+                          strong
+                            span.span.fz-22 進階會員
+                            br
+                            |NT$1,699/月
+                        th(scope='col' width='0')
+                          img.img-fluid(src=require('./img/goldcn.png') width='140' height='140' alt='尊榮方案' title='尊榮方案' loading='lazy')
+                          br
+                          strong
+                            span.span.fz-22 尊榮方案
+                            br
+                            |NT$7,900/月
+                    tbody
+                      tr
+                        th(scope='row') 角色
+                          span.fi-question
+                        td 所有角色
+                        td 所有角色
+                        td 所有角色
+                        td 所有角色
+                      tr
+                        th(scope='row') 產品領域
+                          span.fi-question
+                        td 所有領域
+                        td 所有領域
+                        td 所有領域
+                        td 所有領域
+                      tr
+                        th(scope='row') 產品子類(個)
+                          span.fi-question
+                        td 1
+                        td 2
+                        td 5
+                        td 所有子類
+                      tr
+                        th(scope='row') 產品品類(個)
+                          span.fi-question
+                        td 1
+                        td 2
+                        td 5
+                        td 30
+                      tr
+                        th.lh-xxl-normal(scope='row')
+                          span.fi-question.fl-right.mt-4
+                          |加購產品子類 / 品類
+                          small (不限領域，每個包含台灣、美國市場)
+                        td 399元/個
+                        td 399元/個
+                        td 399元/個
+                        td 329元/個
+                      tr
+                        th(scope='row') AI報告
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td 2
+                        td 5
+                        td 30
+                      tr
+                        th(scope='row') 加購AI報告
+                          span.fi-question
+                        td 299元/份
+                        td 299元/份
+                        td 299元/份
+                        td 229元/份
+                      tr
+                        th(scope='row') 市場類別
+                          span.fi-question
+                        td 台灣
+                        td 台灣、美國
+                        td 台灣、美國
+                        td 台灣、美國
+                    tbody.bg-fa.lh-xxl-normal
+                      tr
+                        th(scope='row') 匯入圖表數量
+                          span.fi-question
+                        td 基礎
+                        td 專案
+                        td 專案
+                        td 專案
+                      tr
+                        th(scope='row')
+                          small.fw-4 &emsp;製作儀表板
+                          span.fi-question
+                        td 2
+                        td 4
+                        td 4
+                        td 4
+                      tr
+                        th(scope='row')
+                          small.fw-4 &emsp;跨市場分析
+                          span.fi-question
+                        td.fz-28.fw-7 &times;
+                        td.fz-28.fw-7.t-primary &check;
+                        td.fz-28.fw-7.t-primary &check;
+                        td.fz-28.fw-7.t-primary &check;
+                      tr
+                        th(scope='row')
+                          small.fw-4 &emsp;下載儀表板
+                          span.fi-question
+                        td.fz-28.fw-7 &times;
+                        td PNG、SVG
+                        td PNG、SVG
+                        td PNG、SVG
+                    tbody
+                      tr
+                        th(scope='row') 瀏覽圖表
+                          span.fi-question
+                        td 所有圖表
+                        td 所有圖表
+                        td 所有圖表
+                        td 所有圖表
+                      tr
+                        th(scope='row') 收藏圖表
+                          span.fi-question
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                      tr
+                        th(scope='row') 複製 / 移動圖表
+                          span.fi-question
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                      tr
+                        th(scope='row') 批次下載圖表
+                          span.fi-question
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                      tr
+                        th(scope='row') 下載圖表類型
+                          span.fi-question
+                        td PDF、PNG、SVG
+                        td PDF、PNG、SVG
+                        td PDF、PNG、SVG
+                        td PDF、PNG、SVG
+                      tr
+                        th(scope='row') 教育訓練
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                      tr
+                        th(scope='row') 專屬客服
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+              .flexbox.J-ctr
+                .sp-4.sp-xxl-3
+                  a.btn.btn-green.btn-block.rad-sm(href='./upgradeMember.html' title='升級會員方案') 升級會員方案
+            #ude-tool.tab-pane.fade(role='tabpanel' aria-labelledby='ude-tool')
+              .card.mb-5
+                .card-body
+                  table.table.table-borderless.t-ctr.nth-1-left.column-4th-black
+                    thead
+                      tr
+                        th(scope='col' width='210')
+                        th(scope='col' width='0')
+                          img.img-fluid(src=require('./img/normalcn.png') width='140' height='140' alt='一般會員' title='一般會員' loading='lazy')
+                          br
+                          strong
+                            span.fz-22 一般會員
+                            br
+                            | 免費
+                        th(scope='col' width='0')
+                          img.img-fluid(src=require('./img/coppercn.png') width='140' height='140' alt='初階會員' title='初階會員' loading='lazy')
+                          br
+                          strong
+                            span.span.fz-22 初階會員
+                            br
+                            |NT$599/月
+                        th.bg-green.bx-black-4(scope='col' width='0')
+                          .nt-4
+                            span.bg-black.t-white.rad-sm.py-1.px-2.fz-14 熱門方案🔥
+                          img.img-fluid(src=require('./img/silvercn.png') width='140' height='140' alt='進階會員' title='進階會員' loading='lazy')
+                          br
+                          strong
+                            span.span.fz-22 進階會員
+                            br
+                            |NT$2,899/月
+                        th(scope='col' width='0')
+                          img.img-fluid(src=require('./img/goldcn.png') width='140' height='140' alt='尊榮方案' title='尊榮方案' loading='lazy')
+                          br
+                          strong
+                            span.span.fz-22 尊榮方案
+                            br
+                            |NT$9,899/月
+                    tbody
+                      tr
+                        th(scope='row') 專案資料夾(個)
+                          span.fi-question
+                        td 1
+                        td 3
+                        td 無限制
+                        td 無限制
+                      tr
+                        th(scope='row') 人物誌(組)
+                          span.fi-question
+                        td 1
+                        td 無限制
+                        td 無限制
+                        td 無限制
+                      tr
+                        th(scope='row') 顧客旅程地圖(組)
+                          span.fi-question
+                        td 1
+                        td 無限制
+                        td 無限制
+                        td 無限制
+                      tr
+                        th(scope='row') 利益關係人地圖(個)
+                          span.fi-question
+                        td 1
+                        td 無限制
+                        td 無限制
+                        td 無限制
+                      tr
+                        th(scope='row') 特訂產品使用者資料(個)
+                          span.fi-question
+                        td 1
+                        td 3
+                        td 15
+                        td 所有產品
+                      tr
+                        th(scope='row') 加購產品使用者資料
+                          span.fi-question.fl-right.mt-4
+                          small (含台灣、美國市場)
+                        td 399元/組
+                        td 399元/組
+                        td 399元/組
+                        td.fz-32.fw-7 &ndash;
+                      tr
+                        th(scope='row') 使用者國別
+                          span.fi-question
+                        td 台灣
+                        td 台灣、美國
+                        td 台灣、美國
+                        td 台灣、美國
+
+                      tr
+                        th(scope='row') 複製文件
+                          span.fi-question.fl-right.mt-4
+                          small (專案、人物誌、利益關係人地圖、顧客旅程地圖)
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                      tr
+                        th(scope='row') AI自動生成範本(組)
+                          span.fi-question
+                        td 1
+                        td 3
+                        td 15
+                        td 60
+                      tr
+                        th(scope='row') AI擷取上傳文本(組)
+                          span.fi-question
+                        td.fz-28.fw-7 &times;
+                        td 3
+                        td 15
+                        td 60
+                      tr
+                        th(scope='row') AI專案分析報告(份)
+                          span.fi-question
+                        td.fz-28.fw-7 &times;
+                        td 3
+                        td 15
+                        td 60
+                      tr
+                        th(scope='row') 加購AI報告
+                          span.fi-question.fl-right.mt-4
+                          small (範本、文本擷取、專案報告等)
+                        td 499元/套
+                        td 499元/套
+                        td 499元/套
+                        td 399元/套
+
+                      tr
+                        th(scope='row') 試算表(XLSX)匯入(份)
+                          span.fi-question
+                        td 1
+                        td 3
+                        td 無限制
+                        td 無限制
+                      tr
+                        th(scope='row') 下載次數
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td 10
+                        td 無限制
+                        td 無限制
+                      tr
+                        th(scope='row') 下載檔案類型
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td PDF、PNG、XLSX
+                        td PDF、PNG、XLSX
+                        td PDF、PNG、XLSX
+                      tr
+                        th(scope='row') 批次下載
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                        td.fz-32.fw-7.t-primary &check;
+                      tr
+                        th(scope='row') 教育訓練
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                      tr
+                        th(scope='row') 專屬客服
+                          span.fi-question
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+                        td.fz-32.fw-7 &times;
+              .flexbox.J-ctr
+                .sp-4.sp-xxl-3
+                  a.btn.btn-green.btn-block.rad-sm(href='./upgradeMember.html' title='升級會員方案') 升級會員方案
+            - for(let i = 1; i < 4; i++)
+              - const toolname = String.fromCharCode('c'.charCodeAt() + i)
+              .card-body.tab-pane.fade(id=toolname+'-tool' role='tabpanel' aria-labelledby=toolname+'-tool') #{toolname}工具
+        +item({ id: 'customize', title: '客製化方案' })
+          form.flexbox.J-ctr.gy-3
+            .sp-12
+              label 選擇產品*
+              .card
+                .card-body.dropleft.p-1
+                  .badge-group.bg-white
+
+                    button.btn.btn-sm.js-btn-dropdown-option(type='button')
+                      span.fi-plus
+                    .hstack.wrap
+                      label.badge.bg-f2(for='tool-0')
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        |PDE產品數據工具
+                        span.fi-close-cir.fi-normal
+                      label.badge.bg-f2(for='tool-1')
+                        img.mr-2.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE產品數據工具' title='UDE產品數據工具' loading='lazy')
+                        |UDE產品數據工具
+                        span.fi-close-cir.fi-normal
+                    .js-dropdown-option
+                      .hstack.wrap.py-3
+                        input#tool-0.badge-check-black(type='checkbox' name='tool' value='PDE' checked)
+                        label.badge.bg-f2(for='tool-0')
+                          img.mr-2.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                          |PDE產品數據工具
+                        input#tool-1.badge-check-black(type='checkbox' name='tool' value='UDE' checked)
+                        label.badge.bg-f2(for='tool-1')
+                          img.mr-2.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE產品數據工具' title='UDE產品數據工具' loading='lazy')
+                          |UDE產品數據工具
+
+                      .flexbox.J-ctr
+                        .sp-3
+                          button.btn.btn-black.rad-sm.btn-block.js-dropdown-save(type='button') 關閉
+            .sp-3
+              label(for='lastname') 姓氏*
+              input#lastname.form-control(type='text' name='lastname' placeholder='請輸入姓氏' required)
+            .sp-3
+              label(for='firstname') 名字*
+              input#firstname.form-control(type='text' name='firstname' placeholder='請輸入名字' required)
+            .sp-6
+              label(for='email') 電子信箱*
+              input#email.form-control(type='email' name='email' placeholder='請輸入電子信箱' required)
+            .sp-6
+              label(for='org') 公司/組織*
+              input#org.form-control(type='text' name='org' placeholder='請輸入公司/組織' required)
+            .sp-6
+              label(for='title') 職稱*
+              input#title.form-control(type='text' name='title' placeholder='請輸職稱' required)
+            .sp-6
+              label(for='subject') 主旨*
+              input#subject.form-control(type='text' name='subject' placeholder='請輸主旨' required)
+            .sp-6
+              label(for='purpose') 聯繫目的*
+              select#purpose.form-control(name='purpose' required)
+                option(value='' selected disabled) 產品客製化方案
+                option(value='purpose1') 方案1
+                option(value='purpose2') 方案2
+                option(value='purpose3') 方案3
+            .sp-12
+              label(for='description') 內容簡述*
+              textarea#description.form-control(name='description' rows='6' style='resize:none' placeholder='請輸入內容')
+            .sp-4.sp-xxl-3
+              button.btn.btn-black.btn-block.rad-sm(type='submit') 確認送出
+
+          .t-ctr.pt-6.t-333
+            h3.t-32 訊息已送出
+            p.t-22 感謝您的來信!! 我們會在確認來信內容後盡快聯繫您!!
+
+block script
+  script.
+    ;(function(windows){
+      window.addEventListener('DOMContentLoaded', function (e) {
+        $('.js-btn-dropdown-option, .js-dropdown-save').on('click', function (e) {
+          console.log($(this).parents('.badge-group'))
+          $(this).parents('.badge-group').toggleClass('show')
+        })
+      })
+    })(window)

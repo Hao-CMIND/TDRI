@@ -1,0 +1,434 @@
+.gap-2 > * + *
+  margin-top: .5rem
+.gap-3 > * + *
+  margin-top: 1rem
+.gap-4 > * + *
+  margin-top: 2rem
+.gap-5 > * + *
+  margin-top: 3rem
+.js-autowiden
+  display: -webkit-box
+  max-width: 46ch
+  height: 0
+  padding: 0 0.75rem
+  overflow: hidden
+  -webkit-line-clamp: 1
+  -webkit-box-orient: vertical
+.sticky-spy
+  position: fixed
+  z-index: 1
+  top: 0
+  // right: 1.5rem
+  border-bottom: 1px solid #333
+  opacity: 0
+  background-color: #f3f3f3
+  font-size: 14px
+  transform: translateY(-100%)scaleY(0)
+  transition: transform .4s,
+// .slide-down
+//   .sticky-spy
+//     opacity: 1
+//     transform: translateY(-50px)scaleY(1)
+//   &.scroll-up
+//     .sticky-spy
+//       transform: translateY(50px)scaleY(1)
+
++text-emphasis-variant('.spy-anchor', #828282, true)
+
+.spy-anchor
+  display: flex
+  align-items: center
+  padding-left: 1rem
+  border-bottom: 4px solid transparent
+  &:hover
+    border-color: #937cff
+    background-color: #efefef
+  &.active
+    border-color: #5f3ae4
+    background-color: #f5eefe
+    .nav-text
+      font-weight: $font-weight-bold
+  &:not(:first-child)
+    margin-top: .5rem
+  .nav-text
+    color: #333
+  .ib-icon
+    font-size: 28px
+  //   margin-right: 0.5rem
+.pde-spy
+  width: 11.5rem
+  .spy-anchor
+    &:hover
+      border-color: #2f80ed
+    &.active
+      border-color: #0009ec
+      background-color: #e6f0ff
+.card-info
+  h4
+    font-size: 1.5rem
+    text-align: center
+  h5
+    font-size: 1.125rem
+  h6
+    font-size: 0.875rem
+  .input-group
+    border-radius: .375rem
+    background-color: #f2f2f2
+  .divider
+    height: 1px
+    margin: 1.25rem 0
+    background-color: #e0e0e0
+
+.list-radio
+  padding-left: 0
+  list-style: none
+.list-radio-item:not(:last-child)
+  margin-bottom: 1rem
+.list-input
+  display: none
+  &:checked + .list-label
+    background-color: $purple
+    color: $white
+.list-label
+  width: 100%
+  margin-bottom: 0
+  padding: 1rem
+  border-radius: 0.5rem
+  background-color: #f2f2f2
+  text-align: center
+
+.badge-group,
+.badge-group-lg
+  padding: 0.75em 1rem
+  border-radius: 0.5rem
+  background-color: #fafafa
+  color: #828282
+  legend
+    width: auto
+    margin-bottom: 0
+    float: left
+    font-size: 16px
+  .badge
+    padding: 0.375rem
+    border: 1px solid #e0e0e0
+    border-radius: 0.375rem
+    @extend .badge-normal
+    background-color: $white
+    color: $black
+  .js-btn-dropdown-option
+    float: right
+  &.show
+    .js-dropdown-option
+      display: block
+    .js-btn-dropdown-option
+      transform: rotate(45deg)
+.btn-avatar
+  margin-bottom: 0.5rem
+  padding: 0
+  border: 1px solid #e5e5e5
+  background-color: #f2f2f2
+  img
+    border-radius: 50%
+  &.active
+    img
+      outline: 4px solid #7856ff
+  &-hover:hover
+    button
+      background-color: #dadada
+    p
+      color: $purple
+      text-decoration: underline
+.badge-checkbox-group
+  padding: 1rem 0
+  input
+    display: none
+    &:checked
+      + label
+        background-color: #603ae7
+        color: $white
+.img-round-avatar
+  width: 98px
+  margin: 0 auto
+  overflow: hidden
+  border: 1px solid #e6e6e6
+  border-radius: 50%
+  background-color: #f2f2f2
+  text-align: center
+.customize-dropdown
+  .btn
+    display: flex
+    align-items: center
+  .show
+    &.btn
+      border-width: 0 0 2px
+      border-radius: 0.5rem 0.5rem 0 0
+    > .placeholder
+      color: $purple
+    > .fi-arr-down
+      transform: rotate(0.5turn)
+  .dropdown-menu
+    width: 100%
+    padding: 0
+    border-radius: 0 0 0.5rem 0.5rem
+    transform: translateY(45px) !important
+  .placeholder
+    flex-grow: 1
+    text-align: left
+  .disabled
+    background-color: #e6deff
+    color: #4f4f4f
+  .nav-megamenu-content
+    padding: 0
+.ude-dropdown
+  .btn
+    &.show
+      border-bottom-color: $purple
+      > .placeholder
+        color: $purple
+  .disabled
+    background-color: #e6deff
+    color: #4f4f4f
+.pde-dropdown
+  .btn
+    &.show
+      border-bottom-color: #323dff
+      > .placeholder
+        color: #323dff
+
+.black-dropdown
+  .btn
+    &.show
+      border-bottom-color: $black
+      > .placeholder
+        color: $black
+
+.js-dropdown-option
+  display: none
++media-breakpoint-up(l)
+  .gap-l-3 > * + *
+    margin-top: 1rem
+  .sticky-spy,
+  .sticky-header
+    position: sticky
+    z-index: $zindex-popover + 1
+    top: $header-height
+    background-color: #f3f3f3
+  .sticky-spy
+    flex-direction: column
+    float: right
+    border-left: 1px solid #333
+    border-bottom-width: 0
+    opacity: 1
+    transform: translateY(0)scaleY(1)
+  .spy-anchor
+    border-left: 4px solid transparent
+    border-bottom-width: 0
+
+.card-fb
+  height: 100%
+  padding: 1rem
+  border-radius: 1rem
+  background-color: #fbfbfb
+.nav-tabs-character
+  border-bottom: none
+  .nav-character
+    display: flex
+    align-items: center
+    min-width: 18rem
+    padding-left: 3rem
+    border: none
+    background-image: var(--tab-pill)
+    background-repeat: no-repeat
+    background-position: 40px 12px
+    background-size: 230px
+    line-height: 1.25
+    padding-block: 1rem
+    &.active
+      border: none
+      background-color: transparent
+      background-image: var(--tab-bg)
+      background-position: 0
+      background-size: 100% 100%
+      .icon
+        background-color: #7a59ff
+        color: $white
+      small
+        color: #7a59ff
+    &:first-child
+      min-width: 15rem
+      padding-left: 1rem
+      background-position: 10px
+      &.active
+        background-image: var(--tab-first-bg)
+        background-position: 0
+.nav-character
+  &:hover
+    border: none
+  .icon
+    align-content: center
+    width: 3rem
+    height: 3rem
+    border-radius: 50%
+    background-color: #e6deff
+  .text
+    flex-grow: 1
+    padding-left: 1rem
+    text-align: left
+  small
+    color: #888
+
+
+// +media-breakpoint-up(xxl)
+//   .sticky-spy
+//     // right: 0
+//     transform: translateX(calc(-25vw + 389px + 50%))
+.btn-create-banner
+  padding: 0
+  border-radius: 1rem
+  background-color: #f1eeff
+  margin-block: 2.5rem
+  img
+    width: 1300px
+    height: 270px
+    object-fit: cover
+.btn-create-avatar
+  padding: 0.5rem
+  border: 0.25rem solid #f2f2f2
+  background-color: #f1eeff
+  background-clip: content-box
+  img
+    width: 190px
+    height: 190px
+    border: 1px solid #f2f2f2
+    border-radius: 50%
+    object-fit: cover
+.form-label-sm
+  margin-bottom: .5rem
+  font-size: .875rem
+  font-weight: $font-weight-bold
+.input-border
+  border-bottom: $border-width solid $border-color
+  border-radius: 0
+  background: transparent
+
+.input-group-sm > .input-group-append
+  [class^=fi-]
+    font-size: 0.875rem
+  > .btn
+    padding-block: 0
+
+.btn-add-character-input
+  color: #828282
+  text-align: left
+  padding-inline: 0
+  .fi-plus
+    float: right
+    font-size: 1rem
+    line-height: 1
+.nav-character-spy
+  position: sticky
+  z-index: 1030
+  top: 0
+  padding: 0.25rem
+  border-radius: 50rem
+  background-color: #f2f2f2
+  > .nav-link
+    border-radius: 50rem
+    padding-block: .5rem
+    &.active
+      background-color: #7a59ff
+      color: $white
+
+.btn-rect-purple,
+.btn-rect-pink,
+.btn-rect-white
+  display: block
+  align-content: center
+  width: 100%
+  border-radius: 1rem
+  cursor: pointer
+  aspect-ratio: 1
+.btn-rect-purple
+  background-color: #e6deff
+  +hover-focus
+    background-color: #7a59ff
+    color: $white
+.btn-rect-white
+  background-color: $white
+  +hover-focus
+    background-color: #7a59ff
+    color: $white
+.btn-rect-pink
+  background-color: #f7d6e6
+  +hover-focus
+    background-color: #de5c9d
+    color: $white
+
+.js-open-card-tutorial
+  position: fixed
+  right: 2rem
+  bottom: 6.5rem
+  width: 62px
+  padding: 0
+  border-radius: 50%
+  font-size: 26px
+  aspect-ratio: 1
+  span
+    width: auto
+    font-size: 2rem
+    line-height: 1.2
+    vertical-align: 0
+  &::after
+    content: ''
+    display: inline-block
+    position: absolute
+    top: calc(50% - 16px)
+    left: calc(50% - 16px)
+    width: 32px
+    border: 5px solid #141316
+    border-radius: 50%
+    aspect-ratio: 1
+.btn-play
+  position: absolute
+  top: calc(50% - 26px)
+  left: calc(50% - 26px)
+  background-color: #e1e1e1
+  aspect-ratio: 1
+  svg
+    transform: rotate(90deg)
+.round-purple
+  display: inline-block
+  width: 1.5rem
+  margin-right: 0.5rem
+  border-radius: 50%
+  background-color: $purple
+  color: $white
+  line-height: 1.25
+  text-align: center
+  aspect-ratio: 1
+.card-tutorial
+  position: fixed
+  z-index: 2
+  right: 2rem
+  bottom: 11rem
+  width: 20rem
+  background-color: $black
+  color: $white
+.fileuploading
+  position: relative
+  align-content: center
+  height: 16rem
+  text-align: center
+.uploaded-file
+  padding: 0.5rem
+  border-radius: 60rem
+  background-color: #fafafa
+
+.z-2000
+  z-index: 2000
+// .popove r-extend-data
+.popover-extend-data
+  border: none
+  background-color: rgba($white, .6)
+  box-shadow: 0 2px 4px rgba($black, .15)
+  backdrop-filter: blur(10px)

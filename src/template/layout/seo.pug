@@ -1,0 +1,210 @@
+block global
+- const officialDomain = ''
+-
+  const seo = {
+    demo: {
+      title: 'Sitemap',
+      desc: 'Sitemap'
+    },
+    layout: {
+      title: 'title請套入資料',
+      desc: 'description請套入資料'
+    },
+    zh:{
+      mobileOverlap: {
+        title: '手機禁止瀏覽'
+      },
+      component: {
+        title: '元件、素材'
+      },
+      orderDetails: {
+        title: '訂單明細',
+        desc: 'SEO desc'
+      },
+      upgradeMember: {
+        title: 'update 會員升級',
+        desc: 'SEO desc'
+      },
+      resource: {
+        title: '資源中心',
+        desc: 'SEO desc'
+      },
+      salesPlanning: {
+        title: '價格方案'
+      },
+      infoManagement: {
+        title: '會員資料管理',
+        desc: 'SEO desc'
+      },
+      membership: {
+        title: '會員',
+        desc: 'SEO desc',
+        comment: `
+        <a target="_blank" href="./membership.html#forgot">忘記密碼</a><br/>
+        <a target="_blank" href="./membership.html#modify">更變密碼</a><br/>
+        <a target="_blank" href="./membership.html#signup">註冊方式</a><br/>
+        <a target="_blank" href="./membership.html#register">會員註冊</a><br/>
+        <a target="_blank" href="./membership.html?step=2#register">會員註冊2</a>`
+      },
+      finishedRegistering: {
+        title: '完成註冊',
+        desc: 'SEO desc'
+      },
+      advMember: {
+        title: '進階會員',
+        desc: 'SEO desc'
+      },
+      history: {
+        title: '歷史紀錄',
+      },
+      //- projectList:{
+      //-   no: 'v1.0',
+      //-   title:'PDE UDE專案列表',
+      //- },
+      pdeIndex: {
+        no: '2-1',
+        title: 'PDE',
+        desc: 'SEO desc'
+      },
+      pdeProjectList: {
+        no: '1-2-1A 專案列表_清單(進階會員)<br>1-2-1A 專案列表_卡片(進階會員)',
+        title:'PDE專案列表',
+        comment: '有popup在底下'
+      },
+      productSelect2: {
+        no: '2-2 (v2.0)',
+        title: '產品類別選擇2.0',
+        comment: '購買的項目顯示黑框，連結設定資料分析頁；未購賣左上角lock icon，連結設為購買'
+      },
+      pdeManagement2: {
+        no: '1-2-1B 專案內容(進階會員)',
+        title: 'PDE專案',
+        comment: '有popup在底下<br>連結dashboard參數規劃中，可先套入UI操作。執行下載，下載的區塊有狀態的判斷顯示，class="disabled-container"<span style="color:red;">非</span>下載區塊狀態'
+      },
+      dataAnalysis2: {
+        no: '2-2-1-1 分析結果頁-市場分析',
+        title: '子類別分析資料2.0',
+        comment: '<a href=\'https://whatlife.no-ip.org/test/tdri/pde_chart/\' target=\'blank\'>新圖表</a><br/>圖表製作中，AI按鈕可先套入程式'
+      },
+      dashboard: {
+        no: '2-2-1-1 市場分析(圖表展開)',
+        title: '儀錶板',
+        comment: '<a style=\'color:red\' target="_blank" href="./dashboard.html?dashboardid=1">儀錶板ID=1</a>'
+      },
+      pdeAIreportList: {
+        no: '1-3-1A AI報告列表_卡片(進階會員)<br>1-2-1A 專案列表_清單(進階會員)',
+        title: 'AI報告列表',
+        comment: '有popup 在底下'
+      },
+      pdeAIreportExport: {
+        no: '2-2-1-1 市場分析',
+        title: 'AI趨勢報告'
+      },
+      dataVisualize: {
+        no: 'iframe',
+        title: '資料視覺化',
+        comment: '無法獨立開啟，主頁sharedworker啟動，iframe嵌入使用'
+      },
+      //- productSelect: {
+      //-   no: 'v1.0',
+      //-   title: '產品類別選擇',
+      //-   comment: '購買的項目顯示黑框，連結設定資料分析頁；未購賣左上角lock icon，連結設為購買'
+      //- },
+      //- pdeManagement:{
+      //-   no: 'v1.0',
+      //-   title:'PDE產品數據工具',
+      //- },
+      //- dataAnalysis: {
+      //-   no: 'v1.0',
+      //-   title: '子類別分析資料',
+      //-   comment: '<a target="_blank" href="./dataAnalysis.html?tutorial=true">教學</a>'
+      //- },
+      udeIndex: {
+        no: '3-1',
+        title: 'UDE',
+        desc: 'SEO desc'
+      },
+      udeManagement2: {
+        no: '3-2 專案管理',
+        title: 'UDE專案管理',
+      },
+      udeAIreportList: {
+        no: '3-2-0 AI專案分析報告列表',
+        title: 'AI專案分析報告列表'
+      },
+      udeContentList: {
+        title: 'UDE內容列表'
+      },
+      //- udeProjectList: {
+      //-   no: '3-2-1 專案首頁',
+      //-   title: 'UDE專案列表',
+      //- },
+      udeUJMList: {
+        no: '3-2-1 專案首頁',
+        title: '使用者旅程地圖列表',
+      },
+      udeStakeholderList: {
+        no: '3-2-1 專案首頁',
+        title: '利益關係人地圖列表',
+      },
+      udeCharacterList: {
+        no: '3-2-1 專案首頁',
+        title: '人物誌列表',
+      },
+      drawStakeholder: {
+        no: '3-2-3-2 利益關係人圖',
+        title: '利益關係人圖'
+      },
+      UJM: {
+        no: '3-2-4-3 使用者旅程地圖',
+        title: '使用者旅程地圖'
+      },
+      createCharacter2: {
+        no: '3-2-2-1-2 創建人物誌 ',
+        title: '創建人物誌'
+      },
+      udeAIreportExport: {
+        title: '使用者研究質性報告'
+      },
+      //- udeManagement:{
+      //-   no: 'v1.0',
+      //-   title:'UDE使用者數據工具',
+      //-   desc: 'SEO desc'
+      //- },
+      //- interestedPartyList: {
+      //-   title: '利益關係人清單',
+      //-   comment: '<a target="_blank" href="./interestedPartyList.html?tutorial=true">教學</a>'
+      //- },
+      //- createInterestedParty: {
+      //-   title: '創建利益關係人',
+      //-   comment: '<a target="_blank" href="./createInterestedParty.html?tutorial=true">教學</a>'
+      //- },
+      //- characterList: {
+      //-   title: '人物誌清單',
+      //-   comment: '<a target="_blank" href="./characterList.html?tutorial=true">教學</a>'
+      //- },
+      //- createCharacter: {
+      //-   title: '創建人物誌',
+      //-   comment: '<a target="_blank" href="./createCharacter.html?tutorial=true">教學</a>'
+      //- },
+
+      termsOfUse: {
+        title: '使用條款'
+      },
+      privacyPolicy: {
+        title: '隱私權政策'
+      },
+      pde404: {
+        title: '404'
+      },
+      ude404: {
+        title: '404'
+      },
+      pde500: {
+        title: '500'
+      },
+      ude500: {
+        title: '500'
+      }
+    }
+  }

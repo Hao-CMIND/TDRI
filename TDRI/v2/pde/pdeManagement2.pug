@@ -1,0 +1,303 @@
+extends ./template/layout.pug
+block local
+  - pageType = 'pde'
+
+block body
+  section.min-vh-full.py-5.gap-4
+    .container
+      .flexbox.gx-2.gy-3
+        .sp-12
+          a.t-333(href='./pdeProjectList.html')
+            svg.img-fluid(fill='currentColor' width='19' height='19')
+              use(href='./img/sprite.svg#arrow-left')
+            span.v-middle 返回專案列表
+        .sp-3.mr-auto
+          .input-group
+            .input-group-prepend
+              img.img-cover(src=require('./img/user-blue.jpg') width='78' height='78' alt='A專案' title='A專案' loading='lazy')
+            input.form-control.form-control-title(type='text' value='A專案')
+        .sp-2
+          select.custom-select.bg-none.b-1(name='sort')
+            option(value='0' selected) 依產品名稱排序
+            option(value='1') 依加入時間排序(新到舊)
+            option(value='2') 依加入時間排序(舊到新)
+    //.disabled-container
+    .container
+      .flexbox.mb-3
+        .sp
+          h2.t-82.fz-22 圖表清單
+        .sp-auto
+          a.btn.btn-blue(href='./dashboard.html?ID=43' title='製作儀錶板')
+            span.fi-shape
+            |製作儀錶板
+        .sp-auto
+          button.btn.btn-deep-gray.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn\' type=\'button\' data-action=\'move\'><span class=\'fi-move\'></span>移動</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載</button></li></menu>')
+            span.fi-edit
+            |編輯
+
+      .flexbox.sps-3.sps-xxl-4.fz-14.g-3
+        .sp-12.sp-l-12.sp-xxl-12.t-ctr
+          img.mb-3(src=require('./img/pde-b3.jpg') width='180' height='auto' alt='第一個圖表' title='第一個圖表' loading='lazy')
+          p.t-4f.fz-24.fw-7 準備開始建立你的第一個圖表
+        - for(let i = 0; i < 3; i++)
+          .sp
+            .card-shadow.flex.col
+              h3.fz-16 產品使用情境
+
+              p 自行車
+              p.limited-1-lines MERIDA、飛馬、GIANT、LOUIS GARNEAU、CHINGCHING
+              button.btn.bg-contain.flex-fill.stretched-link.rad-0(type='button' data-major-name='車輛' data-minor-name='自行車' data-product-name='' data-id='19' data-source='0' data-major-id='246' data-bs-toggle='modal' data-bs-target='#chart-modal' title='市場分析' style!=`background-image:url(${require('./img/nobase64/chart-1.png')});`)
+          .sp
+            .card-shadow.flex.col
+              h3.fz-16 線上銷售概況
+              p 筆記型電腦
+              p.limited-1-lines 品牌1
+              .bg-contain.flex-fill(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+          .sp
+            .card-shadow.flex.col
+              h3.fz-16 產品功能分析
+              p 手機
+              p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+              .bg-contain.flex-fill(style!=`background-image:url(${require('./img/nobase64/chart-9.png')});`)
+              a.stretched-link(href='./dashboard.html?ID=43' title='產品功能分析')
+          .sp
+            .card-shadow.flex.col
+              h3.fz-16 市場分析
+              p 桌上型電腦
+              p.limited-1-lines 品牌1
+              .bg-contain.flex-fill(style!=`background-image:url(${require('./img/nobase64/chart-13.png')});`)
+              a.stretched-link(href='./dashboard.html?ID=43' title='產品功能分析')
+    .container
+      .flexbox.mb-3.a-ctr
+        .sp-auto
+          h2.t-82.fz-22 交叉分析
+        .sp-auto
+          .custom-control.custom-checkbox
+            input#cross-select-all.custom-control-input.check-black(type='checkbox')
+            label.custom-control-label(for='cross-select-all') 全選
+        .sp-auto.px-0
+          .pipe-line
+        .sp-auto
+          a.btn.btn-outline-white.btn-sm(href='#' download='file.png') PNG下載
+        .sp-auto
+          a.btn.btn-outline-white.btn-sm(href='#' download='file.svg') SVG下載
+        .sp-auto
+          a.btn.btn-outline-white.btn-sm(href='#' download='file.pdf') PDF下載
+        .sp-auto.ml-auto
+          |v-if:下載狀態===true
+          p.fw-7 已選擇：
+            span.t-primary 1
+        .sp-auto
+          |v-if:下載狀態true
+          button.btn.btn-deep-gray.js-popovers-option(type='button') 取消
+        .sp-auto.ml-auto
+          |v-if:下載狀態false
+          a.btn.btn-blue(href='./dashboard.html?ID=43' title='製作儀錶板')
+            span.fi-shape
+            |製作儀錶板
+        .sp-auto
+          |v-if:下載狀態false
+          button.btn.btn-deep-gray.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn\' type=\'button\' data-action=\'move\'><span class=\'fi-move\'></span>移動</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載</button></li></menu>')
+            span.fi-edit
+            |編輯
+      .flexbox.sps-2.sps-l-3.sps-xxl-4.fz-14.g-3
+        .sp-12.sp-l-12.sp-xxl-12.t-ctr
+          img.mb-3(src=require('./img/p-benefits-3.jpg') width='180' height='auto' alt='第一個交叉分析' title='第一個交叉分析' loading='lazy')
+          p.t-4f.fz-24.fw-7 準備開始建立你的第一個交叉分析
+        .sp
+          input#cross-1.custom-control-input.check-card-shadow(type='checkbox' checked)
+          .card-shadow.flex.col
+            h3.fz-16 市場分析 v-if= 下載狀態===false
+            .custom-control.custom-checkbox.custom-control-inline
+              label.custom-control-label.fz-16.fw-7(for='cross-1' name='crossanalysis') 市場分析 v-if= 下載狀態===true
+            p 桌上型電腦
+            p.limited-1-lines 品牌1
+            .drop-tpl.drop-tpl-1.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-1.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-2.png')});`)
+            a.stretched-link(href='#' title='市場分析')
+            |@*選取下載狀態 a連結 v-if=下載狀態===false *@
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 市場分析
+            p 桌上型電腦
+            p.limited-1-lines 品牌1
+            .drop-tpl.drop-tpl-2.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-3.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-4.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='市場分析')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 市場分析
+            p 桌上型電腦
+            p.limited-1-lines 品牌1
+            .drop-tpl.drop-tpl-3.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-6.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-7.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='市場分析')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-4.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-8.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-9.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-10.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-5.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-11.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-12.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-13.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-6.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-14.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-15.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-16.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-7.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-17.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-18.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-19.png')});`)
+              .drop-zone.cell-d.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-8.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-d.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-9.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-d.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+        .sp
+          .card-shadow.flex.col
+            h3.fz-16 線上銷售概況
+            p 筆記型電腦
+            p.limited-1-lines 品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6、品牌1、品牌2、品牌3、品牌4、品牌5、品牌6、品牌6、品牌6
+            .drop-tpl.drop-tpl-10.flex-fill
+              .drop-zone.cell-a.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-b.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-c.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+              .drop-zone.cell-d.bg-contain(style!=`background-image:url(${require('./img/nobase64/chart-5.png')});`)
+            a.stretched-link(href='./dashboard.html?ID=43' title='線上銷售概況')
+
+    .container
+      .flexbox.mb-3
+        .sp
+          h2.t-82.fz-22 AI趨勢分析報告
+        .sp-auto
+          button.btn.btn-blue.js-popovers-option(type='button' data-bs-toggle='modal' data-bs-target='#addproject-modal')
+            span.fi-plus
+            |加入報告
+        .sp-auto
+          button.btn.btn-deep-gray.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn\' type=\'button\' data-action=\'move\'><span class=\'fi-move\'></span>移動</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載</button></li></menu>')
+            span.fi-edit
+            |編輯
+      .flexbox.sps-2.sps-l-3.sps-xxl-4.g-3
+        .sp-12.sp-l-12.sp-xxl-12.t-ctr
+          img.mb-3(src=require('./img/p-ai-report.jpg') width='180' height='auto' alt='第一個交叉分析' title='第一個交叉分析' loading='lazy')
+          p.t-4f.fz-24.fw-7 準備開始建立你的第一份AI趨勢分析報告
+        .sp
+          .card.card-gray.ratio-1
+            .card-header
+              h3.fz-16 智慧型手機設計趨勢(2) v-if= 下載狀態===false
+              .custom-control.custom-checkbox.custom-control-inline
+                input#proj-1.custom-control-input.check-black(type='checkbox')
+                label.custom-control-label.fz-16.fw-7(for='proj-1' name='aireport') 智慧型手機設計趨勢(2) v-if= 下載狀態===true
+            .card-body.flex.col
+              .minor-ico.mx-auto
+                img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/電話p.png') width='100' height='100' alt='智慧型手機設計趨勢' title='智慧型手機設計趨勢' loading='lazy')
+              p.t-82.mt-auto 生成時間
+                time(datetime='2024-07-15T19:00') 2024-07-15 19:00
+
+              a.stretched-link(href='./AIreportExport.html' title='智慧型手機設計趨勢(2)')
+              // 選取下載狀態 a連結 v-if=下載狀態===false
+        - for(let i = 0; i < 4; i++)
+          .sp
+            .card.card-gray.ratio-1
+              .card-header
+                h4.fz-16 智慧型手機設計趨勢(2)
+              .card-body.flex.col
+                .minor-ico.mx-auto
+                  img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/電話p.png') width='100' height='100' alt='智慧型手機設計趨勢' title='智慧型手機設計趨勢' loading='lazy')
+                p.t-82.mt-auto 生成時間
+                  time(datetime='2024-07-15T19:00') 2024-07-15 19:00
+
+                a.stretched-link(href='./AIreportExport.html' title='智慧型手機設計趨勢(2)')
+  +modal({ id: 'chart-modal', label: 'chart-modal-title' , size: 'xxl', v5, nobtn, scrollable, vCls: '{\'modal-chart-iframe\': showOverlay}', contentCls:['bg-white'], ref:'chartModal'})
+    +body
+      iframe.w-100(ref='iframe' title='Chart' src='./dataVisualize.html?sharedworker=pde-dev&preview=true' frameborder='0' :data-chart-id='chartId' data-chart-index='0' style='min-height:100vh')
+      .t-ctr
+        a.t-blue(href='./dataAnalysis2.html?ID=246&majorID=21&majorName=車輛&minorName=自行車&productName=自行車') 瀏覽更多圖表
+  +modal({ id: 'addproject-modal', label: 'addproject-modal-title', static, centered, v5, nobtn})
+    +header({ cls: 't-ctr' }) 加入報告至專案A
+    +body
+      .dropdown.customize-dropdown.pde-dropdown
+        button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+          span.placeholder 手機
+            time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+          span.fi-arr-down
+        .dropdown-menu(data-popper-placement='bottom-start')
+          - for(let i = 0; i < 3; i++)
+            a.dropdown-item(href='javascript:void') 手機
+              time.fz-12.t-82(datetime='2024-5-22T24:05:12') 2024/5/22 24:5:12
+    +footer()
+      button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 確定
+block script
+  script
+    | const sw = !{isProd ? '\'https://whatlife.no-ip.org/test/tdri/\'' : '\'./\'' } + 'js/sharedworker.js'
+    include ./js/sw/main.js
+  script.
+
+    document.addEventListener('DOMContentLoaded',  function () {
+      $('#chart-modal').on('show.bs.modal',async e => {
+        const {majorId,majorName, minorName, productName, id: btnId, source} = e.relatedTarget.dataset
+
+      const data = {
+        portName: { name: 'pde-dev' }, // .replace(/-|:|\./g, '-')
+        majorId,
+        source
+      }
+
+      const { chart, sharedWorker, roles, category, tags, tagsMarket, tagsProduct } = await mainThread(data)
+        const iframe = $('iframe')
+        const filename = majorName + '-' + minorName + '-' + (productName || minorName)
+
+        console.log({chart, sharedWorker, roles, category, tags, tagsMarket, tagsProduct})
+
+        iframe[0].contentWindow.location.reload()
+
+        sharedWorker.postMessage({ action: 'sendId', majorId: data.majorId, id: btnId, source: data.source, filename })
+      })
+    })

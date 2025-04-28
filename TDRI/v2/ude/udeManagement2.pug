@@ -1,0 +1,103 @@
+extends ./template/layout.pug
+block local
+  // headerH1 = false
+  - headerH1 = false
+  - const cardBg = require('./img/nobase64/ude-card_hover.jpg')
+  - const cardBgHover = require('./img/nobase64/ude-card.jpg')
+block body
+  section.min-vh-full.py-5
+    .container-fluid.py-3
+      .flexbox.gx-2.J-ctr
+        .sp-10
+          .container
+            .flexbox.sps-1.gx-2.gy-3.mb-3
+              .sp-12
+                h1.fz-32 專案列表
+              .sp-auto.mr-auto
+                button.btn.btn-purple(type='button' data-bs-toggle='modal' data-bs-target='#create-project')
+                  span.fi-plus
+                  |建立專案
+              .sp-2
+                select.custom-select.bg-none.b-1(name='sort')
+                  option(value='0' selected) 依產品名稱排序
+                  option(value='1') 依加入時間排序(新到舊)
+                  option(value='2') 依加入時間排序(舊到新)
+              //- .sp-auto
+              //-   button.btn.btn-layout-toggle.active(type='button' data-layout='list')
+              //-     span.fi-list
+              //- .sp-auto
+              //-   button.btn.btn-layout-toggle(type='button' data-layout='grid')
+              //-     span.fi-grid
+            .alert.alert-gray(role='alert')
+              .flexbox.a-ctr.gx-3
+                .sp.mr-auto
+                  p.ic-bf.ib-silvercn
+                    | 目前方案：
+                    strong 進階會員
+                    span.badge.badge-pill-l-white.badge-normal.ml-1 以使用子類：
+                      strong 3個
+                      |&nbsp;/&nbsp;6個(5+1)
+                      progress.progress-purple.mx-1(max='15' value='8' style='inline-size:10rem')
+                      a.t-purple(href='#') 加購
+
+                .sp-auto
+                  a.btn.btn-purple(href='./upgradeMember.html' title='訂閱升級會員')
+                    span.ic-bf.ib-goldcn 訂閱升級會員
+            .flexbox.card-grid
+              .sp
+                .card.card-ude.bg-contain(style!='--card-bg:url(\'../img/ude-card.jpg\');--card-bg-hover:url(\'../img/ude-card_hover.jpg\');')
+                  .card-header
+
+                    button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'rename\'><span class=\'fi-pen\'></span>重新命名</button></li><li><button class=\'btn\' type=\'button\' data-action=\'analysis\'><span class=\'fi-file-star\'></span>AI專案分析</button></li><li><button class=\'btn\' type=\'button\' data-action=\'avatar\'><span class=\'fi-ap3\'></span>更變縮圖</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載整份專案</button></li><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>')
+                      span.fi-option-h
+                    .avatar
+                      img.img-fluid.hidden.inline-m(src=require('./img/user-blue.jpg') width='36' height='36' alt='ABC洗衣機' title='未命名專案1' loading='lazy')
+                    h4.fz-16.card-title
+                      a.i-block.w-100(href='./udeContentList.html' title='未命名專案1')
+                        time.fz-12.t-82.fw-4(datetime='2024-4-22 24:02:02') 2024/4/22 24:02:02
+                        br
+                        |未命名專案1
+                    .bb-1.mt-2
+                  .card-body
+                    .card-list-title 未命名專案1
+
+                      //- button.btn.btn-blue.avatar-btn(type='button' data-bs-toggle='modal' data-bs-target='#change-avatar')
+                        span.fi-cam
+                    .card-desc.lh-xxl-relaxed
+                      ul.list-charts.t-left
+                        li.layout-list-hide
+                          span.t-4f.pr-1
+                            |AI專案分析報告
+                            strong.t-black.fl-right 1份
+                        li
+                          span.t-4f.pr-1
+                            |人物誌
+                            strong.t-black.fl-right 2組
+                        li
+                          span.t-4f.pr-1
+                            |顧客旅程地圖
+                            strong.t-black.fl-right 2組
+                        li
+                          span.t-4f.pr-1
+                            |利益關係人圖
+                            strong.t-black.fl-right 2組
+
+                      p.card-text 本專案旨在設計和開發一款具有智慧型功能的洗衣機，以滿足現代生活中對於高效、節能、便捷的需求。
+                    a.stretched-link(href='./udeContentList.html' title='未命名專案1')
+
+  +modal({ nobtn, id: 'create-project', label: 'modal-title', static, centered, v5 })
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          label(for='project-name') 專案名稱
+        .sp
+          +inputGroup({type: 'text', id: 'project-name', name:'projectName', placeholder: '請輸入專案名稱', label: '專案名稱', required, prependCls: 'prepend-icon' })
+        .sp
+          label(for='project-desc' placeholder='請輸入電子信箱') 專案描述
+        .sp
+          textarea#roject-desc.form-control(name='rojectDesc' rows='6' style='resize:none' placeholder='請描述您專案的產品／服務')
+    +footer()
+      .sp-5
+        button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+      .sp-5
+        button.btn.btn-purple.btn-block(type='button') 建立專案

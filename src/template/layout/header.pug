@@ -1,0 +1,244 @@
+- const isMemberPage = basename.match(/projectList|infoManagement|finishedRegistering|advMember|membership/)
+- const isPDE = basename.match(/pde500|pde404|pdeIndex|history|productSelect|pdeManagement|dataAnalysis/)
+mixin navDropdown(navDropdownId='navbar-dropdown', catalog, dropdownItems, option=false)
+  li.nav-item.dropdown(class=option.navItemCls)
+    //  class=||'dropdown-toggle'
+    a.nav-link(id=navDropdownId class={'nav-icon-link': option} href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' title=catelog)
+      if option.src
+        img.circle(src=option.src width='32' height='32' alt=option.title title=option.title loading='eager')
+      else
+        |#{catalog}
+      span.fi-arr-down.fi-normal
+    .dropdown-menu(aria-labelledby=navDropdownId)
+      each href, name in dropdownItems
+        a.dropdown-item(href=href title=name)=name
+
+//- mixin navDropdownSplit(navDropdownId='navbar-dropdown', catalog, catalogBasename, dropdownItems, usePhoto=false)
+  li.nav-item
+    .dropdown
+      a.nav-link(href=`./${catalogBasename}.html` class={ active: basename===catalogBasename })
+        if usePhoto
+          img.circle(src=usePhoto.src width='32' height='32' alt=usePhoto.title title=usePhoto.title loading='eager')
+        else
+          |#{catalog}
+      a.dropdown-toggle.dropdown-toggle-split(id=navDropdownId href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' title=catelog)
+        span.fi-arr-down.fi-normal
+      .dropdown-menu(aria-labelledby=navDropdownId)
+        each href, name in dropdownItems
+          a.dropdown-item(href=href title=name)=name
+- const index = ['pdeIndex', 'pdeManagement', 'history', 'productSelect', 'dataAnalysis'].includes(basename) ? 'pde' : 'ude'
+mixin logo(textContent, brand)
+  a(href='pdeIndex.html' title='Design R&D Lab會員中心')
+    img.circle.mr-1(src=require('./img/nobase64/pde.png') width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+    | 產品數據分析工具
+  a(href='pdeIndex.html' title='Design R&D Lab會員中心')
+    img.circle.mr-1(src=require('./img/nobase64/ude.png') width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+    | 使用者研究數位工具
+  //- svg.img-fluid(fill='#000' width='58' height='32')
+  //-   use(xlink:href='./img/sprite.svg#logo')
+  //- //- a(href='./'+index+'Index.html' class={'navbar-brand': brand, 't-hide': !headerSubTitle} title=textContent)
+  //- a(href='./'+index+'Index.html' class={'navbar-brand': brand, 't-hide': !headerSubTitle} title=textContent)
+  //-   if !headerSubTitle
+  //-     span.v-middle=textContent
+  //-   //- img.logo(src=require('./img/logo.png') title=textContent alt=textContent width='180' height='40' loading='eager')
+
+header.fxd-strch.top-0(class=headerCls)
+  nav.navbar.navbar-expand-l.navbar-light
+    .container-fluid.J-between.pl-4
+      if headerH1 || headerSubTitle
+        h1.navbar-brand
+          +logo(title)
+
+      else
+        //<h1 class='navbar-brand'>
+        +logo(title, !headerH1)
+        //</h1>
+
+      button.navbar-toggler.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#mobile-menu' aria-controls='mobile-menu' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #mobile-menu.navbar-collapse.collapse
+        ul.navbar-nav
+          //- li.nav-item
+            a.nav-link(href='pdeIndex.html' title='Design R&D Lab會員中心')
+              img.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+              | 產品數據分析工具
+          li.nav-item
+            a.nav-link.active(href='./pdeProjectList.html' title='專案列表') 專案列表
+          li.nav-item
+            a.nav-link(href='./pdeAIreportList.html' title='AI報告列表') AI報告列表
+          li.nav-item
+            a.nav-link(href='./productSelect2.html' title='產品類別選擇') 產品類別選擇
+          li.nav-item
+            a.nav-link(href='./history.html' title='瀏覽紀錄') 瀏覽紀錄
+          li.nav-item
+            a.nav-link(href='./salesPlanning.html' title='價格方案') 價格方案
+          li.nav-item
+            a.nav-link(href='./resource.html' title='資源中心') 資源中心
+          li.nav-item.dropdown
+            //   class=||'dropdown-toggle'
+            a#resource-dropdown.nav-link(href='resource.html' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false') 資源中心
+              svg.img-fluid.ml-2(fill='none' stroke='currentColor' width='15' height='15')
+                use(xlink:href='./img/sprite.svg#arrow-down')
+            .dropdown-menu(aria-labelledby='resource-dropdown')
+              a.dropdown-item(href='resource.html#nav-guide-tab' title='使用者指南') 使用者指南
+              a.dropdown-item(href='resource.html#nav-faq-tab' title='常見問題FAQ') 常見問題FAQ
+              a.dropdown-item(href='resource.html#nav-support-tab' title='客服支援') 客服支援
+          li.nav-item.dropdown.mr-auto
+            //   class=||'dropdown-toggle'
+            a#sales-planning-dropdown.nav-link(href='salesPlanning.html' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false') 價格方案
+              svg.img-fluid.ml-2(fill='none' stroke='currentColor' width='15' height='15')
+                use(xlink:href='./img/sprite.svg#arrow-down')
+            .dropdown-menu(aria-labelledby='sales-planning-dropdown')
+              a.dropdown-item(href='salesPlanning.html#nav-intro-tab' title='方案介紹') 方案介紹
+              a.dropdown-item(href='salesPlanning.html#nav-customize-tab' title='客製化方案') 客製化方案
+
+          //- li.nav-item
+            a.nav-link(href='#' title='Design R&D Lab設計工具箱')
+              img.circle(src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Ccircle cx="48" cy="48" r="48" fill="%230081C3"/%3E%3Cpath fill="%23FFF" d="M15.9 65.7a14.3 14.3 0 0 1 14.4-14.4H39c2.1 0 3 0 3.9.3.6.3 1.2.9 1.5 1.5.3.9.3 1.8.3 3.9v8.7a11 11 0 0 1-1.2 5.4c-.6 1.8-1.8 3.3-3 4.8a13 13 0 0 1-4.8 3c-1.8.6-3.6 1.2-5.4 1.2s-3.9-.3-5.4-1.2c-1.8-.6-3.3-1.8-4.8-3-1.2-1.2-2.4-3-3-4.8s-1.2-3.6-1.2-5.4zM82.7 30.3a14.3 14.3 0 0 1-14.4 14.4h-8.7c-2.1 0-3 0-3.9-.3-.6-.3-1.2-.9-1.5-1.5-.3-.9-.3-1.8-.3-3.9v-8.7c0-1.8.3-3.9 1.2-5.4.6-1.8 1.8-3.3 3-4.8 1.2-1.2 3-2.4 4.8-3s3.6-1.2 5.4-1.2 3.9.3 5.4 1.2c1.8.6 3.3 1.8 4.8 3a13 13 0 0 1 3 4.8c.6 1.8 1.2 3.6 1.2 5.4z"/%3E%3Cpath fill="%23FFF" d="M15.9 30.3a14.3 14.3 0 0 1 14.4-14.4 14.3 14.3 0 0 1 14.4 14.4V42c-.3.6-.6 1.2-.9 1.5-.3.3-.9.9-1.5.9H30.6c-3.9 0-7.5-1.5-10.2-4.2-3-2.4-4.5-6-4.5-9.9zM82.7 65.7a14.3 14.3 0 0 1-14.4 14.4 14.3 14.3 0 0 1-14.4-14.4V54c.3-.6.6-1.2.9-1.5.3-.3.9-.9 1.5-.9H68c3.9 0 7.5 1.5 10.2 4.2 3 2.4 4.5 6 4.5 9.9z" opacity=".5"/%3E%3C/svg%3E' width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+              | Design R&D Lab設計工具箱
+          //- li.nav-item.dropdown
+            a#info-management-dropdown.nav-link(href='infoManagement.html' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false') 會員中心
+              svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                use(xlink:href='./img/sprite.svg#arrow-down')
+            .dropdown-menu(aria-labelledby='info-management-dropdown')
+              a.dropdown-item(href='infoManagement.html#nav-info-tab' title='基本資料管理') 基本資料管理
+              a.dropdown-item(href='infoManagement.html#nav-subscript-tab' title='訂閱管理') 訂閱管理
+              a.dropdown-item(href='infoManagement.html#nav-payment-tab' title='訂閱紀錄') 訂閱紀錄
+          //- li.nav-item.dropdown
+            a#tool-dropdown.nav-link.nav-icon-link(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              img.circle(src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Ccircle cx="48" cy="48" r="48" fill="%230081C3"/%3E%3Cpath fill="%23FFF" d="M15.9 65.7a14.3 14.3 0 0 1 14.4-14.4H39c2.1 0 3 0 3.9.3.6.3 1.2.9 1.5 1.5.3.9.3 1.8.3 3.9v8.7a11 11 0 0 1-1.2 5.4c-.6 1.8-1.8 3.3-3 4.8a13 13 0 0 1-4.8 3c-1.8.6-3.6 1.2-5.4 1.2s-3.9-.3-5.4-1.2c-1.8-.6-3.3-1.8-4.8-3-1.2-1.2-2.4-3-3-4.8s-1.2-3.6-1.2-5.4zM82.7 30.3a14.3 14.3 0 0 1-14.4 14.4h-8.7c-2.1 0-3 0-3.9-.3-.6-.3-1.2-.9-1.5-1.5-.3-.9-.3-1.8-.3-3.9v-8.7c0-1.8.3-3.9 1.2-5.4.6-1.8 1.8-3.3 3-4.8 1.2-1.2 3-2.4 4.8-3s3.6-1.2 5.4-1.2 3.9.3 5.4 1.2c1.8.6 3.3 1.8 4.8 3a13 13 0 0 1 3 4.8c.6 1.8 1.2 3.6 1.2 5.4z"/%3E%3Cpath fill="%23FFF" d="M15.9 30.3a14.3 14.3 0 0 1 14.4-14.4 14.3 14.3 0 0 1 14.4 14.4V42c-.3.6-.6 1.2-.9 1.5-.3.3-.9.9-1.5.9H30.6c-3.9 0-7.5-1.5-10.2-4.2-3-2.4-4.5-6-4.5-9.9zM82.7 65.7a14.3 14.3 0 0 1-14.4 14.4 14.3 14.3 0 0 1-14.4-14.4V54c.3-.6.6-1.2.9-1.5.3-.3.9-.9 1.5-.9H68c3.9 0 7.5 1.5 10.2 4.2 3 2.4 4.5 6 4.5 9.9z" opacity=".5"/%3E%3C/svg%3E' width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+              svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                use(xlink:href='./img/sprite.svg#arrow-down')
+            .dropdown-menu(aria-labelledby='tool-dropdown')
+              a.dropdown-item(href='#' title='設計思考創新工具') 設計思考創新工具
+              a.dropdown-item(href='resource.html#pde' title='產品數據分析工具') 產品數據分析工具
+              a.dropdown-item(href='resource.html#ude' title='使用者研究數位工具') 使用者研究數位工具
+              a.dropdown-item(href='resource.html#C' title='C工具  ') C工具
+              a.dropdown-item(href='resource.html#D' title='D工具  ') D工具
+          //- li.nav-item.dropdown
+            //   class=||'dropdown-toggle'
+            a#membership-dropdown.nav-link.nav-icon-link(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              img.circle(src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Cpath fill="%23B2FB2F" d="M48 0a48 48 0 0 1 0 96 48 48 0 0 1 0-96z"/%3E%3Cpath d="m60.2 17.1-2 19.2 18.4-6-13 14.4 18.4 6-18.9 4 11.4 15.6-17.7-7.9v19.3L47.1 65 35.8 80.6l2-19.2-18.4 6L32.3 53l-18.4-6 18.9-4-11.3-15.6 17.7 7.9V16l9.7 16.7 11.3-15.6z"/%3E%3C/svg%3E' width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+              svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                use(xlink:href='./img/sprite.svg#arrow-down')
+            .dropdown-menu(aria-labelledby='membership-dropdown')
+              button.dropdown-item(type='button' data-bs-toggle='collapse' data-bs-target='#info-management-collapse' aria-expanded='false' aria-controls='info-management-collapse') 會員中心
+              #info-management-collapse.collapse
+                a.dropdown-item(href='infoManagement.html#nav-info-tab' title='基本資料管理') 基本資料管理
+                a.dropdown-item(href='infoManagement.html#nav-subscript-tab' title='訂閱管理') 訂閱管理
+                a.dropdown-item(href='infoManagement.html#nav-payment-tab' title='訂閱紀錄') 訂閱紀錄
+
+              button.dropdown-item(type='button' data-bs-toggle='collapse' data-bs-target='#resource-collapse' aria-expanded='false' aria-controls='resource-collapse') 價格方案
+              #resource-collapse.collapse
+                a.dropdown-item(href='resource.html#nav-guide-tab' title='使用者指南') 使用者指南
+                a.dropdown-item(href='resource.html#nav-faq-tab' title='訂閱管理') 常見問題FAQ
+                a.dropdown-item(href='resource.html#nav-support-tab' title='訂閱管理') 客服支援
+
+              button.dropdown-item(type='button' data-bs-toggle='collapse' data-bs-target='#sales-planning-collapse' aria-expanded='false' aria-controls='sales-planning-collapse') 價格方案
+              #sales-planning-collapse.collapse
+                a.dropdown-item(href='salesPlanning.html#nav-intro-tab' title='方案介紹') 方案介紹
+                a.dropdown-item(href='salesPlanning.html#nav-customize-tab' title='客製化方案') 客製化方案
+          li.nav-item
+            a.nav-link(href='./salesPlanning.html' title='價格方案') 價格方案
+          li.nav-item
+            a.nav-link(href='./resource.html' title='資源中心') 資源中心
+          li.nav-item
+            a.btn.btn-black(href='#' title='免費試用' style='border-radius: 50rem;') 免費試用
+              span.fi-arr-right
+          li.nav-item
+            a.btn(href='#' title='' target='_blank' rel='noreferrer noopener nofollow') 登入
+          li.nav-item
+            a#user-dropdown.nav-link.nav-icon-link(href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              img.circle(src='data:image/svg+xml, %3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 96 96\' %3e %3ccircle fill=\'%23E6F0FF\' stroke=\'%23040000\' stroke-miterlimit=\'10\' cx=\'48\' cy=\'48\' r=\'48\'/%3e %3cpath fill=\'%23CCE0FF\' d=\'M24.9,81.4c6.8,4.7,14.8,7.2,23.1,7.1c8.2,0,16.3-2.5,23.1-7.1c2.9-2,4.1-5.8,2.4-8.9 C70,66.1,62.8,62.1,48,62.1s-22,4-25.5,10.4C20.8,75.6,22,79.4,24.9,81.4z M48,47.7c-3.8,0-7.5-1.5-10.2-4.2s-4.2-6.4-4.2-10.2 s1.5-7.5,4.2-10.2s6.4-4.2,10.2-4.2s7.5,1.5,10.2,4.2s4.2,6.4,4.2,10.2s-1.5,7.5-4.2,10.2S51.8,47.7,48,47.7z\'/%3e %3c/svg%3e' width='32' height='32' alt='會員中心' title='會員中心' loading='eager')
+              //- svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                use(xlink:href='./img/sprite.svg#arrow-down')
+            //- .dropdown-menu(aria-labelledby='user-dropdown')
+              a.dropdown-item(href='projectList.html' title='專案列表') 專案列表
+              a.dropdown-item(href='infoManagement.html#nav-subscript-tab' title='訂閱管理')
+                span.ic-bf.ib-goldcn 訂閱管理
+              a.dropdown-item(href='#' title='登出')
+                span.fi-logout
+                |登出
+      //- #mobile-menu.navbar-collapse.collapse
+        //- ul.navbar-nav(class={ 'J-l-end': isMemberPage})
+        ul.navbar-nav(class={ 'J-l-end': isMemberPage})
+          //- if !isMemberPage
+          //-   li.nav-item
+          //-     span.pipe-line
+          //- //- if headerSubTitle
+          //- if headerSubTitle
+          //-   li.nav-item
+          //-     a.nav-link.nav-first-link(href='./'+index+'Index.html' class={'navbar-brand': brand, 't-hide': !headerSubTitle} title=textContent)
+          //-       img.mr-2(src=require('./img/nobase64/'+pageType+'.png') width='32' height='32' alt=headerSubTitle title=headerSubTitle loading='lazy')
+          //-       span.v-middle #{headerSubTitle}
+          //- //- if isPDE
+          //- if isPDE
+          //-   li.nav-item
+          //-     a.nav-link(href='./history.html' title='瀏覽紀錄' class={ active: basename==='history' }) 瀏覽紀錄
+          //-   li.nav-item.mr-auto
+          //-     a.nav-link(href='./productSelect.html' title='篩選項目' class={ active: basename==='productSelect' }) 篩選項目
+
+          //-   +navDropdownSplit('ude-dropdown', '使用者研究數位工具', 'udeIndex', {
+          //-     '利益關係人清單':'interestedPartyList.html',
+          //-     '人物誌清單':'characterList.html',
+          //-   }, { src: require('./img/nobase64/ude.png'), title: 'UDE'})
+
+          //- //- else if isMemberPage
+          //- else if isMemberPage
+          //-   +navDropdownSplit('ude-dropdown', '產品數據分析工具', 'pdeIndex', {
+          //-     '瀏覽紀錄':'history.html',
+          //-     '篩選項目':'productSelect.html',
+          //-   }, { src: require('./img/nobase64/pde.png'), title: 'PDE'})
+          //-   +navDropdownSplit('ude-dropdown', '使用者研究數位工具', 'udeIndex', {
+          //-     '利益關係人清單':'interestedPartyList.html',
+          //-     '人物誌清單':'characterList.html',
+          //-   }, { src: require('./img/nobase64/ude.png'), title: 'UDE'})
+          //- //- else
+          //- else
+          //-   li.nav-item
+          //-     a.nav-link(href='./interestedPartyList.html' title='利益關係人清單' class={ active: basename==='interestedPartyList' }) 利益關係人清單
+          //-   li.nav-item.mr-auto
+          //-     a.nav-link(href='./characterList.html' title='人物誌清單' class={ active: basename==='characterList' }) 人物誌清單
+          //-   +navDropdownSplit('ude-dropdown', '產品數據分析工具', 'pdeIndex', {
+          //-     '瀏覽紀錄':'history.html',
+          //-     '篩選項目':'productSelect.html',
+          //-   }, { src: require('./img/nobase64/pde.png'), title: 'PDE'})
+          li.nav-item
+            a.nav-link(href='./history.html' title='Design R&D Lab會員中心')
+              img.circle(src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Cpath fill="%23B2FB2F" d="M48 0a48 48 0 0 1 0 96 48 48 0 0 1 0-96z"/%3E%3Cpath d="m60.2 17.1-2 19.2 18.4-6-13 14.4 18.4 6-18.9 4 11.4 15.6-17.7-7.9v19.3L47.1 65 35.8 80.6l2-19.2-18.4 6L32.3 53l-18.4-6 18.9-4-11.3-15.6 17.7 7.9V16l9.7 16.7 11.3-15.6z"/%3E%3C/svg%3E' width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+              |Design R&D Lab會員中心
+          li.nav-item
+            a.nav-link(href='./history.html' title='Design R&D Lab設計工具箱')
+              img.circle(src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Ccircle cx="48" cy="48" r="48" fill="%230081C3"/%3E%3Cpath fill="%23FFF" d="M15.9 65.7a14.3 14.3 0 0 1 14.4-14.4H39c2.1 0 3 0 3.9.3.6.3 1.2.9 1.5 1.5.3.9.3 1.8.3 3.9v8.7a11 11 0 0 1-1.2 5.4c-.6 1.8-1.8 3.3-3 4.8a13 13 0 0 1-4.8 3c-1.8.6-3.6 1.2-5.4 1.2s-3.9-.3-5.4-1.2c-1.8-.6-3.3-1.8-4.8-3-1.2-1.2-2.4-3-3-4.8s-1.2-3.6-1.2-5.4zM82.7 30.3a14.3 14.3 0 0 1-14.4 14.4h-8.7c-2.1 0-3 0-3.9-.3-.6-.3-1.2-.9-1.5-1.5-.3-.9-.3-1.8-.3-3.9v-8.7c0-1.8.3-3.9 1.2-5.4.6-1.8 1.8-3.3 3-4.8 1.2-1.2 3-2.4 4.8-3s3.6-1.2 5.4-1.2 3.9.3 5.4 1.2c1.8.6 3.3 1.8 4.8 3a13 13 0 0 1 3 4.8c.6 1.8 1.2 3.6 1.2 5.4z"/%3E%3Cpath fill="%23FFF" d="M15.9 30.3a14.3 14.3 0 0 1 14.4-14.4 14.3 14.3 0 0 1 14.4 14.4V42c-.3.6-.6 1.2-.9 1.5-.3.3-.9.9-1.5.9H30.6c-3.9 0-7.5-1.5-10.2-4.2-3-2.4-4.5-6-4.5-9.9zM82.7 65.7a14.3 14.3 0 0 1-14.4 14.4 14.3 14.3 0 0 1-14.4-14.4V54c.3-.6.6-1.2.9-1.5.3-.3.9-.9 1.5-.9H68c3.9 0 7.5 1.5 10.2 4.2 3 2.4 4.5 6 4.5 9.9z" opacity=".5"/%3E%3C/svg%3E' width='32' height='32' alt='工具箱' title='工具箱' loading='eager')
+              |Design R&D Lab設計工具箱
+          +navDropdown('membership-dropdown', '會員中心', {
+            '基本資料管理':'projectList.html',
+            '訂閱管理':'infoManagement.html',
+            '訂閱紀錄':'infoManagement.html'
+          })
+          +navDropdown('resource-dropdown', '資源中心', {
+            '價格方案':'projectList.html',
+            '常見問題FAQ':'infoManagement.html',
+            '客服支援':'projectList.html',
+          })
+          +navDropdown('plans-dropdown', '價格方案', {
+            '方案介紹':'projectList.html',
+            '客製化方案':'infoManagement.html'
+          }, { navItemCls: 'mr-auto' })
+          +navDropdown('tool-dropdown', '工具箱', {
+            '設計思考創新工具':'projectList.html',
+            '產品數據分析工具':'infoManagement.html',
+            '使用者研究數位工具':'infoManagement.html',
+            'C工具  ':'#',
+            'D工具  ':'#',
+          }, { src: `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Ccircle cx="48" cy="48" r="48" fill="%230081C3"/%3E%3Cpath fill="%23FFF" d="M15.9 65.7a14.3 14.3 0 0 1 14.4-14.4H39c2.1 0 3 0 3.9.3.6.3 1.2.9 1.5 1.5.3.9.3 1.8.3 3.9v8.7a11 11 0 0 1-1.2 5.4c-.6 1.8-1.8 3.3-3 4.8a13 13 0 0 1-4.8 3c-1.8.6-3.6 1.2-5.4 1.2s-3.9-.3-5.4-1.2c-1.8-.6-3.3-1.8-4.8-3-1.2-1.2-2.4-3-3-4.8s-1.2-3.6-1.2-5.4zM82.7 30.3a14.3 14.3 0 0 1-14.4 14.4h-8.7c-2.1 0-3 0-3.9-.3-.6-.3-1.2-.9-1.5-1.5-.3-.9-.3-1.8-.3-3.9v-8.7c0-1.8.3-3.9 1.2-5.4.6-1.8 1.8-3.3 3-4.8 1.2-1.2 3-2.4 4.8-3s3.6-1.2 5.4-1.2 3.9.3 5.4 1.2c1.8.6 3.3 1.8 4.8 3a13 13 0 0 1 3 4.8c.6 1.8 1.2 3.6 1.2 5.4z"/%3E%3Cpath fill="%23FFF" d="M15.9 30.3a14.3 14.3 0 0 1 14.4-14.4 14.3 14.3 0 0 1 14.4 14.4V42c-.3.6-.6 1.2-.9 1.5-.3.3-.9.9-1.5.9H30.6c-3.9 0-7.5-1.5-10.2-4.2-3-2.4-4.5-6-4.5-9.9zM82.7 65.7a14.3 14.3 0 0 1-14.4 14.4 14.3 14.3 0 0 1-14.4-14.4V54c.3-.6.6-1.2.9-1.5.3-.3.9-.9 1.5-.9H68c3.9 0 7.5 1.5 10.2 4.2 3 2.4 4.5 6 4.5 9.9z" opacity=".5"/%3E%3C/svg%3E` , title: '工具箱'})
+          +navDropdown('tool-dropdown', '工具箱', {
+            '會員中心':'projectList.html',
+            '資源中心':'infoManagement.html',
+            '價格方案':'infoManagement.html',
+          }, { src: `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"%3E%3Cpath fill="%23B2FB2F" d="M48 0a48 48 0 0 1 0 96 48 48 0 0 1 0-96z"/%3E%3Cpath d="m60.2 17.1-2 19.2 18.4-6-13 14.4 18.4 6-18.9 4 11.4 15.6-17.7-7.9v19.3L47.1 65 35.8 80.6l2-19.2-18.4 6L32.3 53l-18.4-6 18.9-4-11.3-15.6 17.7 7.9V16l9.7 16.7 11.3-15.6z"/%3E%3C/svg%3E` , title: '工具箱'})
+          +navDropdown('info-dropdown', '會員中心', {
+            '專案列表':'infoManagement.html#info',
+            '訂閱管理':'infoManagement.html#subscript',
+            '登出  ':'infoManagement.html#payment',
+          }, { src: `data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' %3e %3ccircle fill='%23E6F0FF' stroke='%23040000' stroke-miterlimit='10' cx='48' cy='48' r='48'/%3e %3cpath fill='%23CCE0FF' d='M24.9,81.4c6.8,4.7,14.8,7.2,23.1,7.1c8.2,0,16.3-2.5,23.1-7.1c2.9-2,4.1-5.8,2.4-8.9 C70,66.1,62.8,62.1,48,62.1s-22,4-25.5,10.4C20.8,75.6,22,79.4,24.9,81.4z M48,47.7c-3.8,0-7.5-1.5-10.2-4.2s-4.2-6.4-4.2-10.2 s1.5-7.5,4.2-10.2s6.4-4.2,10.2-4.2s7.5,1.5,10.2,4.2s4.2,6.4,4.2,10.2s-1.5,7.5-4.2,10.2S51.8,47.7,48,47.7z'/%3e %3c/svg%3e` , title: '會員中心'})

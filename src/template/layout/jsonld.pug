@@ -1,0 +1,71 @@
+mixin jsonBreadcrumb(items)
+  - const jsonld = { '@context': 'https://schema.org/', '@type': 'BreadcrumbList', itemListElement: [] }
+  - items.push({ n: seo[basename].title })
+  each item, index in items
+    -
+      let obj = {
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.n,
+          item: item.href && item.href.replace('./', staticDomain + baseDir+'/')
+        }
+    - jsonld.itemListElement.push(obj)
+  script(type='application/ld+json')!=JSON.stringify(jsonld, null, 2)
+//- +jsonBreadcrumb([{ href: './index.html', n: 'Home' }, { href: './page.html', n: 'page' }, { href: './index.html', n: 'Library' }])
+
+mixin jsonCarousel(items)
+  - const jsonld = { '@context': 'https://schema.org/', '@type': 'ItemList', itemListElement: [] }
+  each product, index in items
+    -
+      const obj = {
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${staticDomain + baseDir}/${product.id}.html`,
+      }
+    - jsonld.itemListElement.push(obj)
+  script(type='application/ld+json')!=JSON.stringify(jsonld, null, 2)
+//-
+  +jsonCarousel([
+    { title: '社會新鮮人1', desc: '錢錢沒有不見 只是變成未來的樣子', img: 'career-1.png', id: 'newbie1' },
+    { title: '社會新鮮人2', desc: '錢錢沒有不見 只是變成未來的樣子', img: 'career-1.png', id: 'newbie2' }
+  ])
+
+mixin jsonArticle({ headline, description, name, image, datePublished })
+  -
+    let jsonld =
+      {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline,
+        image: [
+          image
+        ],
+      datePublished,
+      author: [{
+        '@type': 'Organization',
+        name,
+        logo: './img/logo.png'
+      }],
+      description
+    }
+  script(type='application/ld+json')!=JSON.stringify(jsonld, null, 2)
+//- +jsonArticle({ headline: 'Heading', name: 'Company', description: 'Lorem ipsum dolor sit amet.', image: './img.jpg', datePublished: new Date() })
+
+mixin jsonFAQ(items)
+  - let jsonld ={ '@context': 'https://schema.org/', '@type': 'FAQPage', mainEntity: [] }
+  each item, index in items
+    -
+      let obj = {
+        '@type': 'Question',
+        name: item.title,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.ans
+        }
+      }
+    - jsonld.mainEntity.push(obj)
+  script(type='application/ld+json')!=JSON.stringify(jsonld, null, 2)
+//- +jsonFAQ([{ title: 'QA1', ans: 'text' }, { title: 'QA2', ans: 'text' }])
+
+//- mixin jsonArticle
+//- mixin jsonBranch

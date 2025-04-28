@@ -1,0 +1,102 @@
+extends ./template/layout.pug
+block body
+  .container
+    .flexbox.sps-1.gy-3.mb-3
+      .sp
+        h1.fz-32 專案列表
+  +tabs({selfContainer, id: 'tab', v5, cls: ['tab-products', 'tab-project'], contentCls: ['tab-products-content', 'tab-project-content'] })
+    +inContainer
+      +item({ id: 'pde-list', htmlTitle: `<img class="img-fluid mr-1" src="${require('./img/nobase64/pde.png')}" width="36" height="36" alt="UDE使用者數據工具" title="UDE使用者數據工具" loading="lazy">PDE使用者數據工具`, active })
+        section.py-5
+          .container
+            .flexbox.sps-1.J-end.gy-3.mb-3
+              .sp-s-6.sp-m-4.sp-xl-3
+                +sortSelect
+            .layer
+              .flexbox.gx-0
+                .sp-auto.mr-auto
+                  h3.fz-22.t-82 PDE清單
+                .sp-auto
+                  button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#pde-list' aria-expanded='false' aria-controls='pde-list')
+                    svg.img-fluid(fill='currentColor' width='16' height='16')
+                      use(xlink:href='./img/sprite.svg#tri-top')
+                .sp-12
+                  +alertDanger('一般會員每種只可建立一個專案')
+              #pde-list.show
+                .flexbox.sps-1.sps-m-2.sps-xl-3.g-3.g-xxl-6
+                  .sp
+                    +PDEcreateBtn({ id: '#create-project', btnContent: '創建PDE專案' })
+                  .sp
+                    button.btn.btn-rect-blue.btn-block(type='button' data-bs-toggle='modal' data-bs-target='#create-adv')
+                      span.btn.btn-blue.ic-bf.ib-goldcn 建立專案
+                  - for(let i = 0; i < 1; i++)
+                    .sp
+                      +PDEcard
+      +item({ id: 'ude-list', htmlTitle: `<img class="img-fluid mr-1" src="${require('./img/nobase64/ude.png')}" width="36" height="36" alt="UDE使用者數據工具" title="UDE使用者數據工具" loading="lazy">UDE使用者數據工具` })
+        section.py-5
+          .container
+            .flexbox.sps-1.J-end.gy-3.mb-3
+              .sp-s-6.sp-m-4.sp-xl-3
+                +sortSelect
+            .layer
+              .flexbox.gx-0
+                .sp-auto.mr-auto
+                  h3.fz-22.t-82 UDE清單
+                .sp-auto
+                  button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#ude-list' aria-expanded='false' aria-controls='ude-list')
+                    svg.img-fluid(fill='currentColor' width='16' height='16')
+                      use(xlink:href='./img/sprite.svg#tri-top')
+                .sp-12
+                  +alertDanger('一般會員每種只可建立一個專案')
+
+              #ude-list.show
+                .flexbox.sps-1.sps-m-2.sps-xl-3.g-3.g-xxl-6
+                  .sp
+                    +UDEcreateBtn({ id: '#create-project', btnContent: '創建UDE專案' })
+                  .sp
+                    button.btn.btn-rect-purple.btn-block(type='button' data-bs-toggle='modal' data-bs-target='#create-adv')
+                      span.btn.btn-purple.ic-bf.ib-goldcn 建立專案
+
+                  - for(let i = 0; i < 1; i++)
+                    .sp
+                      +UDEcard({ cardTitle: 'ABC洗衣機'})
+                        ul.list-unstyled.t-left
+                          li
+                            span.fi-target
+                            span.t-82.pr-1 利益人關係
+                            |6組
+                            span.avatar-list
+                              img.avatar-items(src='https://fakeimg.pl/24x24/ff8888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                              img.avatar-items(src='https://fakeimg.pl/24x24/88ff88/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                              img.avatar-items(src='https://fakeimg.pl/24x24/8888ff/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                              span.avatar-count.avatar-items +6
+                          li
+                            span.fi-id-card
+                            span.t-82.pr-1 人物誌
+                            |3組
+                            span.avatar-list
+                              img.avatar-items(src='https://fakeimg.pl/24x24/ff88ff/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                              img.avatar-items(src='https://fakeimg.pl/24x24/888888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                              img.avatar-items(src='https://fakeimg.pl/24x24/888888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                        a.stretched-link(href='./udeManagement.html')
+
+  +modal({ nobtn ,id: 'create-project', label: 'modal-title', static, centered, v5 })
+    +body
+      .flexbox.sps-1.gy-3
+        .sp
+          label(for='project-name' placeholder='請輸入電子信箱') 專案名稱
+        .sp
+          +inputGroup({type: 'text', id: 'project-name', name:'projectName', placeholder: '請輸入專案名稱', label: '專案名稱', required, prependCls: 'prepend-icon' })
+            +prepend
+              span.fi-folder
+
+    +footer()
+      button.btn.btn-blue.btn-block(type='button') 建立
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+  +adModal()
+  +changeAvatar()
+block script
+  script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js')
+  script (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    include ./js/uploadImg.js
+    |})}((window)))

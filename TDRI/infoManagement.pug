@@ -1,0 +1,479 @@
+extends ./template/layout.pug
+block local
+  // headerH1 = true
+  - headerH1 = true
+  -
+    bodyAttr = {
+      class: ['bg-grid']
+    }
+block script
+  // 用cdn安裝 這個頁面再import
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js')
+  script(src='https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js')
+  script.
+    const picker = new Lightpick({
+      field: document.getElementById('start-time'),
+      secondField: document.getElementById('end-time'),
+      singleDate: false,
+      numberOfMonths:2,
+      format: 'YYYY/MM/DD',
+      lang: 'en'
+    })
+mixin tip
+  .fl-right.info-tip(data-bs-toggle='popover' data-bs-content=Array.from({ length: 30 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join(''))
+    span.fi-question
+
+mixin tool(name)
+  - const upper = name.toUpperCase()
+  .card(id=name+'-tool')
+    .card-header
+      .flexbox.J-between.a-ctr
+        .sp-auto
+          h2.v-middle
+            img.mr-2.circle(src=require('./img/nobase64/'+name+'.png') width='32' height='32' alt=upper+'產品數據工具' title=upper+'產品數據工具' loading='lazy')
+            |#{ upper }產品數據工具
+        .sp.css-has-collapse
+          p
+            span.ic-bf.ib-silvercn 目前方案：
+            strong 進階會員
+            |&emsp;
+            span.badge.badge-pill-l-gray.badge-normal.ml-1 將於
+              time(timestamp='2024-03-28T00:00') 2024 年 3 月 28 日
+              |續訂，費用為 NT$ 7,900 / 月
+        .sp-auto
+          button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#'+name+'-body' aria-expanded='true' aria-controls=name+'-body')
+            svg.img-fluid(fill='currentColor' width='16' height='16')
+              use(xlink:href='./img/sprite.svg#tri-top')
+    .card-body.collapse.show.py-0(id=name+'-body')
+      .flexbox.gx-3
+        .sp-2
+          .img-crown.goldcn
+            img.img-fluid(src=require('./img/goldcn.png') width='100%' height='auto' alt='尊榮會員' title='尊榮會員' loading='lazy')
+          .img-crown.silvercn
+            img.img-fluid(src=require('./img/silvercn.png') width='100%' height='auto' alt='進階會員' title='進階會員' loading='lazy')
+          .img-crown.coppercn
+            img.img-fluid(src=require('./img/coppercn.png') width='100%' height='auto' alt='初階會員' title='初階會員' loading='lazy')
+          .img-crown.normalcn
+            img.img-fluid(src=require('./img/normalcn.png') width='100%' height='auto' alt='一般會員' title='一般會員' loading='lazy')
+        .sp-10
+          .flexbox.a-ctr.bb-1.py-3.gx-3
+            .sp-auto
+              p
+                span.ic-bf.ib-silvercn 目前方案：
+                strong 進階會員
+                |&emsp;
+                span.t-danger 升級尊榮方案，讓您省下 17%
+            .sp-auto.ml-auto
+              a.btn.btn-gray.rad-sm(href='#' title='方案介紹') 方案介紹
+            .sp-auto
+              a.btn.btn-gray.rad-sm(href='#' title='更變方案') 更變方案
+            .sp-auto
+              a.btn.btn-black.rad-sm(href='./upgradeMember.html' title='訂閱升級會員')
+                span.ic-bf.ib-goldcn 訂閱升級會員
+          .flexbox.a-ctr.bb-1.py-3.gx-3
+            .sp-auto
+              p
+                span.fi-calendar
+                |下次續費時間：
+                strong 將於
+                  time(datetime='2001-05-15T00:00') 2024 年 3 月 28 日
+                  |續訂，費用為 NT$ 7,900 / 月
+                |&emsp;
+
+            .sp-auto.ml-auto
+              button.btn.btn-gray.rad-sm(type='button' data-bs-toggle='modal' data-bs-target='#unsubscript-modal') 取消訂閱
+          .flexbox.a-ctr.bb-1.py-3.g-3
+            .sp-auto
+              p
+                span.fi-star
+                |享有AI方案
+            .sp-auto.ml-auto
+              a.btn.btn-gray.rad-sm(href='#' title='AI方案加購') 功能介紹
+            .sp-auto
+              a.btn.btn-black.rad-sm(href='#' title='AI方案加購') 加購
+            .sp-12
+              .flexbox.sps-5.sps-xxl-6.gx-2.gx-xxl-3
+                .sp
+                  .bg-f2.p-2.rad-sm
+                    +tip
+                    p
+                      span.fi-ai-file
+                      |AI報告：
+                      br
+                      strong 2份
+                      |&nbsp;/&nbsp;5份
+                    progress.progress-black(value='2' max='5')
+                .sp
+                  .bg-f2.p-2.rad-sm
+                    +tip
+                    p
+                      span.fi-id-connect
+                      |AI範本：
+                      br
+                      strong 2份
+                      |&nbsp;/&nbsp;5份
+                    progress.progress-black(value='2' max='5')
+                .sp
+                  .bg-f2.p-2.rad-sm
+                    +tip
+                    p
+                      span.fi-text
+                      |AI文本擷取：
+                      br
+                      strong 8份
+                      |&nbsp;/&nbsp;15份
+                    progress.progress-black(value='8' max='15')
+                .sp
+                  .bg-f2.p-2.rad-sm
+                    +tip
+                    p
+                      span.fi-ai-file
+                      |AI專案報告：
+                      br
+                      strong 15份
+                      |&nbsp;/&nbsp;15份
+                    progress.progress-black.progress-full(value='15' max='15')
+          .flexbox.a-ctr.py-3
+            .sp-auto
+              p
+                span.fi-info
+                |已開通項目
+            .sp-auto.ml-auto
+              button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#'+name+'-open' aria-expanded='true' aria-controls=name+'-open')
+                svg.img-fluid(fill='currentColor' width='16' height='16')
+                  use(xlink:href='./img/sprite.svg#tri-top')
+          .collapse.show(id=name+'-open')
+            +tabs({ selfColumn, id: 'tab', v5, cls: ['tab-products', 'tab-project'], contentCls: ['tab-products-content', 'tab-project-content'] })
+              +inColumn({ colCls: ['sp']})
+                +item({ id: name+'-minor', htmlTitle: '<strong class="minor-ico mr-1">子</strong>子類', active })
+                  +table
+                if name === 'pde'
+                  +item({ id: name+'-product', htmlTitle: '<strong class="minor-ico mr-1 bg-f2">品</strong>品類', })
+                    +table('品類','無線對講機')
+              +outColumn({ colCls: ['sp-auto'] })
+                button.btn.btn-black.btn-block.rad-sm(type='button') 加購
+        .sp-12.py-3
+          img.img-fluid.rad-xl.mb-3(src=require('./img/'+name+'-promo.jpg') width='100%' height='auto' alt=+upper+'產品數據工具推薦' title=+upper+'產品數據工具推薦' loading='lazy')
+          p.fz-24.t-ctr 我該如何成為進階會員?
+            br
+            | 點此前往
+            a.t-blue.t-underline(href='#' title='進階會員') 方案介紹
+            | 查看成為進階會員後的完整功能介紹!!
+
+mixin table(type='子類',item='手機')
+  .flexbox.sps-5.sps-xxl-6.gx-2.gx-xxl-3.py-3
+    .sp
+      .bg-f2.p-2.rad-sm.lh-xxl-none
+        p.lh-xxl-loose 以使用#{type}：
+          br
+          strong 5個
+          |&nbsp;/&nbsp;5個
+        progress.progress-black.progress-full(value='5' max='5')
+    .sp
+      .bg-f2.p-2.rad-sm.h-100
+        p 以加購#{type}：
+          br
+          |1個
+  - const picUrl = require(item==='手機' ? './img/nobase64/手機p.png' : './img/nobase64/無線對講機.png')
+  table.table.nth-4-right.mb-0.bb-1
+    thead.bg-fa
+      tr
+        th(scope='col') 詳細資訊
+        th(scope='col') 已訂閱/加購
+        th(scope='col') 下次續費時間
+          span.info-tip(data-bs-toggle='popover' data-bs-html='true' data-bs-content='<p>會員方案中的子類 / 品類資料，可在每次自動續訂後 24 小時內更換一次項目。例如：將「手機」更換為「咖啡機」。<br><br>*每個類別僅能更換一次</p>')
+            span.fi-question
+        th(scope='col') 訂閱
+    tbody
+      - for(let i = 0; i < 4; i++)
+        tr
+          th(scope='row')
+            .minor-ico.mr-1(class={'bg-white':item==='無線對講機'})
+              img.img-contain(src=picUrl width='24' height='24' alt=item title=item loading='lazy')
+            strong #{ item }
+            br
+            span.t-82.fw-4 智慧移動 / 通訊 / 手機
+          td 進階方案
+          td -
+          td
+            button.btn.btn-gray.rad-sm(type='button' disabled) 取消訂閱
+      tr
+        th(scope='row')
+          .minor-ico.mr-1(class={'bg-white':item==='無線對講機'})
+            img.img-contain(src=picUrl width='24' height='24' alt=item title=item loading='lazy')
+          strong #{ item }
+          br
+          span.t-82.fw-4 智慧移動 / 通訊 / 手機
+        td 一般會員
+        td 永久免費
+        td
+          button.btn.btn-gray.rad-sm(type='button') 變更
+      tr
+        th(scope='row')
+          .minor-ico.mr-1(class={'bg-white':item==='無線對講機'})
+            img.img-contain(src=picUrl width='24' height='24' alt=item title=item loading='lazy')
+          strong #{ item }
+          br
+          span.t-82.fw-4 智慧移動 / 通訊 / 手機
+        td 加購
+        td 將於
+          time(timestamp='2024-03-28T00:00') 2024 年 3 月 28 日
+          |續訂，費用為 NT$ 399
+        td
+          button.btn.btn-gray.rad-sm(type='button') 取消訂閱
+      tr
+        td.t-ctr(colspan='4')
+          button.btn.btn-black.rad-sm(type='button') 項目選擇
+
+block body
+  section
+    .container.py-5
+      h1.fz-32 會員中心
+    +tabs({selfContainer, id: 'tab-info-management', v5, cls: ['tab-products', 'tab-project'], contentCls: ['tab-products-content', 'tab-project-content'] })
+      +inContainer
+        +item({ id: 'info', title: '基本資料管理', active })
+          .container.py-5
+            .alert.alert-white(role='alert')
+              .flexbox.a-ctr.gx-3
+                .sp-auto.mr-auto
+                  p.ic-bf.ib-silvercn 目前方案：
+                    strong 進階會員
+                    span.badge.badge-pill-l-gray.badge-normal.ml-1 將於
+                      time(timestamp='2024-03-28T00:00') 2024 年 3 月 28 日
+                      |續訂，費用為 NT$ 7,900 / 月
+                .sp-auto
+                  button.btn.btn-gray.rad-sm(type='button') 取消訂閱
+                .sp-auto
+                  a.btn.btn-black.rad-sm(href='./upgradeMember.html' title='訂閱升級會員')
+                    span.ic-bf.ib-goldcn 訂閱升級會員
+            .flexbox.sps-1.J-ctr.gy-3
+              .sp.t-ctr
+                .avatar
+                  img.img-fluid.hidden.inline-m(src=require('./img/user-purple.jpg') width='96' height='96' alt='王大明' title='王大明' loading='lazy')
+                  button.btn.btn-black.avatar-btn(type='button' data-bs-toggle='modal' data-bs-target='#change-avatar')
+                    span.fi-cam
+                  span.avatar-badge.avatar-member.silvercn
+                  // normalcn 一般
+                  // coppercn 初階
+                  // silvercn 進階
+                  // goldcn 尊榮
+              .sp-l-5
+                form
+                  .flexbox.sps-1.gy-4
+                    .sp
+                      .alert.alert-info
+                        span.fi-info
+                        |maxbig@gmail.com
+                        span.fi-check-cir-fill.t-success
+                        a.fl-right.t-blue(href='./membership.html#modify' title='試用進階會員') 修改密碼
+                      p.fz-14.t-82 如要修改帳號Mail請至聯絡我們聯繫管理員
+                    .sp
+                      label.fw-4(for='username') 姓名*
+                      input#username.form-control(type='text' name='username' placeholder='請輸入姓名' value='Max' required)
+                    .sp
+                      label.fw-4(for='company') 公司名稱*
+                      input#company.form-control(type='text' name='company' placeholder='請輸入公司名稱' value='Cmind' required)
+                    .sp
+                      label.fw-4(for='jobtitle') 職稱*
+                      input#jobtitle.form-control(type='text' name='jobtitle' placeholder='請輸入職稱' value='PM' required)
+
+                    .sp
+                      label.fw-4(for='industrial') 產業*
+                      select#industrial.custom-select(name='industrial')
+                        option(value='0' selected) 科技業
+                        option(value='1') 魔術師
+                    .sp
+                      button.btn.btn-black.btn-block(type='submit') 儲存修改
+
+        +item({ id: 'subscript', title: '訂閱管理' })
+          .container.py-5.gap-5
+            .card
+              .card-body.p-0
+                .flexbox
+                  .sp-auto
+                    a.btn(role='button' href='#pde-tool')
+                      img.mr-2.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                      span.v-middle PDE產品數據工具
+                  .sp-auto
+                    a.btn(role='button' href='#ude-tool')
+                      img.mr-2.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE使用者數據工具' title='UDE使用者數據工具' loading='lazy')
+                      span.v-middle UDE使用者數據工具
+                  - for(let i = 1; i < 4; i++)
+                    - const toolname = String.fromCharCode('c'.charCodeAt() + i)
+                    .sp-auto
+                      a.btn(role='button' href='#'+toolname+'-tool')
+                        img.mr-2.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt=toolname + '工具' title=toolname + '工具' loading='lazy')
+                        span.v-middle #{ toolname + '工具' }
+            +tool('pde')
+            +tool('ude')
+
+        +item({ id: 'payment', title: '付款紀錄' })
+          .container.py-5.gap-5
+            .card
+              .card-body
+                .flexbox
+                  .sp-3
+                    label(for='product') 選擇產品
+                    .dropdown.dropdown.customize-dropdown.black-dropdown
+                      button.btn.rad-sm.btn-block(type='button' aria-current='page' aria-expanded='true' aria-haspopup='true' data-bs-toggle='dropdown')
+                        span.placeholder 產品選擇
+                        span.dropdown-arrow.fi-arr-down
+                      .dropdown-menu.w-100
+                        a.dropdown-item(href='#') 全部
+                        a.dropdown-item(href='#')
+                          img.mr-2.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                          span.v-middle PDE產品數據工具
+
+                        a.dropdown-item.focus(href='#')
+                          img.mr-2.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE使用者數據工具' title='UDE使用者數據工具' loading='lazy')
+                          span.v-middle UDE使用者數據工具
+                        a.dropdown-item.focus(href='#')
+                          img.mr-2.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt='C工具' title='C工具' loading='lazy')
+                          span.v-middle C工具
+                        a.dropdown-item.focus(href='#')
+                          img.mr-2.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt='D工具' title='D工具' loading='lazy')
+                          span.v-middle D工具
+                        a.dropdown-item.focus(href='#')
+                          img.mr-2.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt='E工具' title='E工具' loading='lazy')
+                          span.v-middle E工具
+
+                  .sp-3
+                    label(for='keyword') 關鍵字
+                    .input-group.bg-fa.rad-sm
+                      input#keyword.form-control(type='search' name='search' placeholder='訂單編號或名稱' aria-label='搜尋訂單編號或名稱')
+                      .input-group-append.pr-1
+                        label.mb-0.pt-1.pl-2(for='keyword')
+                          svg(fill='currentColor' stroke='#000' width='20' height='20')
+                            use(href='./img/sprite.svg#magnifer')
+                  .sp-6
+                    fieldset
+                      legend.fz-16.mb-0 訂閱期間
+                      .flexbox.gx-3
+                        .sp
+                          .input-group.bg-fa.rad-sm
+                            input#start-time.form-control(type='text' name='start' placeholder='開始時間' autocomplete='off')
+                            .input-group-append.pr-1
+                              label.mb-0.pt-1.pl-2(for='start-time')
+                                span.fi-calendar
+
+                        .sp-1
+                          span.i-block.w-100.bt-1(style='border-color:#000')
+                        .sp
+                          .input-group.bg-fa.rad-sm
+                            input#end-time.form-control(type='text' name='start' placeholder='結束時間' autocomplete='off')
+                            .input-group-append.pr-1
+                              label.mb-0.pt-1.pl-2(for='end-time')
+                                span.fi-calendar
+            .card
+              .card-body
+                table.table.nth-6-right.table-hover.bb-1
+                  thead.bg-fa
+                    tr
+                      th(scope='col') 訂單編號
+                      th(scope='col') 購買產品
+                      th(scope='col') 購買項目
+                      th(scope='col') 付款時間
+                      th(scope='col') 有效時間
+                      th(scope='col') 金額
+                  tbody
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td: span.ic-bf.ib-goldcn 尊榮方案
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td
+                        strong.minor-ico.mr-1 子
+                        |加購子類 x 2個
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td
+                        strong.minor-ico.mr-1 品
+                        |加購品類 x 1個
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td
+                        span.fi-ai-file
+                        |AI報告 x 1份
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td: span.ic-bf.ib-coppercn 初階會員
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/ude.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle UDE產品數據工具
+                      td: span.ic-bf.ib-goldcn 尊榮方案
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td
+                        time(timestamp='2023-03-01T13:39') 2023/03/01
+                        |~
+                        time(timestamp='2023-02-29T13:39') 2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/pde.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td
+                        span.fi-star
+                        |加購AI方案 x 2套
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+                    tr
+                      td: a(href='#' title='訂單編號22024030031' target='_blank' rel='noreferrer noopener nofollow') 22024030031
+                      td
+                        img.mr-2.circle(src=require('./img/nobase64/ude.png') width='24' height='24' alt='PDE產品數據工具' title='PDE產品數據工具' loading='lazy')
+                        span.v-middle PDE產品數據工具
+                      td
+                        span.fi-id-connect
+                        |加購產品使用者資料 x 2組
+                      td: time(timestamp='2023-03-01T13:39') 2023/03/01 13:39
+                      td 2023/03/01~2024/02/29
+                      td NT$ 9,999
+
+  +modal({ id: 'unsubscript-modal', label: 'modal-title', static, centered, v5, nobtn })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-alert.ic-2x
+      br
+      |確定要取消訂閱嗎?
+
+    +body
+      p.t-ctr (取消後將於訂閱期限到期後恢復成一般會員)
+        br
+        |*子/品類別將會依照所選順序保留
+
+    +footer()
+      button.btn.btn-red.btn-block(type='button') 取消訂閱
+
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 保留

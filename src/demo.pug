@@ -1,0 +1,126 @@
+extends ./template/layout.pug
+
+block local
+  - const langCodes = Object.keys(langs)
+  - const isMutiLang = langCodes.length > 1
+  -
+    const sizes = {
+      sm: { width: 375, height: 668, name: 'Mobile' },
+      md: { width: 768, height: 1025, name: 'Pad V' },
+      lg: { width: 1024, height: 769, name: 'Pad H' },
+      xl: { width: 1366, height: 769, name: 'Notbook' },
+      '2xl': { width: 1600, height: 1080, name: 'PC' }
+    }
+block body
+  if basename === 'demo'
+    .container-fluid
+      h1=projectName
+      h6 cmind.dg@gmail.com
+      h6 ZApVEAQfU_k2uzC
+      ul.list-inline
+        li.list-inline-item
+          a#download.btn.btn-link.btn-sm(href='#' title='Local' download='meta.txt') 下載Meta
+        li.list-inline-item
+          a.btn.btn-link.btn-sm(href='http://localhost/demo.html' title='Local') Local
+        li.list-inline-item
+          a.btn.btn-link.btn-sm(href=externalIP+'/'+filename title='External') External
+        li.list-inline-item
+          a.btn.btn-link.btn-sm(href=staticDomain+baseDir+'/'+filename title='靜態站' target='_blank') 靜態站
+        li.list-inline-item(style={ display: testingDomain ? 'inline-block' : 'none' })
+          a.btn.btn-link.btn-sm(href=testingDomain||'#' title='測試站' target='_blank') 測試站
+        li.list-inline-item(style={ display: officialDomain ? 'inline-block' : 'none' })
+          a.btn.btn-link.btn-sm(href=officialDomain||'#' title='正式站' target='_blank') 正式站
+
+      each lang, l in langCodes
+        .custom-control.custom-radio.custom-control-inline(class=`css-${lang}` style=!isMutiLang && 'display:none')
+          input.custom-control-input(id=lang type='radio' name='lang' value checked=!l)
+          label.custom-control-label(for=lang)=lang
+
+      br
+      // Checkbox
+      each checkbox in [{ id: 'edit', name: '編輯Meta' }, { id: 'all', name: '所有裝置' }, { id: 'customize', name: '自訂裝置' }]
+        .custom-control.custom-checkbox.custom-control-inline(class=`css-${checkbox.id}`)
+          input.custom-control-input(id=checkbox.id type='checkbox' name=checkbox.id value checked=checkbox.checked)
+          label.custom-control-label(for=checkbox.id)=checkbox.name
+
+      each lang, l in langCodes
+        .table-rwd(class=`css-${lang}-table` style='overflow-x:auto')
+          table.table.table-sm
+            caption(style=!isMutiLang && 'display:none') Lang:
+              span(style='text-transform: uppercase;')=lang
+            thead
+              tr.css-edit-checked-show
+                th(colspan='10')
+                  label(for='officialurl') 正式站網址
+                  input#officialurl.form-control.form-control-sm(type='text' name='officialdomain' value=officialDomain || 'https://' placeholder='正式站網址' title='正式站網址')
+              tr
+                th 編號
+                th
+                  span.css-edit-checked-hide Title
+                  span.css-edit-checked-show Meta
+                each th in ['Tab', 'Url']
+                  th=th
+                th: a.btn.btn-link.btn-sm(data-action='closeAll' href='#' title='Close all') All
+
+                each size, bp  in sizes
+                  th.css-all-device
+                    a.btn.btn-link.btn-sm(data-action='close' href='#' data-bp=bp title=`Close ${size.width}`)=size.width
+
+                // radio
+                th.css-customize-device
+                  each radio, i in [{ id: 'Vertical' }, { id: 'Horizontal' }]
+                    .custom-control.custom-radio.custom-control-inline
+                      input.custom-control-input(id=radio.id.toLocaleLowerCase() data-action='rotate' type='radio' name='orientation' value=radio.id.substring(0,1).toLocaleLowerCase() checked=!i)
+                      label.custom-control-label(for=radio.id.toLocaleLowerCase())=radio.id
+
+                  a.btn.btn-link.btn-sm(data-action='close' href='#' data-bp='customize' title='Close customize') x
+                  .input-group(style='width:260px')
+                    select#select-device.custom-select-sm.custom-select(data-action='selectSize' style='flex-grow:2')
+                      option(value='375*667' selected) iphone6/7/8
+                      option(value='414*736') iphone6/7/8+
+                      option(value='375*812') iphoneX
+                      option(value='1024*1366') iPadPro
+                      option(value='customize*customize') Customize
+                    input#customize-width.form-control.form-control-sm(type='text' name='width' placeholder='size' value='375' disabled)
+                    input#customize-height.form-control.form-control-sm(type='text' name='height' placeholder='size' value='667' disabled)
+                th 備註
+
+            // tbody
+            tbody
+              each page, basename in seo[lang]
+                if ['layout', 'demo'].includes(basename)
+                  - continue
+                tr
+                  th!=page.no || ''
+                  th
+                    span.css-edit-checked-hide
+                      !=page.title.replace(/(new|update)(.*)/, '<span style="color:red">$1</span>$2'  )
+                      //- | #{basename}.html
+                    input.css-edit-checked-show.form-control.form-control-sm(
+                      type='text'
+                      id=`${lang}-${basename}-title`
+                      name='pageTitle'
+                      value=page.title
+                      placeholder='標題 25～30 個中文字'
+                      title=`${page.title}標題`)
+                    textarea.css-edit-checked-show.form-control.form-control-sm(
+                      rows='3'
+                      id=`${lang}-${basename}-desc`
+                      name='pageDescription'
+                      placeholder='描述 65～80 個中文字'
+                      title=`${page.title}描述`)=page.desc
+                  -
+                    const linkAtt = {
+                      class: 'btn btn-link btn-sm',
+                      href: `./${isMutiLang ? lang + '/': ''}${basename}.html`,
+                      title:  `open ${page.title}`
+                    }
+                  td: a(target='_blank')&attributes(linkAtt) Auto
+                  td: a(data-action='copy')&attributes(linkAtt) Copy
+                  td: a(data-action='openAll')&attributes(linkAtt) All
+                  each size, bp  in sizes
+                    td.css-all-device
+                      a(data-action='open' data-width=size.width data-height=size.height data-bp=bp)&attributes(linkAtt)=size.name
+                  td.css-customize-device
+                    a(data-action='customize' data-bp='customize')&attributes(linkAtt) Customize size
+                  td: p!=page.comment ||''

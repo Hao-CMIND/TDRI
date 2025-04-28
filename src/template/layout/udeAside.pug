@@ -1,0 +1,104 @@
+- require('../../img/nobase64/bg-ude-proj.png')
+
+aside#pde-aside.pde-side-toolbar.vh-ude.side-column-w(style='position:fixed')
+  h2.fz-16.mb-3
+    img.mr-2(src=require('../../img/nobase64/ude.png') width='32' height='auto' alt='使用者研究數位工具' title='使用者研究數位工具' loading='lazy')
+    span.v-middle.minize-hide 使用者研究數位工具
+
+  a.t-82.mb-3(href='./pdeProjectList.html')
+    svg.img-fluid.mx-2(fill='currentColor' width='20' height='20')
+      use(href='./img/sprite.svg#arrow-left')
+    span.v-middle.minize-hide 返回「專案管理」
+  .card.card-ude.bg-contain.mb-3.bg-none.minize-hide(style!='background-image:url(\'img/bg-ude-proj.png\')')
+    .card-header
+      p
+        time.fz-12.t-82.fw-4(datetime='2024-4-22 24:02:02') 2024/4/22 24:02:02
+      .flexbox.gx-1
+        .sp-auto
+          .avatar(style='margin-bottom:0')
+            img.img-fluid.hidden.inline-m(src='https://fakeimg.pl/48x48/ff8833/' width='48' height='48' alt='ABC洗衣機' title='ABC洗衣機' loading='lazy')
+        .sp
+          h4.fz-14.card-title
+            |未命名專案1
+    .card-body.t-333.p-1.mb-3
+      .card-desc.mb-2.px-2
+        p.card-text.fz-14.limited-3-lines(style='height: 84px')
+          |本專案旨在設計和開發一款具有智慧型功能的洗衣機，以滿足現代生活中對於高效、節能、便捷的需求。
+      .t-ctr.mb-2
+        button.btn.btn-pink.js-add-ai(type='button' data-bs-toggle='modal' data-bs-target='#ai-report-modal')
+          span.fi-file-star
+          span.fi-lock
+          |AI專案分析
+      p.px-2 剩餘額度｜xxxx 次
+        a.t-l-purple.fl-right.t-underline(href='#') 加購
+  a.btn.btn-block.btn-list-gray.active.mb-3(href='#')
+    span.fi-folder
+    span.minize-hide
+      |AI 專案分析報告
+      strong.fl-right 2份
+  .aside-divider-f2
+  ul.list-unstyled
+    li.py-2
+      a.btn.btn-block.btn-list-purple.active(href='./udeContentList.html')
+        span.bl-purple
+          span.fi-folder-normal
+          span.minize-hide 專案內容總覽
+    li.py-2
+      ul.list-unstyled.tool-nest-list
+        li.tool-item.mb-2
+          a.btn.btn-block.btn-list-gray.active(href='./udeCharacterList.html')
+            span.bl-black
+              span.fi-id-card
+              span.minize-hide 人物誌
+                strong.fl-right 3組
+          span.badge 3
+        li.tool-item.mb-2
+          a.btn.btn-block.btn-list-gray(href='./udeUJMList.html')
+            span.bl-black
+              span.fi-signpost
+              span.minize-hide 使用者旅程地圖
+                strong.fl-right 2組
+            span.badge 2
+        li.tool-item
+          a.btn.btn-block.btn-list-gray(href='./udeStakeholderList.html')
+            span.bl-black
+              span.fi-target
+              span.minize-hide 利益關係人地圖
+                strong.fl-right 2組
+            span.badge 2
+    li.aside-divider-f2
+    li.py-2
+      a.btn.btn-block.t-left(href='./salesPlanning.html')
+        span.fi-money
+        span.minize-hide 價格方案
+        span.minize-hide.fi-fullscreen.fl-right(style='line-height:1')
+    li.py-2.mb-3
+      a.btn.btn-block.t-left(href='./resource.html')
+        span.fi-tpl-4
+        span.minize-hide 資源中心
+        span.minize-hide.fi-fullscreen.fl-right(style='line-height:1')
+
+  a.img-crown.goldcn.minize-show.mt-auto.mb-3(href='#' title='進階升級')
+    img.img-fluid(src=require('../../img/goldcn.png') width='100%' height='auto' alt='尊榮會員' title='尊榮會員' loading='lazy')
+  .card.card-purple.mt-auto.h-auto.minize-hide.mb-3
+    .card-body.t-ctr.bg-none.t-333
+      .img-crown.goldcn(style='width:30%')
+        img.img-fluid(src=require('../../img/goldcn.png') width='100%' height='auto' alt='尊榮會員' title='尊榮會員' loading='lazy')
+      h4.fz-14 訂閱升級會員
+      p.fz-14.lh-xxl-normal.mb-2 現在升級會員可以使用全工具有功能，再享15次AI報告
+      a.btn.btn-purple.stretched-link(href='./upgradeMember.html' title='進階升級')
+        span.ic-bf.ib-goldcn
+        |進階升級
+  .flexbox.gx-3.lh-xxl-normal.rel
+    .sp-auto.static
+      .avatar(style='margin-bottom:0')
+        a.stretched-link(href='./infoManagement.html' title='一般會員')
+          img.img-fluid.hidden.inline-m.circle(src='https://fakeimg.pl/48x48/88ff33/' width='48' height='48' alt='王大明' title='王大明' loading='lazy')
+    .sp.static.minize-hide.fz-14
+      span.fi-fullscreen.fl-right.mt-2(style='line-height:1')
+      p.fw-7 Max
+      p.mt-0
+        a.stretched-link(href='./infoManagement.html' title='一般會員') 一般會員
+button.btn.btn-toggle-aside(type='button')
+  img.img-fluid.img-default(src=require('../../img/nobase64/toogle-side.png') width='50' height='auto' oading='lazy')
+  img.img-fluid.img-toggle(src=require('../../img/nobase64/toogle-side-active.png') width='50' height='auto' oading='lazy')

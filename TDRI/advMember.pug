@@ -1,0 +1,91 @@
+extends ./template/layout.pug
+block local
+  // bodyAttr = { style: 'background-color:#f3f3f3;' }
+  // headerH1 = true
+  - bodyAttr = { style: 'background-color:#f3f3f3;' }
+block body
+  section.py-5
+    .container
+      .flexbox.sps-1.gy-3
+        .sp
+          h1.fz-32.t-ctr 進階會員
+        .sp
+          p.fz-18.t-ctr 請填寫完問卷後，會有專人與您聯繫
+        .sp
+          form.card.card-dark-blue.row
+            .card-header.p-1
+            .card-body
+              .flexbox.J-ctr.gy-3
+                .sp-12
+                  h2.fz-24.t-ctr 進階會員問卷
+                .sp-4
+                  .flexbox.gy-3.sps-1
+                    .sp
+                      h3 基本資料
+                    .sp
+                      label.fw-4(for='company') 公司名稱*
+                      input#company.form-control(type='text' name='company' placeholder='請輸入公司名稱' value='Cmind' required)
+                    .sp
+                      label.fw-4(for='jobtitle') 職稱*
+                      input#jobtitle.form-control(type='text' name='jobtitle' placeholder='請輸入職稱' value='PM' required)
+                    .sp
+                      label.fw-4(for='username') 姓名*
+                      input#username.form-control(type='text' name='username' placeholder='請輸入姓名' value='Max' required)
+                    .sp
+                      label.fw-4(for='title') 稱謂*
+                      select#title.custom-select(name='title' required)
+                        option(value='' disabled) 請選稱謂
+                        option(value='0' selected) 先生
+                        option(value='1') 女士
+                    .sp
+                      label.fw-4(for='tel') 電話*
+                      input#tel.form-control(type='tel' name='tel' placeholder='請輸入電話' value='02 34567890#22' required)
+                    .sp
+                      label.fw-4(for='email') 電子信箱*
+                      input#email.form-control(type='email' name='email' placeholder='請輸入電子信箱' value='maxbig@cmind.com' required)
+                .sp-4
+                  .flexbox.gy-3.sps-1
+                    .sp
+                      h3 使用者需求* (可複選)
+                    .sp
+                      button.btn.btn-outline-white.btn-block.btn-collapse-checkbox-list.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#necessary' aria-expanded='false' aria-controls='necessary') 企業內部使用、與業主/跨領域團隊溝通
+                      #necessary.collapse-checkbox-list.collapse
+                        each nec, i in ['企業內部使用', '產品設計/產品企劃', '市場分析/產業調查', '使用者研究/客群分析', '與業主/跨領域團隊溝通', '學術研究', '個人使用', '教學使用']
+                          .custom-control.custom-checkbox.collapse-checkbox
+                            input.custom-control-input(type='checkbox' id='necessary-'+i)
+                            label.custom-control-label(for='necessary-'+i) #{nec}
+
+                        .input-group.collapse-input-checkbox
+                          input.form-control.bb-1(type='text' name='other' aria-label='其他' placeholder='其他...')
+                          .input-group-append
+                            .custom-control.custom-checkbox.collapse-checkbox
+                              input#necessary-8.custom-control-input(type='checkbox')
+                              label.custom-control-label(for='necessary-8')
+                        .input-group.collapse-input-checkbox
+                          input.form-control.bb-1(type='text' name='other' aria-label='希望和顧問團隊聊聊' placeholder='希望和顧問團隊聊聊...')
+                          .input-group-append
+                            .custom-control.custom-checkbox.collapse-checkbox
+                              input#necessary-9.custom-control-input(type='checkbox')
+                              label.custom-control-label(for='necessary-9')
+                    .sp
+                      label.fw-4(for='usercount') 使用人數
+                      select#usercount.custom-select(name='usercount' required)
+                        option(value='0' selected) 2-5人
+                        option(value='1') 6-10人
+
+                    .sp
+                      h3 預算
+                    .sp
+                      label.fw-4(for='budget') 預算*
+                      select#budget.custom-select(name='budget' required)
+                        option(value='0' selected) 5千元以內/月
+                        option(value='1') 1萬元以內/月
+                .sp-4
+                  h3 其他
+                  label.fw-4(for='consultant') 希望和顧問團隊聊聊
+                  +inputGroup({type: 'text', name: 'consultant', label: '希望和顧問團隊聊聊', value: '希望和顧問團隊聊聊', groupCls:'a-ctr bg-f2', cls: 'form-control-plaintext', readonly })
+                    //- +append
+                      button.js-toggle-readoly.btn(type='button')
+                        span.fi-pen
+                .sp-l-3
+                  button.btn.btn-blue.btn-block(type='submit') 送出問券

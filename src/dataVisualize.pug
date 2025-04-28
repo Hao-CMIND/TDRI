@@ -1,0 +1,228 @@
+-
+  let { options: { basename, filename, lang, locale }, tags: { headTags } } = htmlWebpackPlugin
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width initial-scale=1.0')
+    title Data visualization
+    !=headTags.filter(({ tagName }) => tagName === 'link')
+  body.pt-0
+    #app.container-fluid
+
+      .flexbox.gy-3.mb-3.js-pdf
+        .sp-8.spl-2
+
+          h3.t-ctr {{ isLoading ?'' : (resData.some(d=>d.dataset.length) ? struct.title : 'No Data') }}
+        .sp-2.t-right
+          button.btn.icon-btn-blue-gray.p-0(type='button' @click='enLarge')
+            span.fi-fullscreen
+        .sp-12
+          p {{ struct.descr }}
+        .sp-4(v-if='struct.role.length && showDetail')
+          h4.i-block.t-82.mr-2 適用角色
+          ul.list-inline.i-block
+            template(v-for='role of struct.role')
+              li.list-inline-item
+                span.badge.badge-blue {{ role }}
+        .sp-4(v-if='struct.category.length && showDetail' data-html2canvas-ignore)
+          h4.i-block.t-82.mr-2 使用目的
+          ul.list-inline.i-block
+            template(v-for='usage of struct.category')
+              li.list-inline-item
+                span.badge.badge-l-gray {{ usage[0] }}
+        .sp-4(v-if='struct.tag.length && showDetail' data-html2canvas-ignore)
+          h4.i-block.t-82.mr-2 工作流程
+          ul.list-inline.i-block
+            template(v-for='flow of struct.tag')
+              li.list-inline-item
+                span.badge.badge-blue {{ flow }}
+        .sp-3(v-show='struct.brandFilter?.length')
+          .dropdown.customize-dropdown.pde-dropdown
+            button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false' ref='dropdownBrands' :disabled='!showDetail')
+              span.placeholder.limited-1-lines {{ selectedBrands?.length ? selectedBrands?.join(',') : '全部' }}
+              span.fi-arr-down
+            .dropdown-menu
+              .dropdown-item(@click.stop v-for='brand, i of struct.selectedBrands[struct.filterDefault]' :key='\'brand\'+i')
+                .custom-control.custom-checkbox.custom-checkbox-right
+                  input.custom-control-input.check-black(:id='\'brand\'+i' type='checkbox' :value='brand' v-model='selectedBrands' :disabled='selectedBrands.length===3 && !selectedBrands.includes(brand)')
+                  label.custom-control-label(:for='\'brand\'+i') {{ brand }}
+        .sp-3(v-show='struct.filterItems.length')
+          .dropdown.customize-dropdown.pde-dropdown
+            button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='false' :disabled='!showDetail')
+              span.placeholder {{ struct.filterItems[struct.filterDefault] }}
+              span.fi-arr-down
+            .dropdown-menu
+              template(v-for='item, i of struct.filterItems')
+                .dropdown-item(v-if='item')
+                  .custom-control.custom-checkbox.custom-checkbox-right
+                    input.custom-control-input.check-opacity(:id='\'factor\'+i' type='radio' :value='i' v-model='struct.filterDefault')
+                      //- @change='updateChart'
+                    label.custom-control-label(:for='\'factor\'+i') {{ item }}
+        .sp-auto.ml-auto(v-if='toggleChartTypes.length > 1 && struct.typeRadio && showDetail' :class='{invisible: isInvisible}')
+          .flexbox.gx-0.radio-toggle.radio-black.t-ctr.bg-fa.b-e0.p-1
+            .sp-6(v-for='type of toggleChartTypes')
+              input(type='radio' :id='\'toggle\'+type.valueType' v-model='selectedChartType' :value='type.valueType' @change='changeEvt(this, type.valueType)')
+              //-  @change='updateChart'
+              label.fz-14.w-100(:for='\'toggle\'+type.valueType') {{ type.label }}
+      .flexbox.gx-0.gy-3
+        template(v-if='struct.sn.match(/RE|T01/)')
+          .sp-11
+            ul.list-unstyled
+              template(v-for='set of resData')
+                template(v-for='url of set.dataset')
+                  li
+                    a(:href='url[1]??\'#\'' :title='url[2]' target='_blank' rel='noreferrer noopener nofollow')
+                      span.badge.badge-blue-lg.mr-3 {{  set.legendsEnum[url[0]] }}
+                      | {{ url[2] }}
+
+        template(v-else-if='struct.sn.match(/G02/)')
+          .table-rwd-xl
+            table.table.table-striped.t-ctr
+              thead
+                tr.bg-fa.t-nowrap
+                  th(style='background-color:#e0e0e0;') 類型
+                  template(v-for='types of tables.dataset')
+                    template(v-for='type,i of types')
+                      th.t-ctr {{ tables.rows[i] }}
+              tbody
+                tr(v-for='col,c of tables.cols')
+                  td {{col}}
+                  template(v-for='types,i of tables.rows')
+                    template(v-for='set of tables.dataset')
+                      td(v-if='col===\'url\'')
+                        a(:href='set[i][c] ??\'#\'' target='_blank' rel='noreferrer noopener nofollow') 連結
+                      td(v-else-if='col===\'images\'')
+                        img.img-fluid(:src='set[i][c] ??\'#\'' width='150' height='auto' alt='' title='' loading='lazy')
+                      td(v-else) {{ set[i][c] }}
+                      //-   td {{el}}
+
+        template(v-else-if='struct.sn===\'G01\'')
+          .table-rwd-xl
+            table.table.table-striped
+              thead
+                tr.bg-fa.t-nowrap
+              tbody
+                tr(v-for='item in Object.keys(tables.dataset[2][0])')
+                  th {{ item }}
+                  td(v-for='set of tables.dataset[2]' v-html='set[item]?.replace(/<img/, \'<img class=\"img-fluid\" alt=\"產品圖\" title=\"產品圖\" width=\"200\" height=\"200\"\')')
+
+        template(v-else-if='struct.sn===\'TA1\'')
+          .table-rwd-xl
+            table.table.table-striped
+              thead
+                tr.bg-fa.t-nowrap
+                  th(style='background-color:#e0e0e0;') 品牌
+                  th.t-ctr(v-for='set of tables.dataset') {{ struct.brandFilter[set[0]] }}
+              tbody
+                tr(v-for='row,i of tables.rows.slice(1)')
+                  th.b-white.t-nowrap(style='background-color:#e0e0e0;') {{ row }}
+                  template(v-for='set,j of tables.dataset')
+                    td.t-ctr(v-if='row===\'連結\'')
+                      a(:href='tables.dataset[j].slice(1)[i] ??\'#\'' target='_blank' rel='noreferrer noopener nofollow') {{tables.cols[set[0]]}}
+                    td.t-ctr(v-else-if='row===\'圖片\'')
+                      img.img-fluid(:src='tables.dataset[j].slice(1)[i] ??\'#\'' width='200' height='200' alt='產品圖' title='產品圖' loading='lazy')
+
+                    td.t-ctr(v-else) {{ tables.dataset[j].slice(1)[i] ?? '-' }}
+                    //- template(v-if='row===\'圖片\'&& table.dataset[j][i]')
+                    //-   img.img-fluid(:src='table.dataset[j][i]' width='100%' height='auto' alt='圖片' title='圖片' loading='lazy')
+                    //- template(v-else-if='row===\'連結\' && table.dataset[j][i]')
+                    //-   a(:href='table.dataset[j][i]' title='連結' target='_blank' rel='noreferrer noopener nofollow') 連結
+                    //- template(v-else)
+                    //-   |{{ table.dataset[j][i] }}
+          //- .table-rwd-xl
+            table.table.table-striped(v-for='table of tables')
+              thead
+                tr.bg-fa.t-nowrap
+                  th(style='background-color:#e0e0e0;') 品牌
+                  th.t-ctr(v-for='col of table.cols') {{ col }}
+              tbody
+                tr(v-for='row,i of table.rows')
+                  th.b-white.t-nowrap(style='background-color:#e0e0e0;') {{ row }}
+                  template(v-for='col,j of table.cols')
+                    td.t-ctr
+                      template(v-if='row===\'圖片\'&& table.dataset[j][i]')
+                        img.img-fluid(:src='table.dataset[j][i]' width='100%' height='auto' alt='圖片' title='圖片' loading='lazy')
+                      template(v-else-if='row===\'連結\' && table.dataset[j][i]')
+                        a(:href='table.dataset[j][i]' title='連結' target='_blank' rel='noreferrer noopener nofollow') 連結
+                      template(v-else)
+                        |{{ table.dataset[j][i] }}
+        template(v-else)
+          .sp(v-if='struct.filterItems.length')
+            template(v-for='item, i of struct.filterItems')
+              template(v-for='chartType, j of toggleChartTypes')
+                template(v-if='chartType.hasContainer')
+                  div(:id='\'chart-\'+chartType.valueType+\'-\' + i' v-show='togglingChart(i,chartType)')
+                  //- (v-show='charts.main')
+          .sp(v-else)
+            .t-ctr(v-if='isLoading')
+              .spinner-border.t-blue(role='status' style='width:5rem;height:5rem;border-width:.5rem')
+                span.sr-only Loading...
+            #chart-svg
+          .sp-auto(data-html2canvas-ignore)
+            .flexbox.col.gx-0.gy-3.a-end
+              .sp-auto(v-if='showDetail')
+                button.btn.icon-btn-blue-gray.p-0(type='button' @click='resetChartFilter')
+                  span.fi-reset
+
+              .sp-auto(v-if='showDetail')
+                button.btn.icon-btn-blue-gray.p-0(type='button' @click='addToProj')
+                  span.fi-marked
+              .sp-auto
+                button.btn.icon-btn-blue-gray.p-0(ref='downloadPopover' type='button' data-bs-placement='left' data-bs-toggle='popover' data-bs-content='<menu class=\'list-unstyled\'><li><button class=\'btn\' type=\'button\' data-action=\'png\'>PNG下載</button></li><li><button class=\'btn\' type=\'button\' data-action=\'pdf\'>PDF下載</button></li><li><button class=\'btn\' type=\'button\' data-action=\'svg\'>SVG下載</button></li><li><button class=\'btn\' type=\'button\' data-action=\'png\'><span class=\'ib-icon i-goldcn\'></span>PNG下載</button></li><li><button class=\'btn\' type=\'button\' data-action=\'pdf\'><span class=\'ib-icon i-goldcn\'></span>PDF下載</button></li><li><button class=\'btn\' type=\'button\' data-action=\'svg\'><span class=\'ib-icon i-goldcn\'></span>SVG下載</button></li></menu>' data-bs-html='true' @click.stop)
+                  //-  data-bs-content!=popover.download
+                  span.fi-download
+
+        template(v-if='!struct.sn.match(/RE|TA|G/)')
+          .sp-12.t-nowrap(v-if='!isLoading && tables.dataset')
+            table.table.table-striped.table-bordered.table-sm.mb-0.lh-xxl-tight
+              thead
+                tr.t-ctr
+                  th(width='1%') {{ tables.title }}
+                  th(v-for='legend,i in tables.cols' :key='\'legend\'+ i' :width='Math.round(99/tables.cols.length) + \'%\'') {{ legend }}
+              tbody
+                tr.t-ctr(v-for='label,i in tables.rows' :key='\'label\'+ i')
+                  th.t-left {{ label }}
+                  td(v-for='legend, j in tables.cols' :key='\'dataset-\'+ i +\'-\' + j') {{ /^[0]+(?:\.0+)?%?$/.test(String(tables.dataset[i][j])) ? '-' : tables.dataset[i][j] }}
+
+      .toast-msg(aria-live='polite' aria-atomic='true')
+        .toast.toast-download(data-bs-autohide='false' ref='downloadToast')
+          .toast-body
+            span.fi-download
+            |{{toast.msg}}
+            button.close(type='button' data-bs-dismiss='toast' aria-label='Close')
+              span(aria-hidden='true') ×
+
+    script(src='https://unpkg.com/vue@3/dist/vue.global.js')
+    script(src='https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js')
+    !=headTags.filter(({ tagName }) => tagName === 'script')
+    script(type='module')
+      include ./js/d3/d3.js
+      |
+      |
+      |
+      include ./js/chartV2/Container.js
+      |
+      |
+      |
+      include ./js/chartV2/configuration.js
+      |
+      |
+      |
+      include ./js/chartV2/charts.js
+      |
+      |
+      |
+      include ./js/chartV2/chartTypes.js
+      .
+        document.addEventListener('DOMContentLoaded', function () {
+        const { allowList } = $.bootstrap.Tooltip.Default
+        allowList.h3.push('style')
+        allowList.ul.push('style')
+        allowList.strong.push('style')
+        const sw =!{isProd ? '\'https://whatlife.no-ip.org/test/tdri\'' : '\'\'' } + '/js/sharedworker.js'
+        //console.log('sw設定 sharedworker.js 檔案路徑')
+      |
+      |
+      include ./js/dataVisualize.js
+      |})

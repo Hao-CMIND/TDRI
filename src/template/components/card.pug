@@ -1,0 +1,163 @@
+mixin alertDanger(text, link=true)
+  .alert.alert-danger
+    span.fi-info
+    |#{text}
+    if link
+      a.fl-right.t-blue(href='./advMember.html' title='試用進階會員') 試用進階會員
+
+mixin sortSelect()
+  select.custom-select.bg-none.b-1(name='sort')
+    option(value='0' selected) 依產品名稱排序
+    option(value='1') 依加入時間排序(新到舊)
+    option(value='2') 依加入時間排序(舊到新)
+
+mixin PDEcreateBtn({ id, btnContent='' }={})
+  button.btn.btn-rect-blue.btn-block(type='button' data-bs-toggle='modal' data-bs-target=id)
+    svg(stroke='currentColor' width='50' height='50')
+      circle(cx='25' cy='25' r='23' fill='#2f80ed' opacity='0')
+      use(transform='translate(10, 10)scale(0.6, 0.6)' xlink:href='./img/sprite.svg#plus')
+    br
+    |#{btnContent}
+mixin UDEcreateBtn({ id, btnContent= '' }={})
+  button.btn.btn-rect-purple.btn-block(type='button' data-bs-toggle='modal' data-bs-target=id)
+    svg(stroke='currentColor' width='50' height='50')
+      circle(cx='25' cy='25' r='23' fill='#603ae7' opacity='0')
+      use(transform='translate(10, 10)scale(0.6, 0.6)' xlink:href='./img/sprite.svg#plus')
+    br
+    |#{btnContent}
+
+mixin PDEcard()
+  .card.card-blue
+    .card-header
+      button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.modify)
+        span.fi-option-h
+
+      h4 ABC洗衣機
+        small.pl-2.t-82 1天前
+    .card-body.t-ctr
+      .avatar
+        img.img-fluid.hidden.inline-m(src=require('./img/user-blue.jpg') width='96' height='96' alt='ABC洗衣機' title='ABC洗衣機' loading='lazy')
+        button.btn.btn-blue.avatar-btn(type='button' data-bs-toggle='modal' data-bs-target='#change-avatar')
+          span.fi-cam
+        //- .avatar-badge
+      ul.list-unstyled.t-left
+        li
+          span.t-82.pr-1 已加入圖表
+          |1組
+          span.avatar-list
+            span.avatar-items
+              span.fi-linechart
+            span.avatar-items
+              span.fi-linechart
+            span.avatar-items
+              span.fi-linechart
+            span.avatar-count.avatar-items +6
+      a.stretched-link(href='./pdeManagement.html' title='ABC洗衣機')
+      //- a.stretched-link(href='#' title='利益關係人1')
+mixin UDEcard({ index='', icon, level, cardTitle='利益關係人' }={})
+  .card.card-purple
+    .card-header
+      button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.modify)
+        span.fi-option-h
+
+      //- - const attr = { class: icon && ['ic-bf', icon] }
+      h4
+        span.fi-ap1
+        |#{cardTitle}#{index}
+        small.pl-2.t-82 1天前
+    .card-body.t-ctr
+      .avatar
+        img.img-fluid.hidden.inline-m(src=require('./img/user-purple.jpg') width='96' height='96' alt='利益關係人1' title='利益關係人1' loading='lazy')
+        button.btn.btn-purple.avatar-btn(type='button' data-bs-toggle='modal' data-bs-target='#change-avatar')
+          span.fi-cam
+        if level
+          span.avatar-badge(class='avatar-'+level)
+      block
+mixin adModal()
+  +modal({ nobtn, id: 'create-adv', label: 'modal-title', static, centered, v5 })
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-goldcn.ic-2x
+      br
+      |試用進階工具
+      br
+      |Coming Soon
+
+    +body
+      p.ic-left.i-goldcn(style='background-position: left top;background-size: 2em;') 進階會員可不限次數，查看所有產品類別的分析結果，也可以下載圖表。如有需求，請留下您的資訊，我們將盡快與您聯繫，討論適合您的服務方案。
+
+    +footer()
+      button.btn.btn-blue.btn-block(type='button') 聯絡我們升級會員
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+mixin createInterestedParty({ id, contentCls, dialogCls, title='創建利益關係人' }={})
+  +modal({nobtn, id, label: 'modal-title', static, scrollable, centered, cls: 't-ctr', contentCls, dialogCls, v5 })
+    +header #{ title }
+
+    +body({cls: 'px-4'})
+      .flexbox.gy-3
+        .sp-m-auto.btn-avatar-hover
+          h6.fz-16.t-82 透過空白模板建立
+          button.btn.btn-avatar(type='button')
+            img.img-fluid(src=require('./img/user-purple.jpg') width='96' height='96' alt='產品經理' title='產品經理' loading='lazy')
+
+          p 空白模板
+        .sp
+          h6.fz-16.t-82.t-left 透過範本建立
+          .flexbox.gy-3.t-333
+            each title, i in ['產品經理', '業務主管', '經銷店長', '產品設計師', '產品業務', '行銷經理', '使用者']
+              .sp-6.sp-l-4.btn-avatar-hover
+                button.btn.btn-avatar(type='button')
+                  img.img-fluid(src=require('./img/avatar'+i+'.png') width='96' height='96' alt='產品經理' title='產品經理' loading='lazy')
+                p.lh-xxl-normal #{title}#{title}
+
+    +footer({ cls: 'gx-0' })
+      .sp.sp-m-4.sp-l-3
+        button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+      .sp.sp-m-4.sp-l-3
+        button.btn.btn-purple.btn-block(type='button') 建立
+
+mixin changeAvatar()
+  +modal({ nobtn, id: 'change-avatar', label: 'modal-title', size: 'lg', centered, scrollable, v5 })
+    +body
+      +tabs({ id: 'tab', v5, cls: ['tab-products'], contentCls: 'tab-avatar-content' })
+        +item({ id: 'upload', title: '上傳圖檔', active })
+          h4.croppie-title 上傳圖片
+
+          .croppie-input-area.active
+            input#fileupload.hidden.croppie-input(type='file' accept='image/*')
+            label.btn.btn-light-blue.croppie-upload-btn(for='fileupload') + 從電腦上傳圖片
+          .croppie-upload.hidden
+
+          .flexbox.J-ctr
+            .sp-3
+              button.btn.btn-block.btn-outline-white.js-croppie-cancel(type='rest' data-bs-dismiss='modal') 取消
+            .sp-3
+              button.btn.btn-block.btn-light-blue.js-croppie-save(type='button' data-bs-dismiss='modal') 儲存
+        +item({ id: 'default', title: '預設圖' })
+          .flexbox.gx-2.sps-5
+            .sp
+              button.btn.btn-avatar(type='button')
+                img(src=require('./img/user-purple.jpg') width='96' height='96' alt='default' title='default' loading='lazy')
+            .sp
+              button.btn.btn-avatar(type='button')
+                img(src=require('./img/user-blue.jpg') width='96' height='96' alt='default' title='default' loading='lazy')
+        +item({ id: 'categories', title: '類別圖' })
+          .flexbox.g-2.sps-5
+            each cate in productCategory
+              .sp
+                button.btn.btn-avatar(type='button')
+                  img.img-cover(src=require('./img/nobase64/'+cate.replace(/\//, '-')+'p.png') width='96' height='96' alt=cate title=cate loading='lazy')
+        +item({ id: 'product', title: '商品圖' })
+          .flexbox.g-2.sps-5
+            each cate in products
+              each items in cate
+                each item in items
+                  .sp
+                    button.btn.btn-avatar(type='button')
+                      img(src=require('./img/nobase64/'+item.replace(/\//g, '-').replace(' ', '')+'.png') width='96' height='96' alt=item title=item loading='lazy')
+
+        +item({ id: 'illustration', title: '插畫圖' })
+          .flexbox.g-2.sps-5
+            - for(let i = 0; i < 7; i++)
+              .sp
+                button.btn.btn-avatar(type='button')
+                  img(src=require('./img/avatar'+i+'.png') width='96' height='96' alt='插畫'+i title='插畫'+i loading='lazy')

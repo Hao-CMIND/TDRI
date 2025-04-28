@@ -1,0 +1,33 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+  // bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - bodyAttr = { style: 'background-color:#f3f3f3;' }
+block body
+  .container
+    h1 瀏覽紀錄
+    .card
+      .card-body
+        h2.card-title.t-ctr 瀏覽紀錄
+        .flexbox.sps-1.gy-3
+          .sp-l-3
+            select.custom-select.bg-none.b-1(name='sort')
+              option(value='0' selected) 依建立時間 (遠到近)
+              option(value='1') 依加入時間排序(新到舊)
+              option(value='2') 依加入時間排序(舊到新)
+          .sp
+            p.list-day
+              time(datetime=new Date(2023, 7, 27, 10, 20).toISOString()) 2023.07.27
+          .sp
+            ul.list-unstyled
+              - for(let i = 0; i < 10; i++)
+                li.flex.a-ctr
+                  time(datetime=new Date(2023, 7, 27, 10, 20).toISOString()) 2023.07.27 上午 10:20
+                  +breadcrumb({ cls: 'mb-0', prev: [
+                    { href: '#', page: '洗衣與乾衣' },
+                    { href: '#', page: '滾筒式洗衣機' },
+                    { href: '#', page: '產品定位探索' },
+                    { href: '#', page: '產品售價比較' },
+                  ]})
+        +pagination({ pages: 10, icon, current: 5, cls: 'J-ctr bt-1' })

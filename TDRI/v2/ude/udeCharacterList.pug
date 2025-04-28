@@ -1,0 +1,204 @@
+extends ./template/layout.pug
+block local
+  // bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - headerH1 = false
+
+  - const cardBg = require('./img/nobase64/ude-card_hover.jpg')
+  - const cardPersonaBg = require('./img/nobase64/card-persona.png')
+  - const cardPersonaBgChecked = require('./img/nobase64/card-persona_checked.png')
+  - require('./img/goldcn.png')
+  - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+block body
+  .container-fluid.py-3
+    .flexbox.gx-2
+      .sp-2
+        include ./template/layout/udeAside.pug
+
+      .sp-10
+        .container
+          +breadcrumb({ cls: 'breadcrumb-slash-divider  mb-0', prev: [
+            { href: '#', page: '專案管理' },
+            { href: '#', page: '專案A' },
+            { href: '#', page: '人物誌列表' },
+          ]})
+          h1.fz-32
+            span.rect.t-ctr.mr-1
+              span.fi-id-card(style='vertical-align:.2em')
+            |人物誌列表
+          p.mb-5
+            span.fi-question
+            |基於市場調查和使用者研究創建的虛構角色，代表目標受眾的特徵、需求和行為。通過詳細描述人口統計學、行為模式、動機和痛點等關鍵元素，您可以更深入地了解客戶，並針對他們的特定需求設計產品或服務。
+
+          .section-list.mb-4
+            .flexbox.sps-1.gx-2.gy-3.mb-3.a-ctr
+              .sp-auto
+                button.btn.btn-purple.js-add(type='button' data-bs-toggle='modal' data-bs-target='#add-ch-project')
+                  span.fi-plus
+                  |新增
+              .sp-auto.mr-auto
+                button.btn.btn-outline-white(type='button')
+                  span.fi-download
+                  |下載
+              .sp-2
+                select.custom-select.bg-white.b-1(name='sort')
+                  option(value='0' selected) 依產品名稱排序
+                  option(value='1') 依加入時間排序(新到舊)
+                  option(value='2') 依加入時間排序(舊到新)
+              .sp-2
+                +inputGroup({type: 'search', id: 'search', name: 'search', label: '搜尋', placeholder: '請搜尋關鍵字...', cls: 'bg-white', prependCls: 'bg-white' })
+
+            .flexbox.g-4
+              .sp-12.t-ctr.pt-5(style='opacity: 0.6')
+                img.img-fluid.my-5(src=require('./img/u-benifits-1.png') width='180' height='auto' alt='準備開始建立你的第一個人物誌' title='準備開始建立你的第一個人物誌' loading='lazy')
+                p.fz-24.fw-7 準備開始建立你的第一個人物誌
+              - for(let i = 0; i < 3; i++)
+                .sp-auto
+                  input.custom-control-input.outer-check-pink(type='checkbox' id='character-'+i name='character')
+                  .card.card-persona.bg-contain(style!='--card-bg:url(\'../img/card-persona.png\');--card-bg-checked:url(\'../img/card-persona_checked.png\');width:18.5rem')
+                    button.btn.abs.right-0.js-popovers-option(type='button' style='z-index:2;top: 2rem;' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!='<ul class=\'list-unstyled\'><li><button class=\'btn\' type=\'button\' data-action=\'avatar\'><span class=\'fi-baby\'></span>替換頭像</button></li><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></ul>')
+                      span.fi-option-h
+                    .card-header
+                      .custom-control.custom-checkbox.abs(style='top: 2rem;left:1rem;z-index:2')
+                        label.custom-control-label(for='character-'+i)
+                      .avatar.b-2-f2
+                        img(src=require('./img/user-blue.jpg') width='80' height='80' alt='潘佳麗' title='潘佳麗' loading='lazy')
+                      h4.t-333
+                        a.stretched-link(href='./createCharacter2.html' title='潘佳麗') 潘佳麗
+                        span.fw-4
+                          span.t-82 &nbsp;小姐
+                          br
+                          | 社群行銷經理
+                      p.card-text.limited-2-lines 喜愛廣交不同年齡層的社群行銷經理，會在每個月與區主管提案
+                    .card-body
+                      .flexbox
+                        .sp-6
+                          .rect
+                            span.t-purple 年齡
+                          p: strong 40歲
+                        .sp-6
+                          .rect
+                            span.fi-ap15
+                          p: strong 電暖器
+
+  +modal({ nobtn, id: 'add-ch-project', label: 'modal-add-ch', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 請選擇新增方式
+      h4 手動建立
+      .flexbox.sps-1.t-ctr.gy-3.mb-3
+        .sp-4
+          a.btn.btn-rect-purple(href='./createCharacter2.html?action=blank' title='空白模板')
+            img(src=require('./img/nobase64/ch-blank.png'))
+            br
+            |空白模板
+        .sp-4
+          a.btn.btn-rect-purple(href='./createCharacter2.html?action=sample' title='範本建立')
+            img(src=require('./img/nobase64/ch-sample.png'))
+            br
+            |範本建立
+        .sp-4
+          a.btn.btn-rect-purple(href='./createCharacter2.html?action=excel' title='上傳 Excel 建立')
+            img(src=require('./img/nobase64/ch-excel.png'))
+            br
+            |上傳 Excel 建立
+      h4 AI 輔助
+      .flexbox.sps-1.t-ctr.gy-3
+        .sp-4
+          a.btn.btn-rect-pink(href='./createCharacter2.html?action=aisample' title='AI生成範本')
+            img(src=require('./img/nobase64/ch-gen.png'))
+            br
+            |AI生成範本
+            br
+            small (剩餘額度 : 1 次)
+        .sp-4
+          a.btn.btn-rect-pink(href='./createCharacter2.html?action=aitext' title='逐字稿AI框選')
+            img(src=require('./img/nobase64/ch-selection.png'))
+            br
+            |逐字稿AI框選
+            br
+            small (剩餘額度 : 1 次)
+    +footer
+      button.btn.btn-white(type='button' data-bs-dismiss='modal') 取消
+  +modal({ nobtn, id: 'add-uj-project', label: 'modal-add-uj', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 請選擇新增方式
+      h4 手動建立
+      .flexbox.sps-1.t-ctr.gy-3.mb-3
+        .sp-4
+          a.btn.btn-rect-purple(href='./UJM.html?action=blank' title='空白模板')
+            img(src=require('./img/nobase64/uj-blank.png'))
+            br
+            |空白模板
+        .sp-4
+          a.btn.btn-rect-purple(href='./UJM.html?action=sample' title='範本建立')
+            img(src=require('./img/nobase64/uj-sample.png'))
+            br
+            |範本建立
+        .sp-4
+          a.btn.btn-rect-purple(href='./UJM.html?action=excel' title='上傳 Excel 建立')
+            img(src=require('./img/nobase64/uj-excel.png'))
+            br
+            |上傳 Excel 建立
+      h4 AI 輔助
+      .flexbox.sps-1.t-ctr.gy-3
+        .sp-4
+          a.btn.btn-rect-pink(href='./UJM.html?action=aisample' title='AI生成範本')
+            img(src=require('./img/nobase64/uj-gen.png'))
+            br
+            |AI生成範本
+            br
+            small (剩餘額度 : 1 次)
+        .sp-4
+          a.btn.btn-rect-pink(href='./UJM.html?action=aitext' title='逐字稿AI框選')
+            img(src=require('./img/nobase64/uj-selection.png'))
+            br
+            |逐字稿AI框選
+            br
+            small (剩餘額度 : 1 次)
+    +footer
+      button.btn.btn-white(type='button' data-bs-dismiss='modal') 取消
+  +modal({ nobtn, id: 'add-st-project', label: 'modal-add-st', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 請選擇新增方式
+      h4 手動建立
+      .flexbox.sps-1.t-ctr.gy-3.mb-3
+        .sp-4
+          a.btn.btn-rect-purple(href='./drawStakeholder.html?action=blank' title='空白模板')
+            img(src=require('./img/nobase64/st-blank.png'))
+            br
+            |空白模板
+        .sp-4
+          a.btn.btn-rect-purple(href='./drawStakeholder.html?action=sample' title='空白模板')
+            img(src=require('./img/nobase64/st-sample.png'))
+            br
+            |範本建立
+        .sp-4
+          a.btn.btn-rect-purple(href='./drawStakeholder.html?action=blank' title='空白模板')
+            img(src=require('./img/nobase64/st-excel.png'))
+            br
+            |上傳 Excel 建立
+      h4 AI 輔助
+      .flexbox.sps-1.t-ctr.gy-3
+        .sp-4
+          a.btn.btn-rect-pink(href='./drawStakeholder.html?action=aisample' title='空白模板')
+            img(src=require('./img/nobase64/st-gen.png'))
+            br
+            |AI生成範本
+            br
+            small (剩餘額度 : 1 次)
+        .sp-4
+          a.btn.btn-rect-pink(href='./drawStakeholder.html?action=excel' title='空白模板')
+            img(src=require('./img/nobase64/st-selection.png'))
+            br
+            |逐字稿AI框選
+            br
+            small (剩餘額度 : 1 次)
+    +footer
+      button.btn.btn-white(type='button' data-bs-dismiss='modal') 取消
+block script
+  script.
+    window.addEventListener('DOMContentLoaded', function (e) {
+      const {add} = Object.fromEntries(new URL(location).searchParams)
+      if(add) {
+        $('.js-add').trigger('click')
+      }
+    })

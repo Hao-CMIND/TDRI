@@ -1,0 +1,22 @@
+extends ./template/layout.pug
+block local
+  - bodyAttr = {class:'p-0 forbidden-page'}
+block mask
+  .mobile-overlap.t-white
+    svg(width='118' height='119')&attributes({viewBox:'0 0 118 119'})
+      defs
+        filter#shadow(x='0' y='0.5' width='118' height='118' color-interpolation-filters='sRGB')&attributes({filterUnits:'userSpaceOnUse'})
+          feFlood(flood-opacity='0' result='BackgroundImageFix')/
+          feColorMatrix(in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha')/
+          feOffset(dy='3')/
+          feGaussianBlur&attributes({stdDeviation: 8.5})/
+          feComposite(in2='hardAlpha' operator='out')/
+          feColorMatrix(type='matrix' values='0 0 0 0 1 0 0 0 0 0.376471 0 0 0 0 0.376471 0 0 0 0.6 0')/
+          feBlend(mode='normal' in2='BackgroundImageFix' result='drop_shadow')/
+          feBlend(mode='normal' in='SourceGraphic' in2='drop_shadow' result='shape')/
+      path(d='M17 98.5h84v-84H17v84Zm6-6v-60h72v60H23Zm72-72v6H23v-6h72Zm-27 24h4.8L59 58.3 45.2 44.5H50v-6H35v15h6v-4.8l13.8 13.8L41 76.3v-4.8h-6v15h15v-6h-4.8L59 66.7l13.8 13.8H68v6h15v-15h-6v4.8L63.2 62.5 77 48.7v4.8h6v-15H68v6Z' fill='#ff6161' filter='url(#shadow)')/
+    p.fz-24.mt-4 請使用電腦版，以獲得最佳體驗
+    p.mb-5 您的螢幕尺寸較小，請改用電腦或大螢幕設備
+      br
+      |以確保流暢操作與完整功能呈現。
+    a.t-white.t-underline(href='#' title='Design R&D Lab' rel='noreferrer noopener nofollow')  回到 Design R&D Lab

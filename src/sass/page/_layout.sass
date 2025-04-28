@@ -1,0 +1,148 @@
+
+html
+  scroll-padding-top: $header-height
+body
+  padding-top: $header-height
+.hide-layout
+  padding-top: 0
+  header,
+  footer
+    display: none
+.under-header
+  top: $header-height
+// .logo
+.bg-grid
+  background-color: #ececec
+  background-image: linear-gradient(#e3e3e3 1px, transparent 1px), linear-gradient(to right, #e3e3e3 1px, #ececec 1px)
+  background-size: 20px 20px
+.fxd-right
+  position: fixed
+  right: 1rem
+  bottom: 1rem
+  transform: translateX(100%)scale(0)
+  transition: transform .5s
+  .nav-link
+    display: flex
+    align-items: center
+    justify-content: center
+    // padding: .75rem 1rem 0
+    background-color: #e7e7e7
+    aspect-ratio: 1
+    &:hover
+      background-color: darken(#e7e7e7, 5%)
+header.fxd-strch
+  z-index: $zindex-popover + 2
+  // border-bottom: 0.5px solid rgba($white, 0.15)
+  background-color: #fbfbfb
+  transition: transform .3s
+  // backdrop-filter: blur(30px)
+.slide-down
+  .fxd-right
+    transform: translateX(0) scale(1)
+  header
+    transform: translateY(-130%)
+  .ude-header
+    transform: translate(-50%, -130%)
+  &.scroll-up
+    header
+      transform: translateY(0)
+    .ude-header
+      transform: translate(-50%, 0)
+
+//   .logo
++media-breakpoint-up(l)
+  .pipe-line
+    display: inline-block
+    width: 2px
+    height: 36px
+    padding-top: 8px
+    background-color: #c6c6c9
+    background-clip: content-box
+  .navbar-nav
+    .nav-link
+      &.active:after
+        content: ''
+        position: absolute
+        right: 0
+        bottom: 0
+        left: 0
+        height: 0.25rem
+        background-color: #000
+  .nav-item
+    position: relative
+    padding: 1rem
+    .dropdown
+      display: flex
+      align-items: center
+      height: $header-height
+      padding: 0 1rem
+      &:hover
+        background-color: #ededed
+      .nav-link
+        height: auto !important
+        padding: 1rem
+
+    .dropdown-menu
+      right: 0
+      left: auto
+      overflow: hidden
+    .dropdown-toggle-split
+      // padding-right: 1rem
+      // padding-left: 0.25rem
+      &:after
+        content: none
+  .dropdown
+    .show
+      .fi-arr-down
+        transform: rotate(0.5turn)
+  .navbar-expand-l .navbar-nav
+    .dropdown
+      padding-left: 1rem
+      .nav-link
+        // display: inline-block
+        padding: 0
+        outline: none
+      // .nav-icon-link
+      //   padding: 9px 1rem
+    .nav-link
+      +hover-focus
+        background-color: transparent
+  .nav-icon-link
+    // padding: 0.5rem !important
+    border: none !important
+    // border-radius: 50%
+    line-height: 1
+    // &.show
+      // background-color: rgba($white, .05)
+    &:focus-visible
+      border: none
+      outline: none
+  img
+    line-height: 0
+  header
+    .dropdown-menu
+      border-radius: 0 0 $border-radius-xl
+      background-color: $black
+    .dropdown-item
+      color: $white
+      &:active
+        background-color: #828282
+    .dropdown
+      .collapse
+        background-color: #333
+  header.ude-header
+
+    background-color: rgba(#fbfbfb, .3)
+    backdrop-filter: blur(60px)
+  .slide-down
+    .ude-header
+      top: 1rem
+      right: auto
+      left: 50%
+      width: 47rem
+      border-radius: 60rem
+      background-color: #fbfbfb
+      box-shadow: 0 2px 4px rgba($black, .15)
+      .navbar-nav
+        .nav-item:nth-child(n + 4):not(:last-child)
+          display: none

@@ -1,0 +1,28 @@
+mixin breadcrumb({ prev, cls, lastLink=false } = {})
+  - const { has } = getPropKeys(arguments)
+  nav(aria-label='breadcrumb')
+    ol.breadcrumb(class=cls)
+      each item, i in prev
+        - const isLast = lastLink && prev.length - 1 === i
+        -
+          const className = {
+            active: isLast
+          }
+        -
+          const attr = {
+            class: className,
+            'aria-current': isLast && 'page'
+          }
+        li.breadcrumb-item&attributes(attr)
+          if isLast
+            =item.page
+          else
+            a(:href!=item.href || '#')=item.page
+
+//-
+  const breadcrumb = { prev: [
+    { href: '/', page: 'index' },
+    { href: '#one', page: 'one' },
+    { page: 'two' }
+  ]}
+  +breadcrumb(breadcrumb)

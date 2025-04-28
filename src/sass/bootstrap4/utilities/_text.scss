@@ -1,0 +1,90 @@
+$utl-text-align: true;
+// stylelint-disable declaration-no-important
+
+//
+// Text
+//
+
+@if $enable-code{
+.t-monospace { font-family: $font-family-monospace; }
+}
+
+// Alignment
+
+.t-justify  { text-align: justify; }
+.t-wrap     { white-space: normal; }
+.t-nowrap   { white-space: nowrap; }
+.t-keep   { word-break: keep-all; } // 中日韓文不斷行
+.t-truncate { @include text-truncate(); }
+
+// Responsive alignment
+
+// @each $breakpoint in map-keys($grid-breakpoints) {
+//   @include media-breakpoint-up($breakpoint) {
+//     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+  @mixin text-align($infix) {
+    .t#{$infix}-left   { text-align: left; }
+    .t#{$infix}-right  { text-align: right; }
+    .t#{$infix}-ctr { text-align: center; }
+  }
+//   }
+// }
+@if $utl-text-transform {
+  // Transformation
+
+  .t-lower  { text-transform: lowercase; }
+  .t-upper  { text-transform: uppercase; }
+  .t-cap { text-transform: capitalize; }
+}
+.t-fl-cap {
+  float: left;
+  letter-spacing: .5em;
+  line-height: 1.5;
+}
+// Weight and italics
+
+// .fw-1   { font-weight: 100; }
+// .fw-2   { font-weight: 200; }
+.fw-3   { font-weight: $font-weight-light; }
+.fw-4  { font-weight: $font-weight-normal; }
+.fw-lighter { font-weight: $font-weight-lighter; }
+// .fw-5  { font-weight: 500; }
+.fw-bolder  { font-weight: $font-weight-bolder; }
+// .fw-6    { font-weight: 600; }
+.fw-7    { font-weight: $font-weight-bold; }
+// .fw-8    { font-weight: 800; }
+// .fw-9    { font-weight: 900; }
+.fs-italic { font-style: italic; }
+
+// Contextual colors
+
+// .t-white { color: $white; }
+@include text-emphasis-variant(".t-white", $white, true);
+@include text-emphasis-variant(".t-black", $black, true);
+@each $color, $value in $theme-colors {
+  @include text-emphasis-variant(".t-#{$color}", $value, true);
+}
+
+.t-body { color: $body-color; }
+.t-muted { color: $text-muted; }
+
+.t-black-50 { color: rgba($black, .5); }
+.t-white-50 { color: rgba($white, .5); }
+
+// Misc
+
+.t-hide {
+  @include text-hide($ignore-warning: true);
+}
+
+.t-undecor { text-decoration: none; }
+.t-underline { text-decoration: underline; }
+
+.t-break {
+  word-break: break-word; // Deprecated, but avoids issues with flex containers
+  word-wrap: break-word; // Used instead of `overflow-wrap` for IE & Edge Legacy
+}
+
+// Reset
+
+.t-reset { color: inherit; }

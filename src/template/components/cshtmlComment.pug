@@ -1,0 +1,5 @@
+mixin cshtmlComment(comment)
+  if isProd && ext === '.cshtml'
+    - const divider = Array(20).fill('■').join('')
+    .
+      #{'\n'}@*#{divider}#{comment}#{divider}*@

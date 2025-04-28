@@ -1,0 +1,45 @@
+/* filename:style */ // sass-lint:disable-line no-css-comments
+@import './helper/inlineSVG';
+@import './helper/font-icon';
+@import './helper/font-icon-size';
+@import './bootstrap-configuration';
+@import './helper/stacks';
+@import './helper/bg-positions';
+@import './helper/list-counter';
+@import './helper/component';
+@import './helper/line-clamp';
+@import './helper/animate';
+@import './helper/scrollbar';
+
+@import './page/layout';
+@import './page/index';
+@import './page/membership';
+@import './page/projectManagement';
+@import './page/createCharacter';
+@import './page/selectProduct';
+@import './page/dataAnalysis';
+@import './page/interestedPartyList';
+@import './page/reportlist';
+@import './page/udeManagement';
+@import './page/udeProjectList';
+@import './page/megamenu';
+@import './page/ujm';
+@import './page/stakeholder';
+@import './page/page';
+@import './shepherd';   // use guide
+@import './croppie';     // avatar
+@import './lightpick';  //datepicker
+@import './page/fz';
+@import './editor';
+.img-cover {
+  object-fit: cover;
+}
+.img-contain {
+  object-fit: contain;
+}
+.ph-purple::placeholder {
+  color: #603ae7;
+}
+%svg-check {
+  background-image: escape-svg($custom-checkbox-indicator-icon-checked);
+}

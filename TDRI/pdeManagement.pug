@@ -1,0 +1,94 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+block body
+  .container
+    .flexbox.sps-1.gy-3.mb-3
+      .sp
+        a.t-333(href='#')
+          svg.img-fluid(fill='currentColor' width='19' height='19')
+            use(xlink:href='./img/sprite.svg#arrow-left')
+          span.v-middle 專案列表
+      .sp
+        h1.fz-32 專案內容
+  section.py-5
+    .container
+      .flexbox.sps-1.mb-3
+        .sp-auto
+          select.custom-select.bg-none.b-1(name='sort')
+            option(value='0' selected) 依產品名稱排序
+            option(value='1') 依加入時間排序(新到舊)
+            option(value='2') 依加入時間排序(舊到新)
+        .sp-auto
+          +dropdownProducts
+      .layer
+        .flexbox.a-ctr.gx-0.mb-3
+          .sp-auto.mr-auto
+            +inputGroup({type: 'text', id: 'modify-title', name: 'project', label: '專案名稱', value: 'ABC滾筒洗衣機', groupCls:'a-ctr bb-1 i-flex w-auto', cls: 'form-control-plaintext fz-32', readonly })
+              +prepend
+                img(src=require('./img/nobase64/pjicon.png') width='48' height='48' alt='利益關係人' title='利益關係人' loading='lazy')
+
+              +append
+                button.js-toggle-readoly.btn.fz-32(type='button' data-toggle='#modify-title')
+                  span.fi-pen
+
+          .sp-5.sp-m-3.sp-l-auto
+            button.btn.btn-blue.btn-block(type='button')
+              span.ib-icon.i-goldcn
+              |全部匯出
+          .sp-5.sp-m-3.sp-l-auto
+            button.btn.btn-blue.btn-block(type='button')
+              span.fi-upload
+              |全部匯出
+        .layer
+          .flexbox.gx-0
+            .sp-auto.mr-auto
+              h3.fz-22.t-82 圖表清單
+            .sp-auto
+              button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#pde-list' aria-expanded='false' aria-controls='pde-list')
+                svg.img-fluid(fill='currentColor' width='16' height='16')
+                  use(xlink:href='./img/sprite.svg#tri-top')
+
+          #pde-list.show
+            .flexbox.sps-1.sps-m-2.sps-xl-3.g-3.g-xxl-6
+              .sp
+                +PDEcreateBtn({ id: '#create-pde', btnContent: '新增圖表' })
+              .sp
+                a.btn.btn-rect-blue.btn-block.flex.J-ctr.a-ctr.col(href='./productSelect.html')
+                  span.btn.btn-blue.ic-bf.ib-goldcn 新增圖表
+
+              .sp
+                .card.card-blue
+                  .card-header
+                    button.btn.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.modify)
+                      span.fi-option-h
+
+                    h4
+                      span.fi-chart
+                      |市場分析
+                      small.pl-2.t-82 1天前
+                  .card-body.t-ctr
+                    button.btn.btn-blue.p-0.fl-right(type='button')
+                      span.fi-marked
+                    h5.fz-14.t-33.t-left 滾筒式洗衣機
+                      span.t-82 / 線上銷售概況
+                    img.img-fluid(src=require('./img/chart-placeholder.jpg') width='100%' height='auto' alt='圖表' title='圖表' loading='lazy')
+                    a.stretched-link(href='./dataAnalysis.html')
+              .sp
+                .card.card-blue
+                  .card-header
+                    button.btn.fl-right.js-popovers-option(type='button' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content!=popover.modify)
+                      span.fi-option-h
+
+                    h4
+                      span.fi-chart
+                      |市場分析
+                      small.pl-2.t-82 1天前
+                  .card-body.t-ctr
+                    button.btn.btn-blue.fl-right.p-0(type='button')
+                      span.fi-unmarked
+                    h5.fz-14.t-33.t-left 滾筒式洗衣機
+                      span.t-82 / 線上銷售概況
+                    img.img-fluid(src=require('./img/chart-placeholder-2.jpg') width='100%' height='auto' alt='圖表' title='圖表' loading='lazy')
+                    a.stretched-link(href='./dataAnalysis.html')

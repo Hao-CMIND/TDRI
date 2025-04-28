@@ -1,0 +1,75 @@
+// stylelint-disable declaration-no-important
+
+// Common values
+@each $position in $positions {
+  $abbr: if(index((relative, absolute), $position), str-slice($position, 0, 3), $position);
+  .#{$abbr} { position: $position; }
+}
+
+// Shorthand
+
+.fxd-strch {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+}
+.z-top {
+  z-index: 1000;
+}
+
+// .fixed-top {
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   left: 0;
+//   z-index: $zindex-fixed;
+// }
+
+// .fixed-bottom {
+//   position: fixed;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   z-index: $zindex-fixed;
+// }
+
+.sticky-top {
+  @supports (position: sticky) {
+    position: sticky;
+    top: 0;
+    z-index: $zindex-sticky;
+  }
+}
+
+%top-0 {
+  top: 0;
+}
+
+%right-0 {
+  right: 0;
+}
+
+%bottom-0 {
+  bottom: 0;
+}
+
+%left-0 {
+  left: 0;
+}
+
+$inset: top, bottom, right, left;
+@each $prop in $inset {
+  $abbr: $prop;
+  $index: index($inset, $prop);
+
+  @each $size in (0) {
+    .#{$abbr}-#{$size} {
+      @extend %#{$prop}-#{$size};
+    }
+  }
+
+  // .inset-auto {
+  //   #{$prop}: auto;
+  // }
+}

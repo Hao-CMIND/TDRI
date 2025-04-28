@@ -1,0 +1,87 @@
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+$use-sps-class: true;
+@if $enable-grid-classes {
+  // Single container class with breakpoint max-widths
+  .container, [class*=container-] {
+    @include make-container();
+
+  }
+  .flexbox {
+    @include make-row();
+  }
+  @if $use-sps-class {
+    @include make-grid-columns();
+  }
+  // .container,
+  // 100% wide container at all breakpoints
+  // .container-fluid {
+  //   @include make-container();
+  // }
+
+  // Responsive containers that are 100% wide until a breakpoint
+  @each $breakpoint, $container-max-width in $grid-breakpoints {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    // .container#{$infix} {
+    //   @extend .container-fluid;
+    // }
+
+    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+      %responsive-container-#{$breakpoint} {
+        max-width: map-get($container-max-widths, $breakpoint);
+      }
+
+      // Extend each breakpoint which is smaller or equal to the current breakpoint
+      $extend-breakpoint: true;
+
+      @each $name, $width in $grid-breakpoints {
+        @if ($extend-breakpoint) {
+          .container#{breakpoint-infix($name, $grid-breakpoints)} {
+            @extend %responsive-container-#{$breakpoint};
+          }
+
+          // Once the current breakpoint is reached, stop extending
+          @if ($breakpoint == $name) {
+            $extend-breakpoint: false;
+          }
+        }
+      }
+      @if $use-sps-class {
+        @include create-columns($infix)
+      }
+    }
+  }
+}
+
+
+// Row
+//
+// Rows contain your columns.
+
+@if $enable-original-grid-classes {
+  .flexbox {
+    @include make-row();
+  }
+
+  // Remove the negative margin from default .row, then the horizontal padding
+  // from all immediate children columns (to prevent runaway style inheritance).
+  .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .sp,
+    > [class*="sp-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@if $enable-grid-classes {
+  // @include make-grid-columns();
+}

@@ -1,0 +1,8 @@
+$map-wight: (Thin: 100, Extralight: 200, Light: 300, Regular: 400, Medium: 500, Semibold: 600, Bold: 700, Extrabold: 800, Black: 900, Heavy: 900) // sass-lint:disable-line no-color-keywords
+@mixin fontface($family, $weights)
+  @each $weight, $ext in $weights
+    @font-face
+      font-family: $family
+      font-weight: map-get($map-wight, $weight)
+      src: url('../font/#{$family}-#{$weight}.#{$ext}') #{if($ext == woff, format('woff'), '')}
+// +fontface(NotoSansJP, ( Bold: otf, Light: otf, Regular: otf)) //, Medium: otf, Thin: otf , Black: otf,

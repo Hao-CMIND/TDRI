@@ -1,0 +1,181 @@
+.modify-title
+  background-color: transparent
+.croppie-input-area
+  display: none
+  align-items: center
+  justify-content: center
+  height: 500px
+  &.active
+    display: flex
+.croppie-title
+  color: #b1b1b1
+  text-align: left
+.croppie-upload-btn
+  width: 12.5rem
+%btn-rect
+  height: 100%
+  min-height: 15rem
+  border-radius: 0.5rem
+
+  &:hover
+    text-decoration: underline
+    circle
+      opacity: .2
+
+// .btn-rect-purple
+//   @extend %btn-rect
+//   background-color: #f2eeff
+//   color: #603ae7
+//   &:hover
+//     color: #603ae7
+// .btn-rect-blue
+//   @extend %btn-rect
+//   background-color: #e6f0ff
+//   color: #2f80ed
+//   &:hover
+//     color: #2f80ed
+
+.card-purple,
+.card-blue,
+.card-deep-purple,
+.card-dark-purple,
+.card-dark-blue,
+.card-gray
+  height: 100%
+  // min-height: 21.75rem
+  // padding: 0.25rem
+  .card-header
+    .btn
+      padding-top: 0
+      padding-bottom: 0
+  .card-body
+    position: relative
+    @include border-radius($card-border-radius)
+    border: 1px solid #e0e0e0
+    background-color: $white
+    &:has(.stretched-link):hover
+      background-color: darken($white, 2%)
+  &.h-auto
+    height: auto
+    min-height: auto
+
+.card-purple
+  background-color: #f2eeff
+.card-deep-purple
+  background-color: #31009a
+.card-dark-purple
+  background-color: #603ae7
+.card-blue
+  background-color: #e6f0ff
+.card-gray
+  background-color: #e0e0e0
+.card-dark-blue
+  background-color: #2f80ed
+
+.card-text-list
+  display: flex
+  flex-wrap: wrap
+  padding-left: 0
+  list-style: none
+  font-weight: $font-weight-bold
+  text-align: left
+
+  .title
+    padding-right: 0.5rem
+    color: #9d9d9d
+    font-weight: $font-weight-normal
+  >:first-child
+    width: 100%
+    text-align: center
+  >:not(:first-child)
+    width: 50%
+.avatar
+  display: inline-block
+  position: relative
+  margin-bottom: 1rem
+  text-align: center
+  >img
+    border-radius: 50%
+
+  &-btn,
+  &-badge
+    position: absolute
+    left: calc(100% - 2rem)
+    width: 2rem
+    height: 2rem
+    border-radius: 50%
+  &-btn
+    z-index: 2
+    top: calc(100% - 2rem)
+    padding: 0
+  &-badge
+    bottom: calc(100% - 2rem)
+  &-high
+    background-color: #eb5757
+    color: $white
+    &:before
+      content: '高'
+  &-medium
+    background-color: #fa994a
+    color: $white
+    &:before
+      content: '中'
+  &-low
+    background-color: #f2c94c
+    color: #333
+    &:before
+      content: '低'
+  &-list
+    padding-top: 0.25rem
+    float: right
+  &-items
+    width: 24px
+    height: 24px
+    float: left
+    border: 2px solid $white
+    border-radius: 50%
+    outline: 2px solid $white
+    &:not(:first-child)
+      margin-left: -.5rem
+    [class^='fi-']
+      font-size: 16px
+      vertical-align: 8px
+    &:has([class^='fi-'])
+      &:nth-child(1)
+        background-color: #9da4ff
+        color: $white
+      &:nth-child(2)
+        background-color: #5964ff
+        color: $white
+      &:nth-child(3)
+        background-color: #e0e0ff
+        color: $black
+  &-count
+    width: 24px
+    border: none
+    background-image: radial-gradient($white 8px, #828282 8px, #828282 10px, $white 10px)
+    font-size: 10px
+    line-height: 24px
+    text-align: center
+  &-sm
+    font-size: 0
+
+    .avatar-btn,
+    .avatar-badge
+      left: calc(100% - .5rem)
+      width: .5rem
+      height: .5rem
+    .avatar-btn
+      top: calc(100% - .5rem)
+    .avatar-badge
+      bottom: calc(100% - .5rem)
+.layer
+  padding-left: 1rem
+  border-left: 4px solid #e0e0e0
+.popover-body
+  .btn
+    padding-right: 0
+    padding-left: 0
+.tab-avatar-content
+  padding-top: 1rem
+  text-align: center

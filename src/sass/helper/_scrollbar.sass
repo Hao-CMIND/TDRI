@@ -1,0 +1,47 @@
+=scroll-bar($color)
+  scrollbar-color: lighten($black, 50%) $secondary
+  &::-webkit-scrollbar
+    &-thumb
+      background-color: transparent
+%scroll-bar
+  // scroll-behavior: smooth
+  scrollbar-width: thin
+  &::-webkit-scrollbar
+    width: 4px
+    height: 4px
+    &-thumb
+      border-radius: 2px
+      box-shadow: inset 0 0 2px 2px lighten($black, 50%)
+    &-track
+      background: transparent
+      &-piece
+        border-radius: 5px
+        background: transparent
+        // box-shadow: inset 0 0 5px 2px rgba($black, .5)
+    &-button
+      display: none
+      height: 0
+
+html,
+div
+  // +scroll-bar(transparent)
+  @extend %scroll-bar
+
+// .blue-scrollbar,
+// .purple-scrollbar
+//   @extend %scroll-bar
+// .pde,
+// .blue-scrollbar
+//   +scroll-bar(#2f80ed)
+// .ude,
+// .purple-scrollbar
+//   +scroll-bar(#603ae9)
+// .scroll-x
+//  @extend %scroll-bar
+//   width: 100%
+//   overflow-x: auto
+
+// .scroll-y
+//  @extend %scroll-bar
+//   max-height: 290px
+//   overflow-y: auto

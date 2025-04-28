@@ -1,0 +1,21 @@
+mixin picture(src, { alt, title = alt, classname = '', style = '', sizes = {}, width = '100%', height = 'auto' } = {})
+  - const req = require.context('./img/', false, /\.jpg|png$/)
+  - const [filename, ext] = src.split('.')
+
+  -
+    const bp = {
+      xl: '1360px',
+      l: '992px',
+      m: '768px',
+      s: '576px'
+    }
+  picture
+    each size, key in sizes
+      - let media = ''
+      if size
+        - media = size
+      if bp[key]
+        - media = bp[key]
+      source(media=`(min-width:${media})` srcset=req(`./${filename}_${key}.${ext}`) type='image/' + ext)
+
+    img(class=classname src=req(`./${filename}.${ext}`) loading='eager')&attributes({width, height, alt, title, style})

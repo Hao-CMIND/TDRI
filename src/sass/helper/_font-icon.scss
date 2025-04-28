@@ -1,0 +1,170 @@
+@font-face {
+  font-family: 'tdri';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../font/tdri.eot') format('embedded-opentype'), url('../font/tdri.woff2') format('woff2'), url('../font/tdri.ttf') format('truetype'), url('../font/tdri.woff') format('woff'), url('../font/tdri.svg#tdri') format('svg');
+  font-display: block;
+}
+// [class^='fi-ap'] {
+//   padding-right: 0.5em;
+// }
+[class^='fi-'],
+[class*=' fi-'] {
+  display: inline-block; //fw
+  width: 1.25em;
+  font-family: 'tdri' !important;
+  font-size: 1.5rem; //xl
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: .04167em; //xl
+  text-align: center; //fw
+  text-transform: none;
+  vertical-align: -.1em; //xl
+  speak: never;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.fi-close.bg-e6::before {
+  padding: 0.125rem;
+  border-radius: 50%;
+  background-color: #e6e6e6;
+  font-weight: 700;
+}
+// 取代 /\* '.+' \*/
+
+.fi-achieve:before { content: '\e800'; }
+.fi-ai-file:before { content: '\e801'; }
+.fi-ap1:before { content: '\e802'; }
+.fi-ap2:before { content: '\e803'; }
+.fi-ap3:before { content: '\e804'; }
+.fi-ap4:before { content: '\e805'; }
+.fi-ap5:before { content: '\e806'; }
+.fi-ap6:before { content: '\e807'; }
+.fi-ap7:before { content: '\e808'; }
+.fi-ap8:before { content: '\e809'; }
+.fi-ap9:before { content: '\e80a'; }
+.fi-ap10:before { content: '\e80b'; }
+.fi-ap11:before { content: '\e80c'; }
+.fi-ap12:before { content: '\e80d'; }
+.fi-ap13:before { content: '\e80e'; }
+.fi-ap14:before { content: '\e80f'; }
+.fi-ap15:before { content: '\e810'; }
+.fi-ap16:before { content: '\e811'; }
+.fi-ap17:before { content: '\e812'; }
+.fi-ap18:before,
+.fi-cam:before {
+  content: '\e813';
+}
+.fi-ap19:before { content: '\e814'; }
+.fi-ap20:before { content: '\e815'; }
+.fi-ap21:before { content: '\e816'; }
+.fi-ap22:before { content: '\e817'; }
+.fi-ap23:before { content: '\e818'; }
+.fi-ap24:before { content: '\e819'; }
+.fi-arr-down:before { content: '\e81a'; }
+.fi-arr-right:before { content: '\e81b'; }
+.fi-baby:before { content: '\e81c'; }
+.fi-bachelor:before { content: '\e81d'; }
+.fi-barchart:before { content: '\e81e'; }
+.fi-book:before { content: '\e81f'; }
+.fi-bookmark-rect:before { content: '\e820'; }
+.fi-calendar:before { content: '\e821'; }
+.fi-candlechart:before { content: '\e822'; }
+.fi-care:before { content: '\e823'; }
+.fi-cart:before { content: '\e824'; }
+.fi-chart:before { content: '\e825'; }
+.fi-check:before { content: '\e826'; }
+.fi-check-cir:before { content: '\e827'; }
+.fi-check-cir-fill:before { content: '\e828'; }
+.fi-check-rect:before { content: '\e829'; }
+.fi-check-rect-fill:before { content: '\e82a'; }
+.fi-clock:before { content: '\e82b'; }
+.fi-close:before { content: '\e82c'; }
+.fi-close-cir:before { content: '\e82d'; }
+.fi-copy:before { content: '\e82e'; }
+.fi-database-down:before { content: '\e82f'; }
+.fi-delete:before { content: '\e830'; }
+.fi-doc:before { content: '\e831'; }
+.fi-download:before { content: '\e832'; }
+.fi-earth:before { content: '\e833'; }
+.fi-earth-fill:before { content: '\e834'; }
+.fi-edit:before { content: '\e835'; }
+.fi-field:before { content: '\e836'; }
+.fi-file-star:before { content: '\e837'; }
+.fi-file-star-copy:before { content: '\e838'; }
+.fi-folder:before { content: '\e839'; }
+.fi-folder-normal:before { content: '\e83a'; }
+.fi-folder-question:before { content: '\e83b'; }
+.fi-grid:before { content: '\e83c'; }
+.fi-id-card:before { content: '\e83d'; }
+.fi-id-connect:before { content: '\e83e'; }
+.fi-info:before { content: '\e83f'; }
+.fi-invis:before { content: '\e840'; }
+.fi-job:before { content: '\e841'; }
+.fi-job-time:before { content: '\e842'; }
+.fi-letter:before { content: '\e843'; }
+.fi-lightbulb:before { content: '\e844'; }
+.fi-like:before { content: '\e845'; }
+.fi-linechart:before { content: '\e846'; }
+.fi-link:before { content: '\e847'; }
+.fi-list:before { content: '\e848'; }
+.fi-locate:before { content: '\e849'; }
+.fi-lock:before { content: '\e84a'; }
+.fi-logout:before { content: '\e84b'; }
+.fi-marked:before { content: '\e84c'; }
+.fi-mobile:before { content: '\e84d'; }
+.fi-money:before { content: '\e84e'; }
+.fi-move:before { content: '\e84f'; }
+.fi-next:before { content: '\e850'; }
+.fi-next-end:before { content: '\e851'; }
+.fi-option-h:before { content: '\e852'; }
+.fi-option-v:before { content: '\e853'; }
+.fi-pen:before { content: '\e854'; }
+.fi-pictures:before { content: '\e855'; }
+.fi-piechart:before { content: '\e856'; }
+.fi-plain:before { content: '\e857'; }
+.fi-planet:before { content: '\e858'; }
+.fi-plus:before { content: '\e859'; }
+.fi-prev:before { content: '\e85a'; }
+.fi-prev-end:before { content: '\e85b'; }
+.fi-question:before { content: '\e85c'; }
+.fi-question-solid:before { content: '\e85d'; }
+.fi-redo:before { content: '\e85e'; }
+.fi-reset:before { content: '\e85f'; }
+.fi-save:before { content: '\e860'; }
+.fi-search:before { content: '\e861'; }
+.fi-select:before { content: '\e862'; }
+.fi-shape:before { content: '\e863'; }
+.fi-share:before { content: '\e864'; }
+.fi-signpost:before { content: '\e865'; }
+.fi-spiderchart:before { content: '\e866'; }
+.fi-stackedchart:before { content: '\e867'; }
+.fi-star:before { content: '\e868'; }
+.fi-star-5:before { content: '\e869'; }
+.fi-star-fill:before { content: '\e86a'; }
+.fi-taiwan:before { content: '\e86b'; }
+.fi-taiwan-fill:before { content: '\e86c'; }
+.fi-target:before { content: '\e86d'; }
+.fi-text:before { content: '\e86e'; }
+.fi-top-end:before { content: '\e86f'; }
+.fi-tpl-0:before { content: '\e870'; }
+.fi-tpl-1:before { content: '\e871'; }
+.fi-tpl-2:before { content: '\e872'; }
+.fi-tpl-3:before { content: '\e873'; }
+.fi-tpl-4:before { content: '\e874'; }
+.fi-undo:before { content: '\e875'; }
+.fi-unmarked:before { content: '\e876'; }
+.fi-unvis-chart:before { content: '\e877'; }
+.fi-upload:before { content: '\e878'; }
+.fi-user:before { content: '\e879'; }
+.fi-user-circle:before { content: '\e87a'; }
+.fi-user-plus:before { content: '\e87b'; }
+.fi-user-search:before { content: '\e87c'; }
+.fi-vis:before { content: '\e87d'; }
+.fi-vis-chart:before { content: '\e87e'; }
+.fi-fullscreen:before { content: '\e87f'; }
+.fi-arr-right-up-broken:before { content: '\e880'; }
+.fi-id-edit:before { content: '\e881'; }
+.fi-id-reset:before { content: '\e882'; }
+.fi-dbl-start-fill:before { content: '\e883'; }

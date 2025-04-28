@@ -1,0 +1,141 @@
+$ico-url: (
+  alert: url('../../src/img/inlineSVG/alert.svg'),
+  coppercn: url('../../src/img/inlineSVG/coppercn.svg'),
+  error: url('../../src/img/inlineSVG/error.svg'),
+  goldcn: url('../../src/img/inlineSVG/goldcn.svg'),
+  hgroupedgraph: url('../../src/img/inlineSVG/hgroupedgraph.svg'),
+  info: url('../../src/img/inlineSVG/info.svg'),
+  normalcn: url('../../src/img/inlineSVG/normalcn.svg'),
+  report-pie: url('../../src/img/inlineSVG/report-pie.svg'),
+  silvercn: url('../../src/img/inlineSVG/silvercn.svg'),
+  top-1: url('../../src/img/inlineSVG/top-1.svg'),
+  top-2: url('../../src/img/inlineSVG/top-2.svg'),
+  top-3: url('../../src/img/inlineSVG/top-3.svg'),
+  warning: url('../../src/img/inlineSVG/warning.svg'),
+);
+// sass-lint:disable-line /* injectImportInlineSVG */
+
+// 獨立icon ib-icon
+// 文字 + icon 較大 ic-left
+// 文字 + icon ic-bf
+// icon 32 32
+// fill 32
+// stroke 30 stroke-width=2
+
+%icon {
+  background-repeat: no-repeat;
+  background-size: 1em;
+  vertical-align: top;
+}
+.ic-2x {
+  background-size: 2em;
+}
+
+@mixin icon($key, $pseudo: null, $ext: null) {
+  @if ($ext and $pseudo == both) {
+    .ia-#{$key}:after,
+    .ib-#{$key}:before,
+    .i-#{$key} {
+      background-image: map-get($ico-url, $key);
+      @content;
+    }
+  } @else if ($ext) {
+    .i#{str-slice($pseudo, 0, 1)}-#{$key}:#{$pseudo},
+    .i-#{$key} {
+      background-image: map-get($ico-url, $key);
+      @content;
+    }
+  } @else if($pseudo) {
+    .ib-#{$key}:#{$pseudo} {
+      background-image: map-get($ico-url, $key);
+      @content;
+    }
+  } @else {
+    .i-#{$key} {
+      background-image: map-get($ico-url, $key);
+      @content;
+    }
+  }
+}
+.ib-icon {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  // vertical-align: middle;
+
+  background-position: center;
+  @extend %icon
+}
+
+.ic-left {
+  padding-left: calc(2.5em);
+  background-position: left center;
+  background-size: 2em;
+  @extend %icon;
+}
+.ic-right {
+  padding-right: calc(2.5em);
+  background-position: right center;
+  background-size: 2em;
+  @extend %icon;
+}
+.ic-bf:before {
+  content: '';
+  padding-left: 1.75em;
+  background-position: left center;
+  @extend %icon;
+}
+.ic-af:after {
+  content: '';
+  padding-right: 1.75em;
+  background-position: right center;
+  @extend %icon;
+}
+@mixin pseudo-icon($ab, $url) {
+  &:#{$ab} {
+    @include icon($url);
+    @content;
+  }
+}
+
+@each $i-bf in () {
+  @include icon($i-bf, both, true);
+}
+// @each $i-af in ('close') {
+//   @include icon($i-af, after, true);
+// }
+@each $i-bf in ('goldcn', 'silvercn', 'coppercn', 'normalcn', 'top-1', 'top-2', 'top-3', 'alert', 'info', 'warning', 'error') {
+  @include icon($i-bf, before, true);
+}
+//ib-icon.i- ic-left.i- (大)
+@each $i in () {
+  @include icon($i);
+}
+// (小) .ic-bf.ib-
+// @each $af in ('close') {
+//   @include icon($af, after);
+// }
+@each $bf in () {
+  @include icon($bf, before);
+}
+
+.mark-crown {
+  margin-bottom: 1rem;
+  list-style: none;
+  padding-inline-start: 0;
+  > li {
+    padding-left: 2.5em;
+    background-repeat: no-repeat;
+    background-position: .25em .5em;
+    background-size: 1.5em;
+    &:nth-child(1) {
+      background-image: map-get($ico-url, 'silvercn');
+    }
+    &:nth-child(2) {
+      background-image: map-get($ico-url, 'goldcn');
+    }
+  }
+}
+.hgroupedgraph {
+  background-image: map-get($ico-url, 'hgroupedgraph');
+}

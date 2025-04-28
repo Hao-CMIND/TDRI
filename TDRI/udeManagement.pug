@@ -1,0 +1,144 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '使用者研究數位工具'
+  - pageType = 'ude'
+block body
+  .container
+    .flexbox.sps-1.gy-3.mb-3
+      .sp
+        a.t-333(href='./projectList.html')
+          svg.img-fluid(fill='currentColor' width='19' height='19')
+            use(xlink:href='./img/sprite.svg#arrow-left')
+          span.v-middle 專案列表
+      .sp
+        h1.fz-32 專案內容
+  section.py-5
+    .container
+      .flexbox.sps-1.mb-3
+        .sp-m-auto
+          select.custom-select.bg-none.b-1(name='sort')
+            option(value='0' selected) 依產品名稱排序
+            option(value='1') 依加入時間排序(新到舊)
+            option(value='2') 依加入時間排序(舊到新)
+        .sp-m-auto
+          +dropdownProducts
+      .layer.gap-4
+        .flexbox.a-ctr.gx-0.mb-3
+          .sp-m-6.sp-xl-4.mr-auto
+            +inputGroup({type: 'text', id: 'modify-title', name: 'project', label: '專案名稱', value: 'ABC滾筒洗衣機', groupCls:'a-ctr bb-1 mb-3 mb-m-0', cls: 'form-control-plaintext fz-32', readonly })
+              +prepend
+                img(src=require('./img/nobase64/pjicon.png') width='48' height='48' alt='ABC滾筒洗衣機' title='ABC滾筒洗衣機' loading='lazy')
+
+              +append
+                button.js-toggle-readoly.btn(type='button' data-toggle='#modify-title')
+                  svg.img-fluid(fill='currentColor' stroke='#828282' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#pen')
+          .sp-5.sp-m-3.sp-l-auto
+            button.btn.btn-purple.btn-block(type='button')
+              span.fi-upload
+              |全部匯出
+        .layer
+          .flexbox.gy-3.gx-0
+            .sp-auto.mr-auto
+              h3.fz-22.t-82
+                span.fi-id-card
+                |人物誌
+            .sp-auto
+              a.btn.btn-gray(href='./characterList.html')
+                span.fi-id-card
+                |人物誌清單
+                span.fi-arr-right
+            .sp-auto
+              button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#character-list' aria-expanded='false' aria-controls='character-list')
+                svg.img-fluid(fill='currentColor' width='16' height='16')
+                  use(xlink:href='./img/sprite.svg#tri-top')
+            .sp-12
+              +alertDanger('一般會員只能建立3組人物誌')
+          #character-list.show
+            .flexbox.sps-1.sps-m-2.sps-xl-3.g-3.g-xxl-6
+              .sp
+                button.btn.btn-rect-purple.btn-block(type='button' data-bs-toggle='modal' data-bs-target='#create-adv')
+                  span.btn.btn-purple.ic-bf.ib-goldcn 創建人物誌
+              .sp
+                a.btn.btn-rect-purple.btn-block.flex.J-ctr.a-ctr.col(href='./createCharacter.html')
+                  svg(stroke='currentColor' width='50' height='50')
+                    circle(cx='25' cy='25' r='23' fill='#603ae7' opacity='0')
+                    use(transform='translate(10, 10)scale(0.6, 0.6)' href='./img/sprite.svg#plus')
+                  | 創建人物誌
+
+              - for(let i = 0; i < 9; i++)
+                .sp
+                  +UDEcard()
+                    ul.card-text-list
+                      li 潘嘉莉
+                        span.title  小姐
+                      li
+                        span.title 年齡層
+                        |40歲
+                      li
+                        span.title 家庭
+                        |結婚
+                      li
+                        span.title 居住
+                        |新北 板橋
+                      li
+                        span.title 人物角色
+                        span.avatar-list
+                          img.avatar-items(src='https://fakeimg.pl/24x24/ff88ff/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                          img.avatar-items(src='https://fakeimg.pl/24x24/888888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                          img.avatar-items(src='https://fakeimg.pl/24x24/888888/' width='24' height='24' alt='頭像' title='頭像' loading='lazy')
+                    a.stretched-link(href='./createCharacter.html' title='人物誌')
+        .layer
+          .flexbox.gy-3.gx-0
+            .sp-auto.mr-auto
+              h3.fz-22.t-82
+                span.fi-target
+                |利益關係人
+            .sp-auto
+              a.btn.btn-gray(href='./interestedPartyList.html')
+                span.fi-target
+                |利益關係人清單
+                span.fi-arr-right
+            .sp-auto
+              button.btn(type='button' data-bs-toggle='collapse' data-bs-target='#interested-people-list' aria-expanded='false' aria-controls='interested-people-list')
+                svg.img-fluid(fill='currentColor' width='16' height='16')
+                  use(xlink:href='./img/sprite.svg#tri-top')
+            .sp-12
+              +alertDanger('一般會員只可建立6個利益關係人')
+
+          #interested-people-list.show
+            .flexbox.sps-1.sps-m-2.sps-xl-3.g-3.g-xxl-6
+              .sp
+                button.btn.btn-rect-purple.btn-block(type='button' data-bs-toggle='modal' data-bs-target='#create-adv')
+                  span.btn.btn-purple.ic-bf.ib-goldcn 利益關係人物誌
+              .sp
+                +UDEcreateBtn({ id: '#create-interested-parties', btnContent: '利益關係人物誌' })
+              - for(let i = 0; i < 9; i++)
+                .sp
+                  +UDEcard({ index: i, level: ['high', 'medium', 'low'][i%3] })
+                    ul.card-text-list
+                      li
+                        span.title 職業
+                        | 產品經理
+                      li
+                        span.title 教育程度
+                        |大學畢業
+                      li
+                        span.title 職稱
+                        |供貨商老闆
+                      li
+                        span.title 所屬產業
+                        |物流
+                      li
+                        span.title 產業規模
+                        |300萬
+                      li
+                        span.title 資歷
+                        |20年
+                      li
+                        span.title 使用工具
+                        |iPad
+                    a.stretched-link(href='./createInterestedParty.html' title='利益關係人1')
+  +createInterestedParty({ id: 'create-interested-parties' })
+  +adModal()
+  +changeAvatar()

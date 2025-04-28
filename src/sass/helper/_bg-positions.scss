@@ -1,0 +1,38 @@
+$bg-type: cover, contain;
+.bg-def {
+  background: {
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+.bg-norepeat {
+  background-repeat: no-repeat;
+}
+
+@each $type in $bg-type {
+  .bg-#{$type} {
+    @extend .bg-def;
+    background-size: $type;
+  }
+}
+
+$bg-inset-y: top, bottom;
+$bg-inset-x: right, left;
+@each $y in $bg-inset-y {
+  .bg- {
+    &#{$y} {
+      background-position-y: $y;
+    }
+    @each $x in $bg-inset-x {
+      &#{str-slice($y, 0, 1)}#{str-slice($x, 0, 1)} {
+        background-position: $y $x;
+      }
+    }
+  }
+}
+@each $x in $bg-inset-x {
+  .bg-#{$x} {
+    background-position-x: $x;
+  }
+}

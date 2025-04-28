@@ -1,0 +1,187 @@
+mixin nav({ id, tag: nav='ul', cls, align, role, prefix, tabSlots, controller } = {})
+  - const { has } = getPropKeys(arguments)
+  - const dataset = isV5.bind(null, has('v5'))
+
+  mixin tabpane
+    - tabSlots.push({ arg: arguments, block })
+
+  mixin navItem
+    if nav === 'ul'
+      li.nav-item(role='presentation'): block
+    else
+      block
+
+  mixin item({ wrapTextAttr, id, tag: item='a', href='#', title, htmlTitle } = {})
+    - id = prefix ? prefix + id : id
+    if role
+      - item = 'button'
+    - const isButton = item === 'button'
+    - const { has, is } = getPropKeys(arguments)
+    -
+      const className = {
+        active: has('active'),
+        disabled: has('disabled'),
+      }
+
+    -
+      const attr = {
+        id: id && id + '-tab',
+        [dataset('toggle')]: role && 'tab',
+        [dataset('target')]: id && '#' + id,
+        type: isButton && 'button',
+        role: role && 'tab',
+        href: !isButton && href,
+        class: className,
+        'aria-current': !role && has('active') && 'page',
+        'aria-controls': id,
+        'aria-selected': role && is('active', true)
+      }
+    +navItem
+      if has('wrapText')
+        #{item}.nav-link&attributes(attr): span&attributes(wrapTextAttr)!=(role ? title : '')
+          unless role
+            block
+      else
+        #{item}.nav-link&attributes(attr)!=(role ? htmlTitle || title : '')
+          unless role
+            block
+
+    if role
+      +tabpane(arguments[0])
+        block
+
+  -
+    const className = [cls, {
+      'nav-tabs': has('tabs'),
+      'nav-pills': has('pills'),
+      'nav-fill': has('fill'),
+      'nav-justified': has('justified'),
+      col: has('vertical'),
+      ['J-' + align]: align
+    }]
+
+  -
+    const attr = {
+      id,
+      class: className,
+      role,
+      'aria-orientation': role && has('vertical') && 'vertical'
+    }
+
+  #{nav}.nav&attributes(attr)
+    block
+  if has('controller')
+    button.btn.btn-white.mx-1(type='button' @click!=`scrollTab(\'${'#'+id}\', -1)`)
+      span.fi-prev
+    button.btn.btn-white.mx-1(type='button' @click!=`scrollTab(\'${'#'+id}\', 1)`)
+      span.fi-next
+
+mixin tabs({ containerId, id, contentCls, controller } = {})
+  - const tabSlots = []
+  - const slots = {}
+  - const { has } = getPropKeys(arguments)
+  - const args = arguments[0]
+  - const prefix = has('pills') ? 'pills-' : 'nav-'
+  - let navflexClass
+  - let navColClass
+  - let outColClass
+  mixin inContainer
+    - slots.inside = block
+  mixin inColumn({ flexClass, colCls} = {})
+    if flexClass
+      - navflexClass = flexClass
+    if colCls
+      - navColClass = colCls
+    - slots.inside = block
+  mixin outContainer
+    - slots.outside = block
+  mixin outColumn({ colCls } = {})
+    if colCls
+      - outColClass = colCls
+    - slots.outside = block
+  -
+    const defaultProp = {
+      tabSlots,
+      id: prefix + id,
+      prefix,
+      [has('pills') ? 'pills' : 'tabs']: undefined,
+      role: 'tablist'
+    }
+  - Object.assign(args, defaultProp)
+
+  if has('wrapNav')
+    nav(class={ 'scroll-container': has('controller') }): +nav(args): block
+  if has('selfContainer')
+    block
+    .container(id=containerId)
+      nav(class={ 'scroll-container': has('controller') })
+        +nav(args): - slots.inside()
+        if slots.outside
+          - slots.outside()
+
+  else if has('selfColumn')
+    block
+    .flexbox(id=containerId class=navflexClass)
+      div(class=navColClass)
+        nav(class={ 'scroll-container': has('controller') })
+          +nav(args): - slots.inside()
+      if slots.outside
+        div(class=outColClass)
+          - slots.outside()
+  else
+    +nav(args): block
+
+  .tab-content(id=id+'-tabContent' class=contentCls)
+    each slot, i in tabSlots
+      - const { has } = getPropKeys(slot.arg)
+      - const item = slot.arg[0]
+      - const prefixId = prefix+item.id
+      .tab-pane.fade(id=prefixId class={ 'show active': has('active') } aria-labelledby=prefixId+'-tab' tabindex='0')
+        - slot.block()
+
+mixin vPills({ id, navColCls='sp-auto', contentColCls='sp' } = {})
+  - const tabSlots = []
+  - const { has } = getPropKeys(arguments)
+  - const args = arguments[0]
+  - const prefix = 'v-pills-'
+  -
+    const defaultProp = {
+      tabSlots,
+      id: prefix + id,
+      prefix,
+      pills,
+      vertical,
+      role: 'tablist'
+    }
+  - Object.assign(args, defaultProp)
+  .flexbox
+    div(class=navColCls)
+      if has('wrapNav')
+        nav: +nav(args): block
+      else
+        +nav(args): block
+    div(class=contentColCls)
+      .tab-content(id=id+'-tabContent')
+        each slot, i in tabSlots
+          - const { has } = getPropKeys(slot.arg)
+          - const item = slot.arg[0]
+          - const prefixId = prefix+item.id
+          .tab-pane.fade(id=prefixId class={ 'show active': has('active') } aria-labelledby=prefixId+'-tab' tabindex='0')
+            - slot.block()
+//-
+  +nav({ vertical })
+  +nav({ pills, fill })
+  +nav({ pills, justified })
+  +nav({ tag: 'nav' })
+  +nav({ tabs })
+    +item({ active }) Active
+    +item({ disabled }) Disabled
+//-
+  +tabs({ id: 'tab', v5 })
+    +item({ id: 'home', title: 'Home', active })
+      p Some placeholder content in a paragraph relating to "Home". And some more content, used here just to pad out and fill this tab panel. In production, you would obviously have more real content here. And not just text. It could be anything, really. Text, images, forms.
+
+//-
+  +vPills({ id: 'tab', v5 })
+    +item({ id: 'home2', title: 'Home', active })
+      p Some placeholder content in a paragraph relating to "Home". And some more content, used here just to pad out and fill this tab panel. In production, you would obviously have more real content here. And not just text. It could be anything, really. Text, images, forms.

@@ -1,0 +1,93 @@
+/* filename:demo */ // sass-lint:disable-line no-css-comments
+@import './bootstrap-configuration';
+@import './bootstrap4/reboot';
+@import './bootstrap4/type';
+@import './bootstrap4/grid';
+@import './bootstrap4/buttons';
+@import './bootstrap4/tables';
+@import './bootstrap4/forms';
+@import './bootstrap4/transitions';
+@import './bootstrap4/input-group';
+@import './bootstrap4/custom-forms';
+.btn-link {
+  padding-top: 0;
+  padding-bottom: 0;
+  color: #666;
+  line-height: 1.75;
+}
+.counter {
+  counter-reset: num;
+  &-item {
+    counter-increment: num;
+    &:nth-child(-n + 9) {
+      th:before {
+        content: '0' counter(num) ' ';
+      }
+    }
+    th:before {
+      content: counter(num) ' ';
+    }
+  }
+}
+textarea {
+  margin-top: -1px;
+  resize: none;
+}
+tr > th:first-child {
+  // min-width: 350px;
+  // max-width: 350px;
+  overflow: hidden;
+}
+.css-all-device,
+.css-customize-device,
+.css-edit-checked-show,
+.table-rwd {
+  display: none;
+}
+.table {
+  width: auto;
+  white-space: nowrap;
+  thead th {
+    text-align: center;
+    vertical-align: top;
+  }
+}
+.css-all:has(> :checked) ~ .table-rwd .css-all-device,
+.css-customize:has(> :checked) ~ .table-rwd .css-customize-device {
+  display: table-cell;
+}
+%table-show {
+  display: block;
+}
+@each $lang in (zh, en) {
+  .css-#{$lang}:has(> :checked) ~ .css-#{$lang}-table {
+    @extend %table-show;
+  }
+}
+
+.css-edit:has(> :checked) ~ .table-rwd {
+  .css-edit-checked-hide {
+    display: none;
+  }
+  :is(th, td).css-edit-checked-show {
+    display: table-cell;
+  }
+  span.css-edit-checked-show {
+    display: inline;
+  }
+  input.css-edit-checked-show {
+    display: inline-block;
+    width: calc(100% - 19px);
+  }
+  tr.css-edit-checked-show {
+    display: table-row;
+  }
+  textarea.css-edit-checked-show {
+    display: block;
+    width: 245px;
+  }
+}
+
+caption {
+  text-align: right;
+}

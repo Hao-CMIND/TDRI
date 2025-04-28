@@ -1,0 +1,285 @@
+extends ./template/layout.pug
+include ./template/components/check.pug
+include ./template/components/carousel.pug
+include ./template/components/stepList.pug
+block local
+  -
+    bodyAttr = {
+      class: ['bg-grid']
+    }
+  - headerH1 = true
+block body
+  section.min-vh-full(style='padding:5vh 0')
+    .container-fluid
+      .flexbox.J-between.mx-0
+        .hidden.block-l.sp-l-4
+        .sp-s-10.sp-m-6.sp-l-4.sp-xxl-3
+          #register.bg-frosted.maximize.hidden
+            .flexbox.gy-3.sps-1.t-ctr.mb-4
+              .sp.t-left
+                a.t-f2(href='./index.html')
+                  svg.img-fluid(fill='currentColor' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#circle-arrow-left')
+              .sp
+                h2.fz-32.lh-xxl-none 會員註冊
+                p.fz-18 登入驗證即可開始使用
+              .sp
+                +stepList()
+            +carousel({ id: 'register-carousel', noTouching, v5 })
+              +item
+                form.js-membership.flexbox.gy-3.sps-1(action='/index.html' method='get' data-step='0' novalidate)
+                  .sp
+                    label(for='registeremail') 電子信箱
+                    +inputGroup({ type: 'email', id: 'registeremail',name:'email', placeholder: '請輸入電子信箱', label: '電子信箱', required, prependCls:'prepend-icon' })
+                      +prepend
+                        span.fi-letter
+                  .sp
+                    .input-group
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-info
+                      p.form-control.bg-none 此信箱將是您未來登入的帳號。
+                    .input-group
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-info.t-danger
+                      p.form-control.bg-none 此mail無效。
+                      .input-group-append
+                        a.t-blue(href='#forgot') 忘記密碼?
+
+                    .input-group
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-check-cir-fill
+                      p.form-control.bg-none 此mail可使用，但尚未未驗證。
+                    .input-group
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-check-cir-fill.t-success
+                      p.form-control.bg-none 此mail可使用註冊。
+                  .sp
+                    label(for='register-pw' placeholder='請輸入電子信箱') 密碼
+                    +inputGroup({type: 'password', id: 'register-pw', name:'password', placeholder: '請輸入密碼', label: '密碼', required, prependCls:'prepend-icon', appendCls:'append-icon' })
+                      +prepend
+                        span.fi-lock
+                      +append
+                        button.js-toggle-password.btn(type='button' data-toggle='#register-pw')
+                          span.fi-invis
+                  .sp
+                    .input-group
+                      <!-- 更新class， js更新 .js-pw-check toggleClass('t-success')-->
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-check-cir-fill.js-pw-check
+
+                      p.form-control.bg-none 英文小寫字母 (a-z) 和大寫字母 (A-Z)
+                    .input-group
+                      <!-- 更新class -->
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-check-cir-fill.js-pw-check
+
+                      p.form-control.bg-none 數字 (0-9) 或符號
+                    .input-group
+                      <!-- 更新class -->
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-check-cir-fill.js-pw-check
+
+                      p.form-control.bg-none 至少 12 位數以上
+                  .sp
+                    label(for='check-register-pw' placeholder='請輸入電子信箱') 再次輸入密碼
+                    +inputGroup({type: 'password', id: 'check-register-pw', name: 'checkpw', placeholder: '請再次輸入密碼', label: '再次輸入密碼', required, prependCls:'prepend-icon', appendCls:'append-icon' })
+                      +prepend
+                        span.fi-lock
+                      +append
+                        button.js-toggle-password.btn(type='button' data-toggle='#check-register-pw')
+                          span.fi-invis
+
+                  .sp.js-same-ps.hidden
+                    .input-group
+                      .input-group-prepend.prepend-icon.bg-none
+                        span.fi-check-cir-fill
+                      p.form-control.bg-none 密碼需相符
+                  .sp
+                    button.btn.btn-black.btn-block(type='submit' data-step='0') 下一步
+              +item
+                .flexbox.gy-3.sps-1
+                  .sp.t-ctr
+                    img.img-fluid(src=require('./img/verify.png') width='167' height='183' alt='信箱驗證' title='信箱驗證' loading='lazy')
+                  .sp
+                    p 請稍等驗證信件發送的作業時間，如確認未收到信件，請點選【重新發送】即可申請再次發送
+                form.js-membership.flexbox.gy-3.sps-1(action='/index.html' method='get' data-step='1' novalidate)
+                  .sp
+                    button.btn.btn-black.btn-block.js-resend(type='submit' disabled) 重新發送(
+                      span.js-counter 0:00
+                      |)
+              +item
+                form.js-membership.flexbox.gy-3.sps-1(action='./finishedRegistering.html' method='get' data-step='2' novalidate)
+                  .sp
+                    label(for='username') 姓名*
+                    input#username.form-control(type='text' name='username' placeholder='請輸入姓名' required)
+
+                  .sp
+                    label(for='company') 公司/組織*
+                    input#company.form-control(type='text' name='company' placeholder='請輸入公司/組織' required)
+                  .sp
+                    label(for='jobtitle') 職稱*
+                    input#jobtitle.form-control(type='text' name='jobtitle' placeholder='請輸入職稱' required)
+                  .sp
+                    label(for='industry') 產業*
+                    select#industry.custom-select(name='industry' required)
+                      option(value='' selected disabled) 請選擇產業別
+                      option(value='0') 製造業
+                      option(value='1') 資訊業
+                      option(value='2') 金融業
+                  .sp
+                    p.t-82 點擊「註冊」表示您已閱讀且同意本網站的
+                      a.t-reset(href='#') 服務條款與隱私權政策
+                      |。
+                  .sp
+                    button.btn.btn-black.btn-block(type='submit') 完成註冊
+
+          #login.bg-frosted.maximize.hidden
+            .flexbox.gy-3.sps-1.t-ctr.mb-4
+              .sp.t-left
+                a.t-f2(href='./index.html')
+                  svg.img-fluid(fill='currentColor' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#circle-arrow-left')
+              .sp
+                h2.fz-32.lh-xxl-none 會員登入
+                p.fz-18 登入驗證即可開始使用
+              .sp
+                p.fz-12.t-82.decor.mb-2 使用社群登入
+                button.btn.btn-third-pt.btn-block(type='button')
+                  img.img-fluid.mr-1(src=require('./img/nobase64/google.png') width='18' height='18' alt='google登入' title='google登入' loading='lazy')
+                  |使用google登入
+              .sp
+                button.btn.btn-third-pt.btn-block(type='button')
+                  img.img-fluid.mr-1(src=require('./img/nobase64/fb.png') width='18' height='18' alt='fb登入' title='fb登入' loading='lazy')
+                  |使用facebook登入
+                p.fz-12.t-82.decor.mt-2 或
+            form.js-membership.flexbox.gy-3.sps-1(action='/index.html' method='get' novalidate)
+              .sp
+                label(for='loginemail') 電子信箱
+                +inputGroup({type: 'email', id: 'loginemail', name: 'email', placeholder: '請輸入電子信箱', label: '電子信箱', required, prependCls:'prepend-icon' })
+                  +prepend
+                    span.fi-letter
+
+              .sp
+                label(for='loginpswd' placeholder='請輸入電子信箱') 密碼
+                +inputGroup({type: 'password', id: 'loginpswd', name: 'password', placeholder: '請輸入密碼', label: '密碼', required, prependCls:'prepend-icon', appendCls:'append-icon' })
+                  +prepend
+                    span.fi-lock
+                  +append
+                    button.js-toggle-password.btn(type='button' data-toggle='#loginpswd')
+                      span.fi-invis
+              .sp
+                +formCheck({ name: 'memorize', custom, inline, cls: 'check-control' })
+                  +checkItem({ id: 'save' }) 下次登入記住密碼
+                a.btn.btn-link.fl-right.t-blue.py-0(href='#forgot') 忘記密碼?
+              .sp
+                img.img-fluid(src=require('./img/recaptcha.jpg') width='100%' height='auto' alt='recaptcha' title='recaptcha' loading='lazy')
+              .sp
+                button.btn.btn-black.btn-block(type='submit') 登入
+
+              .sp
+                button.btn.btn-black.btn-block(type='submit' disabled) 登入中...
+                  .spinner-border.lh-xxl-none.v-middle
+                    span.sr-only Loading...
+              .sp.t-ctr
+                .bt-1.mx-6.mx-m-4 還沒有帳號嗎?
+                  a.btn.btn-link.t-blue(href='#signup') 開始註冊
+          #signup.bg-frosted.maximize.hidden
+            .flexbox.gy-3.sps-1.t-ctr.mb-4
+              .sp.t-left
+                a.t-f2(href='#login')
+                  svg.img-fluid(fill='currentColor' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#circle-arrow-left')
+              .sp
+                h2.fz-32.lh-xxl-none 請選擇註冊方式
+                p.fz-18 可使用第三方註冊或信箱註冊
+              .sp
+                p.fz-12.t-82.decor.mb-2 使用社群登入
+                button.btn.btn-third-pt.btn-block(type='button')
+                  img.img-fluid.mr-1(src=require('./img/nobase64/google.png') width='18' height='18' alt='google登入' title='google登入' loading='lazy')
+                  |使用google登入
+              .sp
+                button.btn.btn-third-pt.btn-block(type='button')
+                  img.img-fluid.mr-1(src=require('./img/nobase64/fb.png') width='18' height='18' alt='fb登入' title='fb登入' loading='lazy')
+                  |使用facebook登入
+                p.fz-12.t-82.decor.mt-2 或使用信箱註冊
+            .flexbox.gy-3.sps-1
+              .sp
+                a.btn.btn-black.btn-block(href='#register') 信箱註冊
+          #forgot.bg-frosted.maximize.hidden
+            .flexbox.gy-3.sps-1.t-ctr.mb-4
+              .sp.t-left
+                a.t-f2(href='#login')
+                  svg.img-fluid(fill='currentColor' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#circle-arrow-left')
+              .sp
+                h2.fz-32.lh-xxl-none 忘記密碼
+                p.fz-18 我們會將變更密碼連結寄送到您的信箱
+            form.js-membership.flexbox.gy-3.sps-1(action='/index.html' method='get' novalidate)
+              .sp
+                label(for='forgotemail') 電子信箱
+                +inputGroup({type: 'email', id: 'forgotemail', name: 'email', placeholder: '請輸入電子信箱', label: '電子信箱', required, prependCls:'prepend-icon' })
+                  +prepend
+                    span.fi-letter
+
+              .sp
+                img.img-fluid(src=require('./img/recaptcha.jpg') width='100%' height='auto' alt='recaptcha' title='recaptcha' loading='lazy')
+              .sp
+                button.btn.btn-blue.btn-block(type='submit') 確定
+          #modify.bg-frosted.maximize.hidden
+            .flexbox.gy-3.sps-1.t-ctr.mb-4
+              .sp.t-left
+                a.t-f2(href='./index.html')
+                  svg.img-fluid(fill='currentColor' width='40' height='40')
+                    use(xlink:href='./img/sprite.svg#circle-arrow-left')
+              .sp
+                h2.fz-32.lh-xxl-none 變更密碼
+                p.fz-18 請填寫新密碼
+            form.js-membership.flexbox.gy-3.sps-1(action='/index.html' method='get' novalidate)
+              .sp
+                label(for='changepswd' placeholder='請輸入電子信箱') 密碼
+                +inputGroup({type: 'password', id: 'changepswd', name: 'password', placeholder: '請輸入密碼', label: '密碼', required, prependCls:'prepend-icon', appendCls:'append-icon' })
+                  +prepend
+                    //移除id
+                    span.fi-lock
+                  +append
+                    button.js-toggle-password.btn(type='button' data-toggle='#changepswd')
+                      span.fi-invis
+              .sp
+                .input-group
+                  .input-group-prepend.prepend-icon.bg-none
+                    span.fi-check-cir-fill.js-pw-check
+                  p.form-control.bg-none 英文小寫字母 (a-z) 和大寫字母 (A-Z)
+                .input-group
+                  .input-group-prepend.prepend-icon.bg-none
+                    span.fi-check-cir-fill.js-pw-check
+                  p.form-control.bg-none 數字 (0-9) 或符號
+                .input-group
+                  .input-group-prepend.prepend-icon.bg-none
+                    span.fi-check-cir-fill.js-pw-check
+                  p.form-control.bg-none 至少 12 位數以上
+
+              .sp
+                label(for='changerewritepswd' placeholder='請輸入電子信箱') 再次輸入密碼
+                +inputGroup({type: 'password', id: 'changerewritepswd', name: 'checkpw', placeholder: '請再次輸入密碼', label: '再次輸入密碼', required, prependCls:'prepend-icon', appendCls:'append-icon' })
+                  +prepend
+                    //移除id
+                    span.fi-lock
+                  +append
+                    button.js-toggle-password.btn(type='button' data-toggle='#changerewritepswd')
+                      span.fi-invis
+
+              .sp.js-same-ps.hidden
+                .input-group
+                  .input-group-prepend.prepend-icon.bg-none
+                    span.fi-check-cir-fill
+                  p.form-control.bg-none 密碼需相符
+              .sp
+                button.btn.btn-blue.btn-block(type='submit') 確定
+        .hidden.block-m.sp-m-6.sp-l-4
+          img.img-fluid(src=require('./img/login-landing.png') width='100%' height='auto' alt='landing' title='landing' loading='eager')
+block script
+  script (function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    |
+    include ./js/membership.js
+    |
+    | })}((window)))

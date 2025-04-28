@@ -1,0 +1,64 @@
+mixin inputGroup({ input='input', type='text', placeholder, label, describedby=[], groupCls, prependCls, fontCls, appendCls, cls, id, name, value, vmodel, listId, list }={})
+  - const { has } = getPropKeys(arguments)
+  - const prependItems = []
+  - const insertItems = []
+  - const appendItems = []
+  mixin prepend()
+    - prependItems.push(block)
+  mixin append()
+    - appendItems.push(block)
+  mixin insert()
+    - insertItems.push(block)
+
+  block
+  if has('autoWiden')
+    span.js-autowiden(class=fontCls) #{value}
+  .input-group(class=groupCls)
+    if prependItems.length
+      if prependCls
+        <!-- 增加class #{prependCls} -->
+        <!-- span 更改 fi-xxx -->
+      .input-group-prepend(class=prependCls)
+        - for(let i = 0; i < prependItems.length; i++)
+          - prependItems[i]()
+    -
+      const inputAttr = {
+        list: listId,
+        'v-model.trim': vmodel,
+        id,
+        class: [cls, fontCls, { 'autowiden-input': has('autoWiden') }],
+        value: input==='input' && value,
+        type: input==='input' &&type,
+        name,
+        placeholder,
+        required: has('required'),
+        disabled: has('disabled'),
+        readonly: has('readonly'),
+        'aria-label': label,
+        'aria-describedby': Boolean(describedby.length)&&describedby.join(' ')
+      }
+    if has('autoWiden')
+      //
+        $('.autowiden-input').on('input',function(e){
+          $(this).parent().prev().txt(e.target.value)
+        })
+    #{input}.form-control&attributes(inputAttr) #{input==='textarea' ? value : ''}
+    if listId
+      datalist(id=listId)
+        option(v-for='item of ' + list :value='item')
+
+    - for(let i = 0; i < insertItems.length; i++)
+      - insertItems[i]()
+    if appendItems.length
+      if prependCls
+        <!-- 增加class #{appendCls} -->
+        <!-- span 更改 fi-xxx -->
+      .input-group-append(class=appendCls)
+        - for(let i = 0; i < appendItems.length; i++)
+          - appendItems[i]()
+
+//-
+  +inputGroup({ label: 'inputExample', describedby: ['prepend', 'append'] })
+    +prepend: span.input-group-text#prepend pre1
+    +insert: input.form-control(type='input')
+    +append: span.input-group-text#append append3

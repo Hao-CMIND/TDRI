@@ -1,0 +1,90 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+
+block body
+  section.min-vh-full.py-5
+    .container
+      .flexbox.sps-1.gx-2.gy-3.mb-3
+        .sp-12
+          h1.fz-32 AI報告列表
+        .sp-auto.mr-auto
+          a.btn.btn-gray(href='#' download='AI報告列表.png' title='下載報告')
+            span.fi-download
+            |下載報告
+        .sp-2
+          select.custom-select.bg-none.b-1(name='sort')
+            option(value='0' selected) 依產品名稱排序
+            option(value='1') 依加入時間排序(新到舊)
+            option(value='2') 依加入時間排序(舊到新)
+        .sp-auto
+          button.btn.btn-layout-toggle.active(type='button' data-layout='list')
+            span.fi-list
+        .sp-auto
+          button.btn.btn-layout-toggle(type='button' data-layout='grid')
+            span.fi-grid
+      .flexbox.card-list
+        - for(let i = 0; i < 2; i++)
+          .sp
+            .card.card-gray
+              .card-header
+                button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-toggle='popover' data-id='91' data-type='PDE' data-name='專案P_01' data-bs-content='<menu class=\'list-unstyled\'><li><button class=\'btn\' type=\'button\' data-action=\'edit\'><span class=\'fi-pen\'></span>重新命名</button></li><li><button class=\'btn\' type=\'button\' data-action=\'addproject\'><span class=\'fi-folder\'></span>加入報告專案</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載報告</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>' data-bs-html='true' data-bs-placement='bottom')
+                  span.fi-option-h
+                h4.fz-16.card-title 智慧型手機設計趨勢(2)
+              .card-body
+                .card-list-title 智慧型手機設計趨勢(2)
+                .minor-ico.mx-auto
+                  img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/電話p.png') width='100' height='100' alt='智慧型手機設計趨勢' title='智慧型手機設計趨勢' loading='lazy')
+
+                p.card-desc
+                  span.fi-folder-question.t-82
+                  span.t-82 尚未加入專案
+
+                p.card-time 生成時間
+                  time(datetime='2024-07-15T19:00') 2024-07-15 19:00
+
+                a.stretched-link(href='/PDE/Project/91' title='智慧型手機設計趨勢(2)')
+          .sp
+            .card.card-gray
+              .card-header
+                button.btn.p-0.fl-right.js-popovers-option(type='button' data-bs-toggle='popover' data-id='91' data-type='PDE' data-name='專案P_01' data-bs-content='<menu class=\'list-unstyled\'><li><button class=\'btn\' type=\'button\' data-action=\'edit\'><span class=\'fi-pen\'></span>重新命名</button></li><li><button class=\'btn\' type=\'button\' data-action=\'download\'><span class=\'fi-download\'></span>下載報告</button></li><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>' data-bs-html='true' data-bs-placement='bottom')
+                  span.fi-option-h
+                h4.fz-16.card-title 智慧型手機設計趨勢(2)
+              .card-body
+                .card-list-title 智慧型手機設計趨勢(2)
+                .minor-ico.mx-auto
+                  img.img-contain.img-fluid.ratio-1(src=require('./img/nobase64/電話p.png') width='100' height='100' alt='智慧型手機設計趨勢' title='智慧型手機設計趨勢' loading='lazy')
+
+                p.card-desc.limited-2-lines
+                  span.fi-folder-normal.t-82
+                  strong 專案B、專案Ａ、專案Ｃ、專案Ｅ、專案Ｅ、專案Ａ、專案Ｃ、專案Ｅ、專案Ｅ、專案Ａ、專案Ｃ、專案Ｅ、專案Ｅ、專案Ａ、專案Ｃ、專案Ｅ、專案Ｅ、專案Ａ、專案Ｃ、專案Ｅ、專案Ｅ
+                p.card-time 生成時間
+                  time(datetime='2024-07-15T19:00') 2024-07-15 19:00
+
+                a.stretched-link(href='/PDE/Project/91' title='智慧型手機設計趨勢(2)')
+
+  +modal({ id: 'alert-modal', label: 'alert-modal-title', static, centered, v5, nobtn})
+    +header({ cls: 't-ctr' })
+      span.ib-icon.i-alert.ic-2x
+      br
+      |警告標題
+    +body
+      p Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio illum recusandae, autem modi voluptas eaque vel enim tempore ipsam, laborum qui aliquid, quam reiciendis dolorum voluptatem distinctio dolore sed error sit? Quae, aliquid. Eveniet adipisci sit, praesentium corrupti quae delectus error magni accusantium rem tempora obcaecati! Eveniet placeat architecto magni.
+    +footer()
+      button.btn.btn-red.btn-block(type='button') 刪除
+      button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+
+  +modal({ id: 'addproject-modal', label: 'addproject-modal-title', static, centered, v5, nobtn})
+    +header({ cls: 't-ctr' }) 加入報告至專案
+    +body
+      button.btn.btn-outline-white.btn-block.btn-collapse-checkbox-list.black(type='button' data-bs-toggle='collapse' data-bs-target='#add-project' aria-expanded='true' aria-controls='necessary')
+        | 專案1
+        span.fi-arr-down.fl-right(style='line-height:1')
+      #add-project.collapse-checkbox-list.black.collapse.show
+        - for(let i = 0; i < 3; i++)
+          .custom-control.custom-checkbox.collapse-checkbox
+            input.custom-control-input.check-black(type='checkbox' id='project-'+i checked=!i)
+            label.custom-control-label(for='project-'+i) 專案#{i}
+    +footer()
+      button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 確定

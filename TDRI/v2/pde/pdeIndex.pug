@@ -1,0 +1,266 @@
+extends ./template/layout.pug
+block local
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+  include ./template/components/svg.pug
+  // - bodyAttr = {class:'p-0', style: 'background-color:#dce4f0' }
+  - bodyAttr = {class:'p-0', style: 'background-color:#dce4f0' }
+block body
+  .bg-pde-banner
+    - const landImgSize = [{ w: 234, h: 234 }, { w: 990, h: 751 }, { w: 442, h: 636 }, { w: 661, h: 544 }, { w: 401, h: 395 }, { w: 422, h: 343 },{ w: 161, h:161 }, { w: 595, h: 443 }]
+    - for(let i = 0; i < landImgSize.length; i++)
+      img.img-landing(class='p-b'+i src=require('./img/pde-b'+i+'.png') width=landImgSize[i].w height=landImgSize[i].h alt='landing'+i title='landing'+i loading='eager')
+  section.mb-6
+    //.bg-cover
+    //(style!=`background-image:url(${require('./img/kv.jpg')});padding-top:25vh`)
+    .container
+      .flexbox.J-ctr.A-between.min-vh-100(style='padding-top:10vh')
+        .sp-l-8
+          .display-1.mb-4.pb-3 Product
+            br
+            |Data Explore
+          .t-333
+            h1.fz-22 產品數據工具
+              br
+              span.fw-4 專為產品設計團隊打造的一站式數據整合平台
+            p 整合0到1產品開發時需要的資訊，協助團隊快速找到市場缺口、洞察使用者偏好，精準定義設計目標，也可以降低設計前期研究成本、提升團隊溝通效率。
+        .sp-l-8
+          .t-ctr.pt-3
+            a(href='./membership.html')
+              svg.circlepath-text(width='160' height='200')&attributes({ viewBox: '0 0 160 200' })
+                style.
+                  text {
+                    alignment-baseline: middle
+                  }
+                - const cx = 80
+                - const cy = 80
+                g
+                  animateTransform(dur='10s' type='rotate' from=`0 ${cx} ${cy}` to=`360 ${cx} ${cy}`)&attributes({ attributeName:'transform', repeatCount: 'indefinite' })
+                  g(fill='#000' font-size='20' font-family='Tenor Sans' text-anchor='middle')
+                    - const textPath = '●Product Data Explorer●Product Data Explorer'
+                    each t, i in textPath
+                      if t !== ' '
+                        - let degree = 360 / textPath.length * i
+                        if t === 'D'
+                          - degree -= 360 / textPath.length * 0.25
+                        - const toArc = Math.PI /180
+                        - const theta = toArc * (degree - 90)
+                        - let transform = `translate(${(80 + Math.cos(theta) * 71).toFixed(1)},${(80 + Math.sin(theta) * 71).toFixed(1)})` + (t !== '●' ? `rotate(${degree.toFixed(1)})` : '')
+                        text(font-size=t==='●'&&10 transform=transform) #{t}
+
+                circle(cx='80' cy='80' r='50' fill='#323dff')
+                  animate#enterbtn(to='80' dur='.3s' begin='mouseenter' fill='freeze')&attributes({ attributeName: 'r', repeatCount: '1' })
+                  animate(to='#0007ca' dur='.3s' begin='mouseenter' fill='freeze')&attributes({ attributeName: 'fill', repeatCount: '1' })
+                  animate#leavebtn(to='50' dur='.3s' begin='mouseleave' fill='freeze')&attributes({ attributeName: 'r', repeatCount: '1' })
+                  animate(to='#323dff' dur='.3s' begin='mouseleave' fill='freeze')&attributes({ attributeName: 'fill', repeatCount: '1' })
+                text(x='38' y='50' fill='#fff' fill-opacity='0') Get Started
+
+                  animate(to='1' dur='.3s' begin='enterbtn.begin' fill='freeze')&attributes({ attributeName: 'fill-opacity', repeatCount: '1' })
+                  animate(to='0' dur='.3s' begin='leavebtn.begin' fill='freeze')&attributes({ attributeName: 'fill-opacity', repeatCount: '1' })
+                polyline(fill='none' stroke='#fff' points='80,71.8 91.5,71.8 91.5,83.3')
+                line(stroke='#fff' x1='68' y1='94.3' x2='91' y2='71.3' stroke-dasharray='20 6' stroke-dashoffset='5')
+                polyline(fill='none' stroke='#000' points='140,175 140,160 155,160')
+                path(fill='none' stroke='#000' d='M140 200 A21 21 0 0 0 140 160')
+              br
+              |還沒有帳號嗎？
+        .sp-l-8.t-ctr.pb-3
+          a.f-tenor(href='#next-sec') Scroll
+            br
+            svg(width='60' height='110')
+              polyline(fill='none' stroke='#000' points='41.6,95.9 30.2,107.2 18.9,95.9')
+              //- line(stroke='#000' x1='30.2' y1='12.5' x2='30.2' y2='4.2')
+              line(stroke='#000' x1='30.2' y1='107.2' x2='30.2' y2='4.2' stroke-dasharray='85% 15%')
+                animate(values='0;20%;50%;80%;100%' dur='1')&attributes({ keyTimes: '0;0.25;0.5;0.75;1', attributeName: 'stroke-dashoffset', repeatCount: 'indefinite' })
+
+  section#next-sec.watermark.top-right.bg-pie.py-6(style='background-image: url('+require('./img/pie.png')+')' data-top='Try !')
+    #suffle-content.container.py-6
+      .flexbox.J-ctr.gy-5.t-ctr
+        .sp-12
+          h2.fz-48.lh-xxl-none.f-tenor Design With Data
+            br
+            span.fz-28 用數據做設計
+        .sp-l-6.spx-l-6
+          p 依照產品開發的思維，分析國內外大型電商、社群平台的資訊，讓設計團隊可以更有效地運用數據進行決策，確保設計提案符合市場需求，同時提升創新和競爭力
+        .sp-m-6.sp-l
+          h3.fz-32
+            span.t-secondary
+              span.js-shuffle 7
+              span.js-shuffle 0
+              span.fz-64
+                sup +
+            br
+            |生活家電產品
+        .sp-m-6.sp-l
+          h3.fz-32
+            span.t-secondary
+              span.js-shuffle 300
+              span.fz-64 ,
+              span.js-shuffle 000
+              span.fz-64
+                sup +
+            br
+            |產品及市場數據
+        .sp-m-6.sp-l
+          h3.fz-32
+            span.t-secondary
+              span.js-shuffle 1
+              span.fz-64 ,
+              span.js-shuffle 000
+              span.fz-64 ,
+              span.js-shuffle 000
+              span.fz-64
+                sup +
+            br
+            |使用者數據
+        .sp-m-6.sp-l
+          h3.fz-32
+            span.t-secondary
+              span.js-shuffle 7
+              span.fz-64 ,
+              span.js-shuffle 000
+              span.fz-64
+                sup +
+            br
+            |產品報告資料
+        //- .sp-6.sp-m-4.sp-l-4.spx-l-4
+          a.btn.btn-blue.btn-block(href='./membership.html') Get Start
+
+    //- .container-fluid.mb-5.pt-6
+    //-   .flexbox.J-ctr.gy-3
+    //-     .sp-12
+    //-       p.fz-48.t-ctr.lh-xxl-none.f-tenor Give it a try!
+    //-         br
+    //-         strong.fz-28 動手試試看!
+    //-     .sp-xxl-11
+    //-       .rad-xl.of-hidden
+    //-         #product-selection.flexbox.J-ctr.bg-white.py-4
+    //-           .sp-11
+    //-             .fz-32.fw-7 產品數據工具
+    //-               span.fz-18.fw-4.t-82 產品類別選擇
+    //-             each majorItems, major in products
+    //-               - const i = Object.keys(products).indexOf(major)
+    //-                 if i < 1
+    //-                   +productList(major, majorItems, null, 'javascript:void(0)')
+
+            #chart-area-index-0.card.chart-area.index-chart.hidden
+              .card-body
+                a.t-333.js-back(href='javascript:void(0)')
+                  svg.img-fluid(fill='currentColor' width='19' height='19')
+                    use(xlink:href='./img/sprite.svg#arrow-left')
+                  span.v-middle 產品類別選擇
+                h3.card-title.chart-title 範例圖表
+                .flexbox.gx-0
+                  .sp-12
+                    p.chart-desc 範例圖表詳細說明，想了解更多請洽客服專員。
+                  .sp-12
+                    #chart-svg-index-0.table-rwd-l.t-ctr
+                  .sp-12
+                    span.badge.badge-outline #全部
+                  .sp-12
+                    #chart-table-index-0.table-rwd-l.t-nowrap
+                      input#css-table-index-0.checkbox-collapse(type='checkbox')
+
+                  .sp-12
+                    label.btn.btn-block.t-ctr.t-blue(for='css-table-index-0') 收起表格
+    //- .container
+      .flexbox.J-ctr
+        .sp-6.sp-m-4.sp-l-3
+          a.btn.btn-blue.btn-block(href='./membership.html') Get Start
+  section.watermark.min-vh-full.bottom-right.bg-bar.py-6(style!='background-image: url('+require('./img/bar.png')+')' data-top='Design' data-bottom='With Data')
+    .container.t-ctr.py-6
+      .flexbox.J-ctr.gy-5.stagger-animate(data-stagger='0.3')
+        .sp-12
+          h2.fz-48.lh-xxl-none.f-tenor Benefits
+            br
+            span.fz-28 主要功能
+        .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+          .white-card
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/p-benefits-1.png') width='167' height='210' alt='數據驅動產品設計指南' title='數據驅動產品設計指南' loading='lazy')
+            .t-left
+              h3.fz-28 數據驅動產品設計指南
+              p 我們梳理國內各大設計公司的經驗與工作流程，分析出產品開發前期各項工作需要參考的數據指標，幫助設計團隊更好地理解和應用數據來做設計
+        .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+          .white-card
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/p-benefits-2.png') width='218' height='210' alt='產品設計元素分析' title='產品設計元素分析' loading='eager')
+            .t-left
+              h3.fz-28 產品設計元素分析
+              p 系統性拆解16項產品設計元素、20類的使用者偏好因素，有助於設計團隊更深入了解競爭對手的產品特徵與強項、掌握設計流行趨勢
+        .sp-10.sp-m-6.sp-l-4.pt-5.ani-fade-enter
+          .white-card
+            .nt-5.mb-5
+              img.img-fluid(src=require('./img/p-benefits-3.png') width='226' height='210' alt='了解量產的可行性' title='了解量產的可行性' loading='eager')
+            .t-left
+              h3.fz-28 了解量產的可行性
+              p 依產品類別，彙整產品法規、製程等資訊，讓初次接觸一領域的設計團隊可以了解產品開發上的限制，並評估設計的可行性
+
+  section.min-vh-full.pb-6.watermark.bg-print.py-6(style='background-image: url('+require('./img/print.png')+')' data-bottom='Benefits')
+    .container.t-ctr.py-6
+      .flexbox.J-ctr.gy-5.stagger-animate(data-stagger='0.3')
+        .sp-12
+          h2.fz-48.lh-xxl-none.f-tenor How to use
+            br
+            span.fz-28 如何使用
+        .sp-12
+          .card(style='background-color:rgba(255,255,255,.5);box-shadow:0 .25rem 1rem #aeafc2;')
+            .card-body.p-5
+              .flexbox
+                .sp-3
+                  #tab-use.nav.col.nav-pills(role='tablist' aria-orientation='vertical')
+                    button#v-pills-center-tab.btn.btn-white.btn-lg.p-4.btn-block.t-left.active(type='button' data-bs-toggle='pill' data-bs-target='#v-pills-center' role='tab' aria-controls='v-pills-center' aria-selected='true')
+                      span.fw-7 01.會員中心
+                      br
+                      |註冊/登入會員中心
+                    button#v-pills-project-tab.btn.btn-white.btn-lg.p-4.btn-block.mt-4.t-left(type='button' data-bs-toggle='pill' data-bs-target='#v-pills-project' role='tab' aria-controls='v-pills-project' aria-selected='false')
+                      span.fw-7 02.專案列表
+                      br
+                      |創建專案資料夾
+                    button#v-pills-product-tab.btn.btn-white.btn-lg.p-4.btn-block.mt-4.t-left(type='button' data-bs-toggle='pill' data-bs-target='#v-pills-product' role='tab' aria-controls='v-pills-product' aria-selected='false')
+                      span.fw-7 03.產品類別選擇
+                      br
+                      |選擇需要的產品資料
+                .sp-9
+                  #v-pills-tabContent.tab-content
+                    #v-pills-center.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='v-pills-center-tab' tabindex='0')
+                      video.pde-index-video.img-fluid.rad(src='https://tdri2024.cmind.com.tw/Content/video/PDE-Home-001.mp4' width='900' height='576' muted playsinline)
+                      //- autoplay muted playsinline
+                    #v-pills-project.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-project-tab' tabindex='0')
+                      video.pde-index-video.img-fluid.rad(src='https://tdri2024.cmind.com.tw/Content/video/PDE-Home-002.mp4' width='900' height='576' muted playsinline)
+                    #v-pills-product.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-product-tab' tabindex='0')
+                      video.pde-index-video.img-fluid.rad(src='https://tdri2024.cmind.com.tw/Content/video/PDE-Home-003.mp4' width='900' height='576' muted playsinline)
+
+    .container
+      .flexbox.J-ctr
+        .sp-6.sp-m-4.sp-l-3
+          a.btn.btn-blue.btn-block(href='./membership.html') Get Start
+  //- section.last-pde-sec
+    .container-fluid.t-white
+      .flexbox.J-ctr.gy-5
+        .sp-xl-8.sp-xxl-7
+          iframe.w-100.h-100.min-vh-50.rad-lg(src='https://www.youtube.com/embed/pPa7EgF28BU?si=YAvOZKh0Y-8VWkFA&controls=0&showinfo=0' title='設計研究院' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen)
+        .sp-xl-4
+          .flexbox.gy-3
+            .sp-12
+              h2.feature-1.lh-xxl-none.f-tenor User
+                br.hidden.inline-xl
+                |Data
+                br.hidden-m.inline-xl
+                |Explore
+                br
+                span.fz-28 使用者數據工具
+            .sp-12
+              p.fz-24 獨特又專業的設計思考模板
+                br
+                |精確使用者輪廓，以人為本達到目標需求的準確設計
+              p 與 PDE 資源連動，結合數據支撐設計決策，確保準確性。自動推薦需求人物輪廓，創建數據基底的 persona。
+            .sp-6.sp-m-4
+              a.btn.btn-blue.btn-block(href='./udeIndex.html') Get Start
+block script
+  // 請抓取/test/tdri/backend/staggerAnimate.js檔案，在首頁的時候 import 載入
+  // scroll事件如果可以使用throttle降低觸發頻率，有需要可以拆Lodash 出來
+  script(type='module')
+    |import initStaggerAnimate from 'https://whatlife.no-ip.org/test/tdri/backend/staggerAnimate.js'
+    |(function (window) { window.addEventListener('DOMContentLoaded', function (e) {
+    include ./js/pdeIndex.js
+    |})}((window)))

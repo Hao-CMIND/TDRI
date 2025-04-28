@@ -1,0 +1,687 @@
+extends ./template/layout.pug
+block local
+  - for(let i = 1; i < 14; i++)
+    - require('./img/nobase64/avatar'+('0' + i).slice(-2) +'.png')
+  - require('./img/nobase64/avatarairplane.png')
+  - require('./img/nobase64/avatarbank.png')
+  //- - bodyAttr = { class: ['bg-f2', 'hide-layout'] }
+  - bodyAttr = { class: ['bg-e7', 'hide-layout'] }
+block body
+  #app.container-fluid.py-3
+    .flexbox.gx-0
+      .sp-2
+        include ./template/layout/udeAside.pug
+      .sp-8.js-canvas-area.pb-5
+        .flexbox.a-end
+          .sp
+            h1.lh-xxl-tight
+              time.fz-12.t-82.fw-4(datetime='2024-04-22T24:02:02') 2024/4/22 24:02:02
+              br
+              img.rad-sm.mr-1(height='40' width='40' src='./img/user-blue.jpg' alt='智慧型洗衣機' loading='lazy' title='智慧型洗衣機')
+              | 智慧型洗衣機
+
+          .sp-auto
+            .tool-bar.gx-2
+              .sp-auto
+                button.btn.btn-purple(type='button' @click='addCharacter')
+                  span.fi-user
+                  | 新增
+              .sp-auto
+                button.btn(type='button' title='連結')
+                  span.fi-share
+              .sp-auto
+                a.btn(title='下載' :href='base64' @click='downloadCanvas' download='利益人關係圖.png')
+                  span.fi-download
+              .sp-auto
+                button.btn.btn-purple(type='button' @click='saveCanvasData' title='儲存')
+                  span.fi-save
+                  | 儲存
+
+        #stakeholder.t-ctr.nx-3
+          .i-block.rel.rad-lg(style='background-color: #ececec;overflow:hidden;top:3rem')
+            canvas.rel.z-top(width='2550' height='1575' style='cursor:default;width:1020px;height:630px;' ref='canvasRef' @dblclick='handleDblclick' @mousedown='handleMouseDown' @mouseleave='handleMouseLeave' @mousemove='animateFrame' @mouseup='handleMouseUp')
+            img.abs.top-0(style='user-select: none;' ref='bgRef')
+            img.abs.top-0.invisible(style='user-select: none;' :ref='(el) =>{bgfill[0] = el}')
+            img.abs.top-0.invisible(style='user-select: none;' :ref='(el) =>{bgfill[1] = el}')
+            img.abs.top-0.invisible(style='user-select: none;' :ref='(el) =>{bgfill[2] = el}')
+            img.abs.top-0.invisible(style='user-select: none;' :ref='(el) =>{bgfill[3] = el}')
+        .canvas-hover-tip
+          .custom-control.custom-switch
+            input#toggle-tips.custom-control-input.switch-tips(type='checkbox')
+            ul.list-unstyled.css-tips
+              li(@mouseenter='showBg(bgfill[0])' @mouseleave='hideBg(bgfill[0])')
+                img.mr-2(height='40' width='40' src=require('./img/nobase64/canvas-tip-1.png') alt='環境設定者' loading='lazy' title='環境設定者')
+                span.i-block.v-middle
+                  | 環境設定者 (權力高 / 利益低)
+                  br
+                  small Keep informed
+              li(@mouseenter='showBg(bgfill[1])' @mouseleave='hideBg(bgfill[1])')
+                img.mr-2(height='40' width='40' src=require('./img/nobase64/canvas-tip-2.png') alt='關注者' loading='lazy' title='關注者')
+                span.i-block.v-middle
+                  | 關注者 (權力低 / 利益高)
+                  br
+                  small Keep Satisfied
+              li(@mouseenter='showBg(bgfill[2])' @mouseleave='hideBg(bgfill[2])')
+                img.mr-2(height='40' width='40' src=require('./img/nobase64/canvas-tip-3.png') alt='參與者' loading='lazy' title='參與者')
+                span.i-block.v-middle
+                  | 參與者 (權力高 / 利益高)
+                  br
+                  small Manage Closely
+              li(@mouseenter='showBg(bgfill[3])' @mouseleave='hideBg(bgfill[3])')
+                img.mr-2(height='40' width='40' src=require('./img/nobase64/canvas-tip-4.png') alt='群眾' loading='lazy' title='群眾')
+                span.i-block.v-middle
+                  | 群眾 (權力低 / 利益低)
+                  br
+                  small Monitor
+            label.custom-control-label(for='toggle-tips') 專有名詞說明
+
+      .sp-2
+        .js-edit-column.side-column-w.ml-auto.bg-fa.p-3.rad-sm.scroll-list(style='height: calc(100vh - 2rem);')
+          .js-list-character
+            h4.t-82.fz-14 利益關係人列表
+            .scroll-list.preview-edit
+              ul.list-unstyled
+                li.py-2(v-for='node, uuid in nodesRef' :key='uuid')
+                  .btn-list-gray.active
+                    button.btn.btn-sm.fl-right.mt-1.js-popovers-option(type='button' :data-uuid='uuid' data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<menu class=\'list-unstyled my-0\'><li><button class=\'btn\' type=\'button\' data-action=\'edit\'><span class=\'fi-pen\'></span>重新命名</button></li><li><button class=\'btn\' type=\'button\' data-action=\'editAdv\'><span class=\'fi-achieve\'></span>編輯進階內容</button></li><li><button class=\'btn\' type=\'button\' data-action=\'clone\'><span class=\'fi-copy\'></span>複製</button></li><button class=\'btn t-red\' type=\'button\' data-action=\'delete\'><span class=\'fi-delete\'></span>刪除</button></li></menu>')
+                      span.fi-option-v
+                    span.bl-purple
+                    img.circle.mr-1(:src='\'./img/\'+node.avatar' width='40' height='40' :alt='node.title' :title='node.title' loading='lazy')
+                    span {{ node.title }}
+          .js-edit-character.hidden
+            .t-82.fz-14.fw-7.mb-3 利益關係人列表 / 職業婦女
+            .flexbox.gy-3
+              .sp-12.js-edit-adv
+                .flexbox.gx-2.J-end.js-edit-adv.hidden
+                  .sp-auto.mr-auto
+                    button.js-show-popover.btn.btn-gray.btn-block(type='button' @click='closeAdv')&attributes({ 'data-bs-content': '完成並關閉文檔', 'data-bs-placement': 'top', 'data-bs-toggle': 'popover', 'data-bs-custom-class':'popover-purple' })
+                      span.fi-close
+                      |儲存並關閉
+                  .sp-auto
+                    button.btn.btn-reset(style='reset')
+                      span.fi-reset
+                      |清除
+                  .sp-auto
+                    button.btn.btn-gray.btn-block(type='button')
+                      span.fi-download
+                      |下載
+                  .sp-auto
+                    button.btn.btn-purple.btn-block(type='button' @click='saveBasicEdit')
+                      span.fi-save
+                      |儲存
+                  .sp-12
+                    .flexbox.J-ctr.gx-1
+                      .sp-auto.t-ctr
+                        span.rect.mr-1.fz-24
+                          span.fi-user-plus
+                      .sp-auto
+                        input.form-control.input-border.t-ctr.t-purple.fz-24(type='text' placeholder='未命名人物誌' style='width:16ch' v-model='selectedNode.title')
+              .sp-12.js-base-edit
+                .flexbox.gx-2
+                  .sp-8
+                    button.btn.btn-purple.btn-sm.btn-block(type='button' @click='saveBasicEdit') 儲存
+                  .sp-4
+                    button.btn.btn-gray.btn-sm.btn-block(type='button' @click='closeDetail') 返回
+              .sp-12.js-character-preview-info
+                .js-bg-fb.mb-3
+                  .t-ctr
+                    .avatar
+                      img.img-fluid(:src='\'./img/\' + selectedNode.avatar' width='90' height='90' alt='ABC洗衣機' title='ABC洗衣機' loading='lazy')
+                  .js-base-edit
+                    input.form-control.input-border.mx-auto.t-ctr.t-purple.mb-2(type='text' placeholder='未命名人物誌' style='width:16ch' v-model='selectedNode.title')
+                    input.form-control.form-control-sm.input-border.mx-auto.t-ctr.mb-4(type='text' placeholder='請填寫職業' style='width:12ch' value='資深老鳥')
+                    //- .flexbox.gx-0.t-ctr.mb-3
+                      .sp-4
+                        span.rect.t-ctr.mr-1
+                          span.fi-bachelor
+                        br
+                        |碩士
+                      .sp-4
+                        span.rect.t-ctr.mr-1
+                          span.fi-job
+                        br
+                        |金融業
+                      .sp-4
+                        span.rect.t-ctr.mr-1
+                          span.fi-job-time
+                        br
+                        |10年
+                  .flexbox.gx-0.gy-3.mb-3
+                    .sp-12
+                      label.form-label-sm.pl-2 權利*
+                      span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='一個人或組織對產品開發過程或決策的影響力。高權力的利益關係人可能能夠直接或間接地改變產品的方向、功能、或者優先順序。他們可能是高層管理者、重要客戶、或是有能力影響資源分配的關鍵人物。')
+                      //- v-model='selectedNode?.radius?.rights'
+                      .bg-f2.rad-sm
+                        select.custom-select.custom-select-sm(v-model='selectedNode.radius.rights' @change='changeNodePosition($event,\'rights\')')
+                          option(value='' selected disabled) 請選擇權利
+                          option(value='低') 低
+                          option(value='高') 高
+
+                    .sp-12
+                      label.form-label-sm.pl-2 利益*
+                      span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='一個人或組織對產品或項目的關注程度。專案的成果會影響到他們的利益。因此通常非常關心產品的成果和進展，他們可能是產品的終端用戶、受產品直接影響的員工，或對產品的成功有著個人或專業投入的人。')
+                      //- v-model='selectedNode.radius?.benefits'
+                      .bg-f2.rad-sm
+                        select.custom-select.custom-select-sm(v-model='selectedNode.radius.benefits' @change='changeNodePosition($event,\'benefits\')')
+                          option(value='' selected disabled) 請選擇利益
+                          option(value='低') 低
+                          option(value='高') 高
+
+                    .sp-12(v-if='selectedNode.radius?.desc.length')
+                      p.bg-l3-purple.rad-sm.p-2.t-justify
+                        span.fi-user-circle
+                        template(v-for='text, i of selectedNode.radius?.desc')
+                          | {{ text }}
+                          br(v-if='i!==selectedNode.radius?.desc.length-1')
+
+                    .sp-12
+                      label.form-label-sm.pl-2 急迫性*
+                      span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='一個人或組織對於產品開發或決策過程中的迫切需求或期望的反應速度。他們希望或需要多快看到進展、變化或回應的程度。')
+                      //- v-model='selectedNode.radius?.benefits'
+                      .bg-f2.rad-sm
+                        select.custom-select.custom-select-sm
+                          option(value='' selected disabled) 請選擇急迫性
+                          option(value='低') 低
+                          option(value='中') 中
+                          option(value='高') 高
+                    .sp-12
+                      label.form-label-sm.pl-2 類型*
+                      span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='<ol class=\'list-inside\'><li>使用者 (Users)：直接使用產品的人。可以通過人物誌模擬（persona）更好地理解他們的需求。</li><li>影響者 (Influencers)：雖然他們也可能是使用者，但他們的主要特點是有能力影響產品開發的方向。這種影響可能是間接的（透過意見反饋）或直接的（透過影響力）。</li><li>提供者 (Providers)：為產品提供必要資源或服務的人，例如供應商或商業夥伴。他們可能不直接使用產品，但對產品的成功非常重要。</li><li>治理 (Governance)：對產品開發有興趣並可能影響其方向的人，例如法律、市場監管機構、審計師或公司內部的管理層。</li><ol>')
+                      //- v-model='selectedNode.radius?.group'
+                      .bg-f2.rad-sm
+                        select.custom-select.custom-select-sm(v-model='selectedNode.angle' @change='changeNodePosition($event,\'angle\')')
+                          option(value='' selected disabled) 請選擇利益
+                          option(value='使用者') 使用者
+                          option(value='影響者') 影響者
+                          option(value='提供者') 提供者
+                          option(value='治理') 治理
+
+                  h5.fz-16 關係線
+                  ul.list-unstyled
+                    li.list-relationline-item(v-for='link of getRelLinks.from')
+                      .flexbox.gx-2
+                        .sp-auto
+                          img.circle(:src='\'./img/\'+link.source.avatar' width='40' height='40' :alt='link.source.title' :title='link.source.title' loading='lazy')
+                        .sp
+                          p {{ link.source.title }}
+                          button.btn.badge.pill(type='button' @click='editLink([link])') {{ link.action  }}
+                        .sp-3.t-right
+                          button.btn.p-0(type='button' @click='removeLink(link)')
+                            span.fi-close-cir(style='vertical-align:middle')
+                    li.list-relationline-item(v-for='link of getRelLinks.to')
+                      .flexbox.gx-2
+                        .sp-auto
+                          img.circle(:src='\'./img/\'+link.target.avatar' width='40' height='40' :alt='link.target.title' :title='link.target.title' loading='lazy')
+                        .sp
+                          p {{ link.target.title }}
+                          button.btn.badge.pill(type='button' @click='editLink([link])') {{ link.action  }}
+                        .sp-3.t-right
+                          button.btn.p-0(type='button' @click='removeLink(link)')
+                            span.fi-close-cir(style='vertical-align:middle')
+
+                .js-base-edit
+                  button.btn.btn-purple.btn-sm.btn-block(type='button' @click='openAdv') 編輯進階內容
+              .sp-4.js-edit-adv.hidden
+                .card-fb
+                  label.form-label-sm.pl-2 教育程度
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇教育程度
+                    option(value='0' selected) 碩士畢業
+                  label.form-label-sm.pl-2 所屬產業
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇所屬產業
+                    option(value='0' selected) 金融業
+                  fieldset.mb-3
+                    legend.form-label-sm.pl-2 資歷
+                    .bg-f2.px-3.py-1.rad-sm
+                      button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                        span.fi-plus
+                      .input-group.input-group-sm.mb-3
+                        textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資歷' rows='1') 10年以上金融業經驗
+                        .input-group-append
+                          button.btn.btn-white.rad-sm
+                            span.fi-close.bg-e6
+                      .input-group.input-group-sm.mb-3
+                        textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資歷' rows='1') 打工仔5年
+                        .input-group-append
+                          button.btn.btn-white.rad-sm
+                            span.fi-close.bg-e6
+                      .input-group.input-group-sm.mb-3
+                        textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入資歷' rows='1') 麥胞1年
+                        .input-group-append
+                          button.btn.btn-white.rad-sm
+                            span.fi-close.bg-e6
+                      //- textarea.form-control.form-control-sm.input-border(type='text' placeholder='請輸入資歷' rows='1')
+                  label.form-label-sm.pl-2 職業
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇職業
+                    option(value='0' selected) 資深主管
+              .sp-4.js-edit-adv.hidden
+                .card-fb
+                  label.form-label-sm.pl-2 產業規模
+                  select.custom-select.custom-select-sm.mb-3
+                    option(value='' disabled) 請選擇產業規模
+                    option(value='0' selected) 大型公司
+                  fieldset.mb-3
+                    legend.form-label-sm.pl-2 專業技能
+                    .bg-f2.px-3.py-1.rad-sm
+                      button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                        span.fi-plus
+                  fieldset
+                    legend.form-label-sm.pl-2 使用工具
+                      span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='此人物會使用的軟/硬體工具。<br/>ex. Illustrator、Photoshop 或 雷射切割機...等')
+                    .bg-f2.px-3.py-1.rad-sm
+                      button.btn.btn-sm.btn-block.btn-add-character-input(type='button') 請選擇/編輯
+                        span.fi-plus
+                      .input-group.input-group-sm.mb-3
+                        textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用工具' rows='1') Lenovo ThinkPad
+                        .input-group-append
+                          button.btn.btn-white.rad-sm
+                            span.fi-close.bg-e6
+                      .input-group.input-group-sm.mb-3
+                        textarea.form-control.bg-white.bg-border(type='text' placeholder='請輸入使用工具' rows='1') iPhone 20 Pro Max
+                        .input-group-append
+                          button.btn.btn-white.rad-sm
+                            span.fi-close.bg-e6
+              .sp-12.js-edit-adv.hidden
+                hr.bb-82
+                h3.fz-24.t-ctr.mb-5
+                  span.rect.mr-1
+                    span.fi-achieve
+                  |任務目標
+              .sp-4.js-edit-adv.hidden
+                .card-fb
+                  h4.fz-22.t-ctr.mb-4 作為
+                    span.fi-question-solid.js-popovers-option(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='使用者：對於「誰」(who) 這個角色，填寫以下欄位透過形容詞和情境詞來更多的描述，完整描述這樣的人物角色。')
+                    span.t-purple 職業婦女
+
+                  label.form-label-sm.pl-2 有...責任
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這個使用者角色有怎麼樣的職責或責任？')
+                  textarea.form-control.bg-f2.mb-3(type='text' placeholder='有...責任' aria-label='有...責任' rows='2') 管理團隊、制定業務策略。
+                  label.form-label-sm.pl-2 遭遇...挫折
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這樣的使用者角色有甚麼樣的痛點跟困擾？')
+                  textarea.form-control.bg-f2.mb-3(type='text' placeholder='遭遇...挫折' aria-label='遭遇...挫折' rows='2') 每天忙碌的工作中難以找到品質好且快速沖泡的咖啡方式。
+                  label.form-label-sm.pl-2 核心需求
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這樣的使用者角色有甚麼樣態的需求？')
+                  textarea.form-control.bg-f2(type='text' placeholder='核心需求' aria-label='核心需求' rows='2') 方便快捷的咖啡製作流程、高品質的咖啡。
+              .sp-4.js-edit-adv.hidden
+                .card-fb
+                  h4.fz-22.t-ctr.mb-4 我想要...
+                    span.fi-question-solid.js-popovers-option(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+                  label.form-label-sm.pl-2 達到...需求
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這樣的使用者想要做到甚麼？')
+                  textarea.form-control.bg-f2.mb-3(type='text' placeholder='達到...需求' aria-label='達到...需求' rows='2') 我想要一個能在短時間內完成沖煮的智能咖啡機。
+                  label.form-label-sm.pl-2 有...困難
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='這些需求的達成會遇到甚麼樣的困難？')
+                  textarea.form-control.bg-f2(type='text' placeholder='有...困難' aria-label='有...困難' rows='2') 每天工作繁忙，需要一個能夠快速沖泡高品質咖啡的解決方案。
+              .sp-4.js-edit-adv.hidden
+                .card-fb
+                  h4.fz-22.t-ctr.mb-4 已完成...目標
+                    span.fi-question-solid.js-popovers-option(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='缺')
+                  label.form-label-sm.pl-2 目標價值
+                  span.fi-question-solid.js-popovers-option.fz-18(data-bs-placement='bottom' data-bs-toggle='popover' data-bs-html='true' data-bs-content='最終想要達到的核心價值')
+                  textarea.form-control.bg-f2(type='text' placeholder='目標價值' aria-label='目標價值' rows='2') 提升在家工作時的品味享受。
+
+    +modal({ nobtn, id: 'create-sample', label: 'modal-create-sample', static, centered, v5 })
+      +body
+        h3.t-ctr.mb-3 請選擇一個範本開始使用
+        .flexbox.sps-1.t-ctr.gy-3.mb-3
+          - for(let i = 1; i < 7; i++)
+            .sp-4
+              button.btn.btn-rect-white.js-select-sample(type='button' @click='selectSample(\'create-sample\',\'範本0\'+'+i+')')
+                img.circle.evt-none(src=require('./img/user-blue.jpg') width='50' height='50')
+                br
+                |範本0#{i}
+      +footer
+        button.btn.btn-white(type='button' data-bs-dismiss='modal') 取消
+
+    +modal({ nobtn, id: 'upload-textcontent', label: 'modal-upload-textcontent', size: 'l', static, centered, v5 })
+      +body
+        h3.t-ctr 請問您的專案是哪種類型?
+        p.t-ctr.mb-3 請貼上逐字稿，以提供AI更好的判斷分析內容
+        .flexbox.sps-1.gy-3.J-ctr
+          .sp
+            .alert.alert-danger
+              span.fi-info
+              | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+          .sp
+            .dropdown.customize-dropdown.ude-dropdown
+              button.btn.btn-outline-white.rad-sm.btn-block(type='button' data-bs-toggle='dropdown' aria-expanded='true')
+                span.placeholder 選擇專案類型
+                span.fi-arr-down
+              .dropdown-menu(data-popper-placement='bottom-start')
+                a.dropdown-item.t-333(href='javascript:void' style='white-space:normal')
+                  | 服務設計
+                  span.fz-12.t-82.pl-3 (剩餘額度 : 1 次)
+                  br
+                  span.t-82.fz-12 *包括使用者的基本人口統計資料、目標、需求、挑戰、服務體驗、互動模式以及對服務的期望。幫助團隊深入了解目標受眾，從而在服務設計和提供過程中做出更明智的決策。
+                .dropdown-item
+                  hr.dropdown-divider
+                a.dropdown-item.t-333(href='javascript:void' style='white-space:normal')
+                  | 服務設計
+                  span.fz-12.t-82.pl-3 (剩餘額度 : 1 次)
+                  br
+                  span.t-82.fz-12 *包括使用者的基本人口統計資料、目標、需求、挑戰、服務體驗、互動模式以及對服務的期望。幫助團隊深入了解目標受眾，從而在服務設計和提供過程中做出更明智的決策。
+          .sp
+            textarea.form-control(type='text' placeholder='請將逐字稿貼至此處' v-model='verbatim' rows='20')
+            p.t-red 逐字稿文字上限為 700 字，已超過字數限制！
+              span.fl-right 0 / 700
+      +footer({cls: 'J-between gx-0'})
+        .sp-auto
+          button.btn.btn-white(type='button' data-bs-dismiss='modal' @click='closeModal(\'upload-textcontent\')') 上一步
+        .sp.t-right
+          button.btn.btn-pink(type='button' data-bs-dismiss='modal' @click='closeModal(\'upload-textcontent\')')
+            span.fi-dbl-start-fill
+            | 自動框選
+          p.t-82 *按下確認後將會扣除額度並開始生成
+
+        //- .sp-4
+        //-   button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'upload-textcontent\')') 取消
+
+    //- +modal({ nobtn, id: 'select-aisample', label: 'modal-select-aisample', static, centered, v5 })
+      +body
+        h3.t-ctr.mb-3 請問您的專案是哪種類型?
+          br
+          |提供AI更好的判斷分析內容
+        .alert.alert-danger
+          span.fi-info
+          | 本內容由 AI 協助框選，可能生成不存在於文件中的內容。請進一步核實和驗證此內容的準確性。
+        .flexbox.J-ctr.t-ctr.mb-3
+          .sp-4
+            button.btn.btn-rect-pink(type='button' data-sample='服務設計' @click='selectDesign(\'create-sample\', \'服務設計\')')
+              img.circle.evt-none(src=require('./img/user-blue.jpg') width='50' height='50')
+              br
+              |服務設計
+              br
+              span.fz-14 (剩餘額度 : 1 次)
+          .sp-4
+            button.btn.btn-rect-white(type='button' @click='selectDesign(\'create-sample\',\'產品設計\')')
+              img.circle.evt-none(src=require('./img/user-blue.jpg') width='50' height='50')
+              br
+              |產品設計
+              br
+              span.fz-14 (剩餘額度 : 1 次)
+      +footer
+        .sp-4
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'select-aisample\')') 取消
+        .sp-4
+          button.btn.btn-pink.btn-block(type='button' data-bs-dismiss='modal') 自動框選
+        .sp-12
+          p.txt-right *按下確認後將會扣除額度並開始生成
+
+  +modal({ nobtn, id: 'upload-excel', label: 'modal-upload-excel', static, centered, v5 })
+    +body
+      h3.t-ctr.mb-3 上傳 Excel
+      .bg-fa
+        .t-right
+          span.t-82.fi-question.info-tip(data-bs-toggle='popover' data-bs-custom-class='z-2000' data-bs-content=Array.from({ length: 10 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join(''))
+        .fileuploading
+          p 將文件拖曳至此
+            br
+            |或
+          label.btn.btn-purple(for='uploadExcel') 選擇檔案
+          input#uploadExcel.hidden(type='file' accept='.xlsx,.xls' @change='uploadExcel($event, \'upload-excel\')')
+      p.uploaded-file
+        span.fi-check-cir-fill(style='color:#27ae60')
+        span.filename aabbcc.xlsx
+        button.btn.fl-right(type='button')
+          span.fi-delete.t-red
+    +footer
+      .flexbox.g-2
+        .sp-2
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'upload-excel\')') 取消
+        .sp-4
+          button.btn.btn-white.btn-block(href='./#.xlsx' download='範例.xlsx') 下載範例檔案(.xlsx)
+        .sp-2.spl-4
+          button.btn.btn-purple.btn-block(type='button') 確定
+
+        .sp-12
+          p.t-82 *檔案須符合本平台提供的檔案格式
+
+    +modal({ nobtn, id: 'create-character', label: 'modal-create-character', static, centered, v5 })
+      +body
+        h3.t-ctr.mb-3 新增角色名稱
+        .flexbox.J-ctr
+          .sp-10
+            input.form-control(type='text' placeholder='請輸入角色名稱' v-model='editCharacterTitle')
+      +footer
+        .sp-4
+          button.btn.btn-purple.btn-block(type='button' data-bs-dismiss='modal' @click='addCharacter(\'create-character\')') 確定
+        .sp-4
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'create-character\')') 取消
+    +modal({ nobtn, id: 'create-link', label: 'modal-create-link', static, centered, v5 })
+      +body
+        h3.t-ctr.mb-3 {{ editTarget?.source?.title }}對{{ editTarget?.target?.title }}關係是?
+        .flexbox.J-ctr
+          .sp-10
+            input.form-control(type='text' placeholder='請輸入關係' v-model='editLinkAction')
+      +footer
+        .sp-4
+          button.btn.btn-purple.btn-block(type='button' data-bs-dismiss='modal' @click='addLink(\'create-link\')') 確定
+        .sp-4
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'create-link\')') 取消
+
+    +modal({ nobtn, id: 'edit-character', label: 'modal-edit-character', centered, v5 })
+      +body
+        h3.t-ctr.mb-3 編輯{{ editTarget?.title }}
+        .flexbox.J-ctr
+          .sp-10
+            input.form-control(type='text' placeholder='請輸入角色名稱' v-model='editCharacterTitle')
+      +footer
+        .sp-5
+          button.btn.btn-purple.btn-block(type='button' data-bs-dismiss='modal' @click='finishedEdittingCharacter(\'edit-character\')') 確定
+        .sp-3
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'edit-character\')') 取消
+        .sp-3
+          button.btn.btn-red.btn-block(type='button' data-bs-dismiss='modal' @click='deleteCharacter(\'edit-character\')') 刪除
+
+    +modal({ nobtn, id: 'edit-link', label: 'modal-edit-link', centered, v5 })
+      +body
+        h3.t-ctr.mb-3 "{{ editTarget?.source?.title }}"對"{{ editTarget?.target?.title }}"關係–{{ editTarget?.action }}修改為
+        .flexbox.J-ctr
+          .sp-10
+            input.form-control(type='text' placeholder='請輸入關係' v-model='editLinkAction')
+      +footer
+        .sp-5
+          button.btn.btn-purple.btn-block(type='button' data-bs-dismiss='modal' @click='finishedEdittingLink(\'edit-link\')') 確定
+        .sp-3
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'edit-link\')') 取消
+        .sp-3
+          button.btn.btn-red.btn-block(type='button' data-bs-dismiss='modal' @click='deleteLink(\'edit-link\')') 刪除
+
+    //- +modal({ nobtn, id: 'select-st-modal', label: 'select-st-modal-title', static, centered, v5})
+      +header({ cls: 't-ctr' }) 快速新增一個人物誌
+      +body
+        p.t-ctr.t-82.mb-3 AI將使用您選的人物誌來生成旅程地圖。
+        .flexbox.t-ctr.J-ctr.gy-3.mb-3
+          .sp-4
+            button.btn.btn-rect-white(type='button' data-bs-toggle='modal' data-bs-target='#select-built-modal')
+              span.rect.t-ctr.mr-1
+                span.fi-id-connect
+              br
+              |選擇人物誌
+          .sp-12.t-ctr 還沒有人物誌嗎?
+            button.btn.btn-link.p-0.t-underline.v-baseline(type='button' data-bs-toggle='modal' data-bs-target='#quick-add-modal') 快速建立
+
+      +footer({cls: 'J-start'})
+        a.btn.btn-white(href='./udeProjectList.html' title='上一步') 上一步
+    //- +modal({ nobtn, id: 'quick-add-modal', label: 'quick-add-modal-title', static, centered, scrollable, v5})
+      +header({ cls: 't-ctr' }) 快速新增一個人物誌
+      +body
+        .flexbox.sps-1.gy-3
+          .sp
+            .alert.alert-danger
+              span.fi-info
+              | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+          .sp
+            label(for='select-product') 關注的產品*
+          .sp
+            select#select-product.custom-select.bg-white.b-1(name='product')
+              option(value='0' disabled) 請選擇關注的產品
+              option(value='1') 咖啡機
+              option(value='2') 咖啡機
+          .sp
+            label(for='personality') 個性*
+          .sp
+            textarea#personality.form-control(name='personality' rows='3' placeholder='請輸入個性 e.g. 積極、創意，對於咖啡文化有濃厚興趣')
+          .sp
+            label(for='background') 背景*
+          .sp
+            textarea#background.form-control(name='background' rows='3' placeholder='請輸入背景 e.g. 咖啡愛好者、自由工作者，喜歡在咖啡館中工作和品嚐新口味的咖啡。')
+          .sp
+            label(for='intro') 人物自述*
+          .sp
+            textarea#intro.form-control(name='intro' rows='3' placeholder='請輸入人物自述')
+          .sp
+            label(for='controller') AI敘述
+          .sp
+            textarea#controller.form-control(name='controller' rows='3' placeholder='最後使用者滿意/不滿意')
+        p.t-82.t-right 按下確認後將會扣除額度並開始生成
+      +footer({cls: 'J-between'})
+        button.btn.btn-white(type='button' data-bs-toggle='modal' data-bs-target='#select-uj-modal') 上一步
+        button.btn.btn-pink(type='button' data-bs-dismiss='modal') 確定生成
+    +modal({ nobtn, id: 'select-product', label: 'modal-select-product', size: 'xl', static, centered, v5 })
+      +header
+        h3.t-ctr.fz-22.lh-xxl-tight 請選擇關注的產品
+      +body
+        - const fields = ['領域一', '領域二']
+        ul#megamenu-tab.nav.nav-fill.nav-megamenu(role='tablist' style='--tab-bg: url(../img/tab-white.png)')
+          each field, i in fields
+            li.nav-item(role='presentation')
+              button.nav-link(id=`pills-${i}-tab` class={'active':i===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}` type='button' role='tab' aria-controls=`pills-${i}` aria-selected=String(i===0)) #{field}
+
+        #megamenu-tabContent.tab-content.nav-megamenu-content
+          each field, i in fields
+            .tab-pane.fade(id=`pills-${i}` class={'show active':i===0} role='tabpanel' aria-labelledby=`pills-${i}-tab`)
+              .flexbox.a-start.gx-0
+                .sp-4.tab-list-1
+                  h4.megamenu-categroy.fz-14.fw-4.py-2 大類
+                  .nav-scroll
+                    ul.nav.col(id=`major-tab-${i}` role='tablist' aria-orientation='vertical')
+                      each major, j in majors
+                        li.nav-item(role='presentation')
+                          button.nav-link(id=`pills-${i}-${j}-tab` class={'active':j===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}` type='button' role='tab' aria-controls=`pills-${i}-${j}` aria-selected=String(j===0))
+                            span(class='fi-ap'+majorIndex.indexOf(major.Name))
+                            |#{major.Name}
+                .sp-8
+                  .tab-content(id=`major-tab-content-${i}`)
+                    each major, j in majors
+                      .tab-pane.fade(id=`pills-${i}-${j}` class={'show active':j===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-tab`)
+                        .flexbox.a-start.gx-0
+                          .sp-6
+                            h5.megamenu-categroy.fz-14.fw-4.py-2 子類
+                              //- .custom-control.custom-checkbox.custom-checkbox-right
+                                input.custom-control-input.check-black(id=`minor-all-${i}-${j}` type='checkbox' value='true')
+                                label.custom-control-label(for=`minor-all-${i}-${j}`)
+                            .nav-scroll
+                              ul.nav.col(id=`minor-tab-${j}` role='tablist' aria-orientation='vertical')
+                                each minors, k in major.Sub
+                                  li.nav-item(role='presentation')
+
+                                    button.nav-link.sp(id=`pills-${i}-${j}-${k}-tab` class={'active':k===0} data-bs-toggle='pill' data-bs-target=`#pills-${i}-${j}-${k}` type='button' role='tab' aria-controls=`pills-${i}-${j}-${k}` aria-selected=String(k===0)) #{minors.Name}
+
+                                    //- .sp-auto
+                                      a.btn.p-0(class=k===2 ? 'disabled' : '' href=`./dataAnalysis2.html?ID=${minors.ID}&majorID=${majorIndex.indexOf(major.Name)}&majorName=${major.Name}&minorName=${minors.Name}&productName=${minors.Name}`)&attributes(k ===1 ? lock: {})
+                                        span(class=k===1 ? 'fi-cart' : 'fi-arr-right')
+                          .sp-6
+                            .tab-content(id=`minor-tab-content-${j}`)
+                              each minors, k in major.Sub
+                                .tab-pane.fade(id=`pills-${i}-${j}-${k}` class={'show active':k===0} role='tabpanel' aria-labelledby=`pills-${i}-${j}-${k}-tab`)
+                                  h6.megamenu-categroy.fz-14.fw-4.py-2 品類
+                                    //- .custom-control.custom-checkbox.custom-checkbox-right
+                                      input.custom-control-input.check-black(id=`product-all-${i}-${j}-${k}` type='checkbox' value='true')
+                                      label.custom-control-label(for=`product-all-${i}-${j}-${k}`) 品類
+                                  .nav-scroll
+                                    .nav.col
+                                      button.js-select-product.nav-link.A-ctr(type='button' @click='closeModal(\'select-product\')')&attributes(k ===2 ? lock: {}) 全部
+                                        if k ===2
+                                          span.fl-right.mt-2.fi-cart
+                                      each p, l in minors.Sub
+                                        button.js-select-product.nav-link.A-ctr(type='button' @click='closeModal(\'select-product\')')&attributes(l === 1 ? lock: {}) #{p.Name}
+                                          if l === 1
+                                            span.fl-right.mt-2.fi-cart
+        p.t-82.t-right
+          sup *
+          |選擇產品才可查看相關數據
+      //- +footer
+      //-   .sp-5
+      //-     button.btn.btn-purple.btn-block(type='button' data-bs-dismiss='modal' @click='closeModal(\'select-product\')') 返回
+
+    +modal({ nobtn, id: 'select-built-modal', label: 'select-built-modal-title', scrollable, static, centered, v5})
+      +header({ cls: 't-ctr' }) 填寫下方資料生成範本
+      +body
+        .flexbox.sps-1.gy-3
+          .sp
+            .alert.alert-danger
+              span.fi-info
+              | 請注意，AI 生成的內容可能包含錯誤或誤導資訊。請進一步核實和驗證此內容的準確性。
+          .sp
+            label(for='select-product') 關注的產品*
+          .sp
+            button.form-control.t-left(type='button' data-bs-toggle='modal' data-bs-target='#select-product') 請選擇關注的產品
+            //- select#select-product.custom-select.bg-white.b-1(name='product')
+            //-   option(value='0' disabled) 請選擇關注的產品
+            //-   option(value='1') 咖啡機
+            //-   option(value='2') 咖啡機
+          //- - for(let i = 0; i < 6; i++)
+            .sp-4
+              button.btn.btn-rect-white(type='button')
+                img.circle(src=require('./img/user-blue.jpg') width='48' height='48' title='咖啡機產品設計師' alt='咖啡機產品設計師')
+                br
+                |咖啡機
+                br
+                |產品設計師
+
+          .sp
+            label(for='controller2') 專案敘述
+          .sp
+            textarea#controller2.form-control(name='controller' rows='3' placeholder='最後使用者滿意/不滿意')
+      +footer({cls: 'J-between'})
+        a.btn.btn-white(href='./udeProjectList.html' title='上一步') 上一步
+        button.btn.btn-pink(type='button' data-bs-dismiss='modal') 確定生成
+
+block script
+  script(src='https://unpkg.com/vue@3/dist/vue.global.js')
+  script
+    include ./js/stakeholdercanvas/ortho-connector.js
+    include ./js/stakeholdercanvas/json.js
+    include ./js/stakeholdercanvas/draw.js
+  script
+    |document.addEventListener('DOMContentLoaded', function () {
+    |
+    |
+    |
+    include ./js/drawStakeholder.js
+    .
+      $('#uploadExcel').on('change', function(e){
+        const { name } = e.target.files[0]
+        $('.filename').txt(name)
+      })
+      $('.fileuploading').on('dragover dragenter dragleave', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+      }).on('drop', function(e){
+        e.preventDefault()
+        const fileInput = $('#uploadExcel')[0]
+        const {files} = e.dataTransfer
+        if (files.length) {
+          const { name } = files[0]
+          if(name.match(/xlsx?/)) {
+
+            $('.filename').txt(name)
+            fileInput.files = files
+
+            for (const file of files) {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+
+              reader.addEventListener('loadend', function (e) {
+                console.log(e.target.result)
+              })
+            }
+          }
+        }
+      })
+    |})

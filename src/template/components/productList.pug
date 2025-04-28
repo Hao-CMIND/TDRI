@@ -1,0 +1,27 @@
+mixin productList(major, majorItems, id=null, href='./dataAnalysis.html')
+  .product-group(id=id)
+    if id === 'product-0'
+      h2.fz-22.product-group-title #{major}
+    each minorItems, minor in majorItems
+      .product-list
+        .product-header
+          h3.product-list-title.h-uline(style!=`background-image:url(${require('./img/nobase64/'+minor.replace(/\//,'-')+'p.png')});`)
+            a.stretched-link(href!=`${href}?majorId=${major}&minorId=${minor}&productId=${minor}`)
+              span(class='fi-ap'+(productCategory.indexOf(minor)+1))
+              |#{minor}
+              span.fi-next
+        if minorItems.length <= 5
+          .product-btn-group
+            each item, i in minorItems
+              a.btn.btn-white(href!=`${href}?majorId=${major}&minorId=${minor}&productId=${item}`)
+                img(src=require('./img/nobase64/'+item.replace(/\//g, '-').replace(' ', '')+'.png') width='200' height='200' alt=item title=item loading='lazy')
+                span.btn-text #{item}
+        else
+          - const groups = Math.ceil(minorItems.length / 4)
+          - for(let i = 0; i < groups; i++)
+            .product-btn-group
+              - for(let j = 0; j < 4; j++)
+                - const item = minorItems[i * 4 + j]
+                a.btn.btn-white(href!=`${href}?majorId=${major}&minorId=${minor}&productId=${item}`)
+                  img(src=require('./img/nobase64/'+item.replace(/\//g, '-').replace(' ', '')+'.png') width='200' height='200' alt=item title=item loading='lazy')
+                  span.btn-text #{item}

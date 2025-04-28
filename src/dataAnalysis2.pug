@@ -1,0 +1,216 @@
+extends ./template/layout.pug
+block local
+  - htmlAttr = { style: 'scroll-behavior:auto;' }
+  - bodyAttr = { style: 'background-color:#f3f3f3;' }
+  - headerSubTitle = '產品數據分析工具'
+  - pageType = 'pde'
+  - const chartImg = []
+  - for(let i = 1; i < 21; i++)
+    - chartImg.push(require('./img/nobase64/chart-'+i+'.png'))
+block body
+  section#app.py-5.modal-open-section
+    .container-fluid
+      .flexbox.gx-0
+        .sp-2.aside.chart-filter
+          .sticky-header
+            a.t-333(href='./dataAnalysis.html')
+              svg.img-fluid(fill='currentColor' width='19' height='19')
+                use(xlink:href='./img/sprite.svg#arrow-left')
+              span.v-middle 產品類別選擇
+            form.pt-3.gap-3(@submit.prevent)
+              .flexbox.gx-0.radio-toggle.radio-black.t-ctr.bg-fa.b-e0.p-1
+                .sp-6
+                  input#local(type='radio' name='locale' value='0' v-model.number='data.source')
+                  label.fz-14.w-100(for='local')
+                    span.fi-taiwan
+                    |台灣市場
+                .sp-6
+                  input#global(type='radio' name='locale' value='1' v-model.number='data.source')
+                  label.fz-14.w-100(for='global')
+                    span.fi-earth
+                    |全球市場
+              +inputGroup({type: 'search', id: 'search', name: 'search', label: '搜尋', placeholder: '請搜尋關鍵字...', cls: 'bg-none', groupCls: 'bg-white pill', vmodel: 'search', listId: 'search-keyword', 'list': 'keywords' })
+                +prepend
+                  label.mb-0.pt-1.pl-2(for='search')
+                    svg(fill='currentColor' stroke='#828282' width='20' height='20')
+                      use(xlink:href='./img/sprite.svg#magnifer')
+
+              fieldset
+                legend.fz-14.fw-7.mb-0.p-2 使用目的
+                .gap-3
+                  template(v-for='c,i of category')
+                    input.badge-check-black(:id='\'flow-\'+i' type='radio' name='flow' :value='c[0]' v-model='flow')
+                    label.w-100.p-2.rad.fz-14(:for='\'flow-\'+i')
+                      template(v-if='c[2]')
+                        span(:class='c[2]')
+                      |&nbsp;{{ c[0] }}
+              fieldset
+                legend.fz-14.fw-7.mb-0.p-2 相關角色
+                .gap-3.px-2
+                  .custom-control.custom-checkbox(v-for='r, i of roles')
+                    input.custom-control-input.check-black.w-100(:id='\'role-\'+i' type='checkbox' name='role' :value='r' v-model='role')
+                    label.custom-control-label(:for='\'role-\'+i') {{ r }}
+        .sp-10.modal-open-static
+          .flexbox.gx-0
+            .sp-10
+              .container
+                .flexbox.sps-1.gx-2.gy-3.mb-3
+                  .sp-12
+                    +breadcrumb({ cls: 'mb-0', prev: [
+                        { href: '\'./productSelect.html#major-\'+productAnchor', page: '{{ majorName }}' },
+                        { href: '#', page: '{{ minorName }}' }
+                      ],lastLink:true})
+                  .sp-m
+                    h2.fz-32 {{ productName }}
+                    p {{ flowDesc }}
+                  .sp-m-auto
+                    .btn-group
+                      a.btn.btn-white(href='#')
+                        span.fi-file-star-copy
+                        |歷史生成紀錄
+                      button.btn.btn-white.dropdown-toggle.dropdown-toggle-split.after-none(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                        svg(stroke='currentColor' width='15' height='15')
+                          use(href='./img/sprite.svg#arrow-down')
+                        span.badge.abs-badge-alert
+                          span.sr-only New alerts
+                      ul.dropdown-menu.lh-xxl-snug
+                        - for(let i = 0; i < 5; i++)
+                          li
+                            a.dropdown-item(href='#' download='電競筆電設計趨勢(1).png')  電競筆電設計趨勢(1)
+                              br
+                              time.t-82.fz-12(datetime='2024-05-22T24:05') 2024-5-22 24:5:12
+                  .sp-m-auto
+                    button.btn.btn-blue(type='button' data-bs-toggle='modal' data-bs-target='#AI-report')
+                      span.fi-file-star
+                      |生成AI趨勢分析
+                    p.t-82 剩餘額度 : 1 次
+                  //- .sp-12
+                //- h2.fz-32 {{ productId }}
+            .sp-10.modal-open-static(:class='{ \'hide-overlay\': !showOverlay }')
+              button.btn.btn-black.btn-toggle-overlay(type='button' @click='toggleOverlay')
+                span.fi-arr-down
+              .container-fluid.modal-open-container
+                #charts.flexbox.modal-open-nowrap.g-3(data-bs-spy='scroll' data-bs-target='#spy-card' tabindex='0')
+                  template(v-for='item,i of filterStruct')
+
+                    .sp-4.sp-xl-3.sp-xxl-3(:id!='\'chart-card-\'+i' v-show='(i<20 || showAllCharts) && !((+data.source===0) && item.imgIndex===11)')
+                      .chart-card(:style!='`--chart-img:url(../img/chart-${item.imgIndex}.png);`')
+                        h3.chart-card-title {{ item.title }}
+                          small {{item.empty ? '(無法點擊)': ''}}
+                        p.chart-card-desc {{ item.exp }}
+                        //- v-show='!item.empty'
+                        button.btn.btn-block.chart-card-btn(type='button' data-bs-toggle='modal' data-bs-target='#chart-modal' :data-id='item.id' :data-index='i')
+                          svg(width='30' height='30' fill='currentColor')&attributes({viewBox: '0 0 30 30'})
+                            use(href='./img/sprite.svg?#chartbtn')
+                          br
+                          |查看詳細圖表
+                        button.btn.btn-block.chart-card-change(type='button' :data-id='item.id' :data-index='i' @click='chartChange')
+                          svg(width='30' height='30' fill='currentColor')&attributes({viewBox: '0 0 30 30'})
+                            use(href='./img/sprite.svg?#chartbtn')
+                          br
+                          |切換圖表
+
+                button.css-show-charts.btn.btn-white.btn-block.mt-4(v-if='filterStruct.length' type='button' @click='showAllCharts=!showAllCharts') {{showAllCharts ?'收起圖表': '展開更多圖表'  }}
+            //- .sp-2
+              .sticky-header
+                h4.fz-16.fw-4.t-333
+
+                  |圖表目錄
+                  button.btn.btn-sm(type='button' @click='spyPageChange(-1)'): span.fi-prev
+                  button.btn.btn-sm(type='button' @click='spyPageChange(1)'): span.fi-next
+                nav#spy-card.nav.nav-spy-gray.col.list-number(:style='\'counter-reset:num \'+ ((spyPage-1)*10)')
+                  template(v-for='item,i of spyNavStructures')
+                    a.nav-link.grow-1(:href!='\'#chart-card-\'+((spyPage-1)*10 + i)') {{ item.title }}
+    +modal({ id: 'chart-modal', label: 'chart-modal-title' , size: 'xxl', v5, nobtn, scrollable, vCls: '{\'modal-chart-iframe\': showOverlay}', contentCls:['bg-white'], ref:'chartModal'})
+      +body
+        iframe.w-100(ref='iframe' title='Chart' :src='iframeSrc' frameborder='0' :data-chart-id='chartId' data-chart-index='0' :style='showOverlay?\'min-height:calc(80vh - 156px)\':\'min-height:calc(-97px + 100vh)\'')
+    +modal({ id: 'AI-report', label: 'AI-report-title' , v5, nobtn})
+      +header({ cls: 't-ctr' }) AI趨勢分析報告
+        br
+        |剩餘額度:
+        span.t-blue 3份
+        span.t-red 0份
+      +body({cls: 'px-6'})
+
+        p AI趨勢分析報告，可以協助您一鍵將所有數據用報告的形式摘要
+          strong “電競筆電”
+          |的設計趨勢。
+
+        p 按下
+          strong 「生成報告」
+          |後，將扣除
+          strong 1
+          |次 AI趨勢分析報告的額度，您確定要生成
+          strong 1
+          |份
+          strong “電競筆電”
+          |的報告嗎？
+        a.t-blue(href='#') (點擊連結參考此範例)
+        p 如有需要，歡迎至會員中心的「
+          a.t-blue(href='#') 方案商城
+          |」購買
+        p 您已用完於 2024/00/00 購買的額度，如需要加購，請至會員中心的「
+          a.t-blue(href='#') 方案商城
+          | 」中購買
+        p 按下
+          strong 「再次生成報告」
+          |後，將扣除
+          strong 1
+          |次 AI趨勢分析報告的額度，您確定要生成另外
+          strong 1
+          |份
+          strong “電競筆電”
+          |的報告嗎？
+        p (您可在「歷史生成紀錄」以及頂端導覽列的「AI報告列表」查看不同版本的報告)
+      +footer(cls='column')
+        .sp-6
+          button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 生成報告
+        .sp-6
+          button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 再次生成報告
+        .sp-6
+          button.btn.btn-blue.btn-block(type='button' data-bs-dismiss='modal') 前往加購
+        .sp-6
+          button.btn.btn-white.btn-block(type='button' data-bs-dismiss='modal') 取消
+    .toast-container-top(aria-live='polite' aria-atomic='true')
+      .toast.toast-generate(data-bs-autohide='false')
+        .toast-header
+          h4 正在生成1份AI趨勢報告
+        .toast-body
+          p.t-333
+            .spinner-border.t-primary.mr-2
+            |每份報告時間約2分鐘...
+    .toast-container-bottom(aria-live='polite' aria-atomic='true')
+      .toast.toast-generate(data-bs-autohide='false')
+        .toast-header
+          h4 正在生成1份AI趨勢報告
+        .toast-body
+          p.t-333
+            .spinner-border.t-primary.mr-2
+            |每份報告時間約2分鐘...
+    .toast-container-bottom(aria-live='polite' aria-atomic='true')
+      .toast.toast-check(data-bs-autohide='false')
+
+        .toast-body
+          button.close.fl-right(type='button' data-bs-dismiss='toast' aria-label='Close')
+            span.fi-close-cir(aria-hidden='true')
+          p
+            span.t-success.fi-check
+            |已生成2份AI趨勢報告
+            a.t-blue(href='#') 查看
+block script
+  script(src='https://unpkg.com/vue@3/dist/vue.global.js')
+  script document.addEventListener('DOMContentLoaded', function () {
+    |
+    | const sw = !{isProd ? '\'https://whatlife.no-ip.org/test/tdri/\'' : '\'./\'' } + 'js/sharedworker.js'
+    | //console.info('sw設定 sharedworker.js 檔案路徑')
+    |
+    include ./js/sw/main.js
+    |
+    |
+    |
+    include ./js/chartV2/chartImgIndice.js
+    |
+    |
+    |
+    include ./js/dataAnalysis.js
+    |})

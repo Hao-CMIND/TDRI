@@ -1,0 +1,69 @@
+extends ./template/layout.pug
+block local
+  // headerH1 = true
+  - headerH1 = true
+  -
+    bodyAttr = {
+      class: ['bg-grid']
+    }
+block body
+  .container.py-5
+    h1.fz-32.mb-5 訂單明細
+    .flexbox.sps-l-2.gy-3
+      .sp
+        h2.mb-3 訂閱內容
+        .card
+          .card-body
+            table.table.nth-2-right.bb-1
+              colgroup.bg-fa
+              tbody
+                tr
+                  th(scope='row') 訂單編號
+                  td 2024030001
+                tr
+                  th(scope='row') 委託單號
+                  td 2024030001
+                tr
+                  th(scope='row') 購買產品
+                  td
+                    img.mr-2.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='UDE使用者數據工具' title='UDE使用者數據工具' loading='lazy')
+                    |UDE使用者數據工具
+                tr
+                  th(scope='row') 購買項目
+                  td: span.ic-bf.ib-silvercn 進階會員
+                tr
+                  th(scope='row') 詳細資訊
+                  td 方案資訊
+                tr
+                  th(scope='row') 訂閱時間
+                  td
+                    timpe(timestamp='2023-03-01T00:00') 2023/03/01
+                    |~
+                    timpe(timestamp='2023-03-01T00:00') 2024/02/29
+                tr
+                  th(scope='row') 付款時間
+                  td
+                    timpe(timestamp='2024-02-29T13:39') 2024/02/29 13:39
+                tr
+                  th(scope='row') 價格
+                  td
+                    strong NT$6,666/月
+      .sp
+        h2.mb-3 發票資訊
+        .card
+          .card-body
+            table.table.nth-2-right.bb-1
+              colgroup.bg-fa
+              tbody
+                tr
+                  th(scope='row') 發票抬頭
+                  td 思脈數位
+                tr
+                  th(scope='row') 地址
+                  td 台北市中正區新生南路一段108號-1號3樓
+                tr
+                  th(scope='row') 電話
+                  td 02-2396-9288
+                tr
+                  th(scope='row') 統一編號
+                  td 52583239

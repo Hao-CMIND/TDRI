@@ -1,0 +1,250 @@
+extends ./template/layout.pug
+block local
+  -
+    bodyAttr = {
+      class: ['bg-grid'],
+      'data-bs-spy': 'scroll',
+      'data-bs-target': '#side-nav'
+    }
+block body
+  section
+    .container-fluid.px-0
+      .flexbox.gx-0
+        .sp-2
+          nav#side-nav.min-vh-full.h-100.bg-white
+            ul.list-group.list-group-flush.sticky-header.bg-white
+              li.list-group-item.list-group-item-l-gray.active
+                .flexbox.a-ctr.gx-1
+                  .sp-auto
+                    img.circle(src=require('./img/nobase64/pde.png') width='32' height='32' alt='產品數據工具' title='產品數據工具' loading='lazy')
+                  .sp
+                    a.nav-link.stretched-link.px-0(href='#pde' title='產品數據分析工具') 產品數據分析工具
+                  .sp-auto
+                    button.btn.btn-block.t-left.p-0(type='button' data-bs-toggle='collapse' data-bs-target='#pde-nav' aria-expanded='true' aria-controls='pde-nav')
+                      svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                        use(xlink:href='./img/sprite.svg#arrow-down')
+                #pde-nav.collapse.show
+                  ul.nav.col
+                    each link, i in ['產品類別選擇', '結果分析頁面', 'AI趨勢分析', '圖表收藏&專案管理', '製作儀表板']
+                      li.nav-item
+                        a.nav-link(href='#pde-'+i title=link) #{link}
+
+              li.list-group-item
+                .flexbox.a-ctr.gx-1
+                  .sp-auto
+                    img.circle(src=require('./img/nobase64/ude.png') width='32' height='32' alt='使用者研究數位工具' title='使用者研究數位工具' loading='lazy')
+                  .sp
+                    a.nav-link.stretched-link.px-0(href='#ude' title='使用者研究數位工具')  使用者研究數位工具
+                  .sp-auto
+                    button.btn.btn-block.t-left.p-0(type='button' data-bs-toggle='collapse' data-bs-target='#ude-nav' aria-expanded='true' aria-controls='ude-nav')
+                      svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                        use(xlink:href='./img/sprite.svg#arrow-down')
+                #ude-nav.collapse.show
+                  ul.nav.col
+                    each link, i in ['人物誌', '利益關係人圖', '使用者旅程地圖', 'AI生成人物誌', '上傳文本']
+                      li.nav-item
+                        a.nav-link(href='#ude-'+i title=link) #{link}
+              - for(let i = 1; i < 4; i++)
+                - const toolname = String.fromCharCode('C'.charCodeAt() + i)
+                  li.list-group-item.list-group-item-l-gray
+                    .flexbox.a-ctr.gx-1
+                      .sp-auto
+                        img.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt=toolname + '工具' title=toolname + '工具' loading='lazy')
+                      .sp
+                        a.nav-link.stretched-link.px-0(href='#'+toolname title=toolname+'工具')  #{toolname} 工具
+                      .sp-auto
+                        button.btn.btn-block.t-left.p-0(type='button' data-bs-toggle='collapse' data-bs-target='#'+toolname+'-nav' aria-expanded='false' aria-controls=toolname+'-nav')
+                          svg.img-fluid(fill='none' stroke='currentColor' width='15' height='15')
+                            use(xlink:href='./img/sprite.svg#arrow-down')
+                    .collapse(id=toolname+'-nav')
+                      ul.nav.col
+                        - for(let i = 1; i < 3; i++)
+                          li.nav-item
+                            a.nav-link(href='#'+toolname+'-'+i title=i+'頁面') #{i+'頁面'}
+
+                //- li.list-group-item
+                  .flexbox.a-ctr.gx-1
+                    .sp-auto
+                      img.mr-2.circle(src='https://picsum.photos/32/32/' width='32' height='32' alt=toolname + '工具' title=toolname + '工具' loading='lazy')
+                    .sp
+                      a.nav-link.stretched-link.px-0(href='#'+toolname title=toolname+'工具')  #{toolname} 工具
+                    .sp-auto
+                      button.btn.btn-block.t-left.p-0.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#'+toolname+'-nav' aria-expanded='false' aria-controls=toolname+'-nav')
+                        span.fi-arr-down.fl-right.mt-3
+                  .collapse(id=toolname+'-nav')
+                    ul.nav.col
+                      - for(let i = 1; i < 3; i++)
+                        li.nav-item
+                          a.nav-link(href='#'+toolname+'-'+i title=i+'頁面') #{i+'頁面'}
+        .sp-10.sp-xxl-8.spr-xxl-2
+          .container.ml-0.py-5
+            +tabs({id: 'tab-resource', v5, cls: ['tab-products', 'tab-project'], contentCls: ['tab-products-content', 'tab-project-content', 'pt-5'] })
+
+              +item({ id: 'guide', title: '使用者指南', active })
+                .editor-style
+                  #pde
+                    p pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde pde
+                  #pde-0
+                    h2 文字編輯器2級標籤
+                    - for(let i = 0; i < 5; i++)
+                      br
+                  #pde-1
+                    h3 文字編輯器3級標籤
+                    - for(let i = 0; i < 5; i++)
+                      br
+                  #pde-2
+                    h4 文字編輯器4級標籤
+                    - for(let i = 0; i < 5; i++)
+                      br
+                  #pde-3
+                    h5 文字編輯器5級標籤
+                    - for(let i = 0; i < 5; i++)
+                      br
+                  #pde-4
+                    h6 文字編輯器6級標籤
+                    - for(let i = 0; i < 5; i++)
+                      br
+                  #ude
+                    p ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude ude
+                  #ude-0
+                    p 文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字，文字編輯器內文字內文字內文字內文字內文字。
+                    - for(let i = 0; i < 10; i++)
+                      br
+                  #ude-1
+                    ul
+                      li 文字編輯器無序列表1
+                      li 文字編輯器無序列表2
+                      li 文字編輯器無序列表3
+                    - for(let i = 0; i < 10; i++)
+                      br
+                  #ude-2
+                    ol
+                      li 文字編輯器有序列表1
+                      li 文字編輯器有序列表2
+                      li 文字編輯器有序列表3
+                    - for(let i = 0; i < 10; i++)
+                      br
+                  #ude-3
+                    table
+                      thead
+                        tr
+                          th(scope='col') 文字編輯器表頭1
+                          th(scope='col') 文字編輯器表頭2
+                          th(scope='col') 文字編輯器表頭3
+                          th(scope='col') 文字編輯器表頭4
+                          th(scope='col') 文字編輯器表頭5
+                      tbody
+                        tr
+                          th(scope='row') 文字編輯器表格1
+                          td 文字編輯器表格2
+                          td 文字編輯器表格3
+                          td 文字編輯器表格4
+                          td 文字編輯器表格5
+                      tfoot
+                        tr
+                          th(scope='row') 文字編輯器表尾1
+                          td 文字編輯器表尾2
+                          td 文字編輯器表尾3
+                          td 文字編輯器表尾4
+                          td 文字編輯器表尾5
+                  #ude-4
+                    img(src='https://picsum.photos/1920/1080/' width='100%' height='auto' alt='' title='' loading='lazy')
+                  #D
+                    p D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D D
+                  #D-1
+                    iframe(src='https://www.youtube.com/embed/_6TtTRrno3E?si=kVhrgY_x9QW18EaW' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+                  #D-2
+                    iframe(src='https://www.youtube.com/embed/gxwRIx47CjQ?si=jC1zbZWTSKRU5mAp' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+                  #E
+                    p E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E E
+                  #E-1
+                    iframe(src='https://www.youtube.com/embed/XLicBDyo0JQ?si=JKh-6nBXUN0fYjl8' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+                  #E-2
+                    iframe(src='https://www.youtube.com/embed/0d4nLXIansU?si=BrQHmy48oJqESYi5' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+                  #F
+                    p F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F F
+                  #F-1
+                    iframe(src='https://www.youtube.com/embed/1cDZuQ35ns8?si=2jRF06ZHunOgRr9-' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+                  #F-2
+                    iframe(src='https://www.youtube.com/embed/IZ5wtzhaflY?si=I3BAJRoNXXq7ipfx' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen)
+
+              +item({ id: 'faq', title: '常見問題FAQ' })
+                #faq-accordion.accordion
+                  ul.list-group.list-group-flush
+                    li.list-group-item
+                      button.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-1' aria-expanded='true' aria-controls='faq-content-1') 1.我忘記密碼了，該怎麼辦?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-1.collapse.show(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-1') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+                    li.list-group-item
+                      button.collapsed.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-2' aria-expanded='false' aria-controls='faq-content-2') 2.金流付款完成後，需要多久才能使用訂閱的服務?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-2.collapse(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-2') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+                    li.list-group-item
+                      button.collapsed.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-3' aria-expanded='false' aria-controls='faq-content-3') 3.我該怎麼查詢我目前的訂閱資訊?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-3.collapse(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-3') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+                    li.list-group-item
+                      button.collapsed.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-4' aria-expanded='false' aria-controls='faq-content-4') 4.我可以取消目前的訂閱嗎?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-4.collapse(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-4') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+                    li.list-group-item
+                      button.collapsed.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-5' aria-expanded='false' aria-controls='faq-content-5') 5.我要怎麼將已經完成的專案匯出?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-5.collapse(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-5') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+                    li.list-group-item
+                      button.collapsed.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-6' aria-expanded='false' aria-controls='faq-content-6') 6.目前提供的訂閱方案都不符合我的需求，可以提供客製化的方案嗎?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-6.collapse(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-6') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+                    li.list-group-item
+                      button.collapsed.btn.btn-block.t-left.fw-7.t-22(type='button' data-bs-toggle='collapse' data-bs-target='#faq-content-7' aria-expanded='false' aria-controls='faq-content-7') 7.我該怎麼查詢我目前的訂閱資訊?
+                        svg.img-fluid.fl-right(fill='transparent' stroke='#000' width='50' height='50')
+                          use(xlink:href='./img/sprite.svg#circle-arrow')
+                      #faq-content-7.collapse(data-bs-parent='#faq-accordion' aria-labelledby='faq-content-7') #{Array.from({ length: 300 }, () => String.fromCharCode(Math.floor(Math.random() * (0x9fa5 - 0x4e00 + 1)) + 0x4e00)).join('')}
+              +item({ id: 'support', title: '客服支援' })
+                form.flexbox.J-ctr.gy-3
+                  .sp-3
+                    label(for='lastname') 姓氏*
+                    input#lastname.form-control(type='text' name='lastname' placeholder='請輸入姓氏' required)
+                  .sp-3
+                    label(for='firstname') 名字*
+                    input#firstname.form-control(type='text' name='firstname' placeholder='請輸入名字' required)
+                  .sp-6
+                    label(for='email') 電子信箱*
+                    input#email.form-control(type='email' name='email' placeholder='請輸入電子信箱' required)
+                  .sp-6
+                    label(for='org') 公司/組織*
+                    input#org.form-control(type='text' name='org' placeholder='請輸入公司/組織' required)
+                  .sp-6
+                    label(for='title') 職稱*
+                    input#title.form-control(type='text' name='title' placeholder='請輸職稱' required)
+                  .sp-6
+                    label(for='subject') 主旨*
+                    input#subject.form-control(type='text' name='subject' placeholder='請輸主旨' required)
+                  .sp-6
+                    label(for='purpose') 聯繫目的*
+                    select#purpose.form-control(name='purpose' required)
+                      option(value='' selected disabled) 產品客製化方案
+                      option(value='purpose1') 方案1
+                      option(value='purpose2') 方案2
+                      option(value='purpose3') 方案3
+                  .sp-12
+                    label(for='description') 內容簡述*
+                    textarea#description.form-control(name='description' rows='6' style='resize:none' placeholder='請輸入內容')
+                  .sp-4.sp-xxl-3
+                    button.btn.btn-black.btn-block.rad-sm(type='submit') 確認送出
+block script
+  script.
+    ;(function(windows){
+      window.addEventListener('DOMContentLoaded', function (e) {
+        $('#nav-tab-resource .nav-link').on('click', function (e) {
+          console.log( $('#nav-tab-resource .nav-link').indexOf(e.target))
+          $('#side-nav').toggleClass('hidden', $('#nav-tab-resource .nav-link').indexOf(e.target)!==0)
+        })
+      })
+    })(window)

@@ -1,0 +1,7 @@
+// stylelint-disable declaration-no-important
+$ovf-pos: '', -x, -y;
+@each $value in $overflows {
+  @each $pos in $ovf-pos {
+  .of#{$pos}-#{$value} { overflow#{$pos}: $value; }
+  }
+}

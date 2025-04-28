@@ -1,0 +1,30 @@
+@mixin divider($infix, $args...) {
+  $bp: map-get(keywords($args), 'bp') or '';
+  @if ($infix == $bp) {
+    $cols: map-get(keywords($args), 'cols') or 2;
+    $width: map-get(keywords($args), 'width') or 1px;
+    $color: map-get(keywords($args), 'color') or $primary;
+    $spacing: map-get(keywords($args), 'spacing');
+    .cols#{$infix}-#{$cols} {
+      @include media-breakpoint-up($infix) {
+        &.divider {
+          //clear border setting over sm
+          @if $infix != '' {
+            > :nth-child(n) {
+              border-left: none;
+            }
+          }
+          > :not(:nth-child(#{$cols}n - #{$cols - 1})) {
+            border-left: $width solid $color;
+          }
+        }
+        @if $spacing {
+          &.spacing > * {
+            margin-top: $spacing * .5;
+            margin-bottom: $spacing * .5;
+            }
+        }
+      }
+    }
+  }
+}

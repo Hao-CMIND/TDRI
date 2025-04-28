@@ -1,0 +1,21 @@
+block global
+-
+  function getPropKeys ([props = {}]) {
+    const keys = Object.keys(props)
+    const self = {
+      has (prop) { return keys.includes(prop) },
+      is (prop, forceStr = false) {
+        if (forceStr) { return String(self.has(prop)) }
+        return self.has(prop) && String(self.has(prop))
+      },
+      isnot (prop, forceStr = false) {
+        if (forceStr) { return String(!self.has(prop)) }
+        return self.has(prop) && String(!self.has(prop))
+      }
+    }
+    return self
+  }
+-
+  function isV5 (v5, set) {
+    return 'data' + (v5 ? '-bs' : '') + '-' + set
+  }

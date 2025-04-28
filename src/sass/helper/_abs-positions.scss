@@ -1,0 +1,18 @@
+.abs {
+  &-ctr {
+    @extend .abs;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &-x {
+      @extend .abs;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &-y {
+      @extend .abs;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
